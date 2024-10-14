@@ -11,4 +11,4 @@ USER 0
 
 COPY ${JAR_PATH}/discord-bot-bee.jar ${JAR_PATH}/discord-bot-bee.jar
 
-CMD ["java" ,"-jar", "./build/libs/discord-bot-bee.jar", "${BOT_TOKEN}"]
+CMD ["sh", "-c", "java -jar ./build/libs/discord-bot-bee.jar ${BOT_TOKEN}"]
