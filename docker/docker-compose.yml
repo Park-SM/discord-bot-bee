@@ -1,0 +1,7 @@
+version: "3"
+
+services:
+  discord-bot-bee:
+    container_name: discord-bot-bee
+    image:  smparkworld/discord-bot-bee:1.0
+    restart: always

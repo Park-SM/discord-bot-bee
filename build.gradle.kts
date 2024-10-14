@@ -25,6 +25,9 @@ dependencies {
 tasks.test {
     useJUnitPlatform()
 }
+tasks.jar {
+    archiveFileName.set("discord-bot-bee.jar")
+}
 
 kotlin {
     jvmToolchain(11)
