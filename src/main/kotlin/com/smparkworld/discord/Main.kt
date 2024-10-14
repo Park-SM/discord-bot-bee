@@ -25,7 +25,6 @@ fun main(args: Array<String>) {
 
     initDiscordBots(jda)
     initDiscordBotsCommands(jda)
-
 }
 
 fun initDiscordBots(jda: JDA) {
