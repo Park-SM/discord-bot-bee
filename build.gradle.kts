@@ -3,6 +3,7 @@ import java.net.URI
 plugins {
     kotlin("jvm") version "1.8.21"
     application
+    id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
 group = "com.smparkworld.discord"
@@ -31,6 +32,11 @@ tasks.jar {
     manifest {
         attributes["Main-Class"] = "com.smparkworld.discord.MainKt"
     }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
+    archiveFileName.set("discord-bot-bee.jar")
 }
 
 kotlin {
