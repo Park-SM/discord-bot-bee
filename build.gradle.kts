@@ -25,8 +25,12 @@ dependencies {
 tasks.test {
     useJUnitPlatform()
 }
+
 tasks.jar {
     archiveFileName.set("discord-bot-bee.jar")
+    manifest {
+        attributes["Main-Class"] = "com.smparkworld.discord.MainKt"
+    }
 }
 
 kotlin {
