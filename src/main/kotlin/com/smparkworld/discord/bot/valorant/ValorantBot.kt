@@ -45,7 +45,7 @@ class ValorantBot(
         checkAudioChannelValidation(event) { members ->
 
             val ignores: List<User> = obtainIgnoredUsers(event)
-            val players: List<String> = obtainPlayerNames(members)
+            val players: List<String> = obtainPlayerNames(members, ignores)
 
             checkPlayersValidation(event, players, ignores.size) {
                 val agentTypeValues = StringBuilder()
@@ -86,7 +86,7 @@ class ValorantBot(
         checkAudioChannelValidation(event) { members ->
 
             val ignores: List<User> = obtainIgnoredUsers(event)
-            val players: List<String> = obtainPlayerNames(members)
+            val players: List<String> = obtainPlayerNames(members, ignores)
 
             checkPlayersValidation(event, players, ignores.size) {
                 val agentTypeValues = StringBuilder()
@@ -133,7 +133,7 @@ class ValorantBot(
         )
     }
 
-    private fun obtainPlayerNames(members: List<Member>, ignores: List<User> = emptyList()): List<String> {
+    private fun obtainPlayerNames(members: List<Member>, ignores: List<User>): List<String> {
         return members
             .filterNot { ignores.contains(it.user) }
             .filterNot { it.user.isBot }
