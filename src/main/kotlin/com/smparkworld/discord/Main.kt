@@ -21,8 +21,13 @@ fun main(args: Array<String>) {
         )
         .build()
 
+    initJda(jda)
     initDiscordBots(jda)
     initDiscordBotsCommands(jda)
+}
+
+fun initJda(jda: JDA) {
+    jda.presence.activity = Activity.customStatus("꽃가루 찾는 중")
 }
 
 fun initDiscordBots(jda: JDA) {
