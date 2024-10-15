@@ -9,13 +9,11 @@ import net.dv8tion.jda.api.requests.GatewayIntent
 import net.dv8tion.jda.internal.interactions.CommandDataImpl
 
 fun main(args: Array<String>) {
-
     val token = try {
         args[0]
     } catch (e: Exception) {
         throw IllegalArgumentException("Not found token")
     }
-
     val jda = JDABuilder.create(
             token,
             GatewayIntent.GUILD_MESSAGES,
