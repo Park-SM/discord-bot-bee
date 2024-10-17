@@ -138,7 +138,7 @@ class ValorantBot(
             .filterNot { ignores.contains(it.user) }
             .filterNot { it.user.isBot }
             .filterNot { it.user.isSystem }
-            .mapNotNull { it.user.globalName }
+            .map { it.user.globalName ?: it.user.name }
     }
 
     private fun checkAudioChannelValidation(
