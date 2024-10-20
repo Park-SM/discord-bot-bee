@@ -74,6 +74,8 @@ class ValorantBot(
                     .also { builder ->
                         ValorantAgentType.values()
                             .map { it.typeName }
+                            .toMutableList()
+                            .also { it.add(WILDCARD) }
                             .also(Collections::shuffle)
                             .subList(0, players.size)
                             .forEach { builder.append("$it\n") }
@@ -114,7 +116,16 @@ class ValorantBot(
                 val agentTypeValues = StringBuilder()
                     .also { builder ->
                         ValorantAgentType.values()
-                            .map { "${it.agentNames.random()} (${it.typeName})" }
+                            .map { (it.agentNames.random() to it.typeName) }
+                            .toMutableList()
+                            .also { candidates ->
+                                val wildcard = ValorantAgentType.AGENT_ALL
+                                    .filterNot { agent -> candidates.find { it.first == agent} != null }
+                                    .also(Collections::shuffle)
+                                    .first()
+                                candidates.add(wildcard to WILDCARD)
+                            }
+                            .map { "${it.first} (${it.second})" }
                             .also(Collections::shuffle)
                             .subList(0, players.size)
                             .forEach { builder.append("$it\n") }
@@ -240,6 +251,8 @@ class ValorantBot(
     }
 
     companion object {
+
+        private const val WILDCARD = "와일드 카드"
 
         private const val SUBCOMMAND_RANDOM_PICK = "random-pick"
         private const val SUBCOMMAND_RANDOM_PICK_DESC = "음성 채널에 있는 유저들에게 에이전트의 역할군을 무작위로 지정합니다."
