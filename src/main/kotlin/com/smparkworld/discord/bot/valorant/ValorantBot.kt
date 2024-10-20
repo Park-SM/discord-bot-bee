@@ -9,6 +9,7 @@ import net.dv8tion.jda.api.entities.Member
 import net.dv8tion.jda.api.entities.User
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import net.dv8tion.jda.api.interactions.commands.OptionType
+import net.dv8tion.jda.api.interactions.commands.build.OptionData
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData
 import net.dv8tion.jda.api.interactions.commands.build.SubcommandData
 import java.util.*
@@ -30,7 +31,27 @@ class ValorantBot(
                 .addOption(OptionType.USER, "ignore-2", "채널 내 제외할 유저를 입력합니다.", false)
                 .addOption(OptionType.USER, "ignore-3", "채널 내 제외할 유저를 입력합니다.", false)
                 .addOption(OptionType.USER, "ignore-4", "채널 내 제외할 유저를 입력합니다.", false)
-                .addOption(OptionType.USER, "ignore-5", "채널 내 제외할 유저를 입력합니다.", false)
+                .addOption(OptionType.USER, "ignore-5", "채널 내 제외할 유저를 입력합니다.", false),
+            SubcommandData(SUBCOMMAND_RANDOM_MAP, SUBCOMMAND_RANDOM_MAP_DESC)
+                .addOptions(
+                    OptionData(OptionType.STRING, "ignore-1", "제외할 맵을 입력합니다.", false)
+                        .also { option -> ValorantMapType.values().forEach { option.addChoice(it.typeName, it.name) } },
+                    OptionData(OptionType.STRING, "ignore-2", "제외할 맵을 입력합니다.", false)
+                        .also { option -> ValorantMapType.values().forEach { option.addChoice(it.typeName, it.name) } },
+                    OptionData(OptionType.STRING, "ignore-3", "제외할 맵을 입력합니다.", false)
+                        .also { option -> ValorantMapType.values().forEach { option.addChoice(it.typeName, it.name) } },
+                    OptionData(OptionType.STRING, "ignore-4", "제외할 맵을 입력합니다.", false)
+                        .also { option -> ValorantMapType.values().forEach { option.addChoice(it.typeName, it.name) } },
+                    OptionData(OptionType.STRING, "ignore-5", "제외할 맵을 입력합니다.", false)
+                        .also { option -> ValorantMapType.values().forEach { option.addChoice(it.typeName, it.name) } },
+                    OptionData(OptionType.STRING, "ignore-6", "제외할 맵을 입력합니다.", false)
+                        .also { option -> ValorantMapType.values().forEach { option.addChoice(it.typeName, it.name) } },
+                    OptionData(OptionType.STRING, "ignore-7", "제외할 맵을 입력합니다.", false)
+                        .also { option -> ValorantMapType.values().forEach { option.addChoice(it.typeName, it.name) } },
+                    OptionData(OptionType.STRING, "ignore-8", "제외할 맵을 입력합니다.", false)
+                        .also { option -> ValorantMapType.values().forEach { option.addChoice(it.typeName, it.name) } }
+                )
+                ,
         )
     }
 
@@ -38,6 +59,7 @@ class ValorantBot(
         when (event.subcommandName) {
             SUBCOMMAND_RANDOM_PICK -> handleRandomPickCommand(event)
             SUBCOMMAND_RANDOM_PICK_HARD -> handleRandomPickHardCommand(event)
+            SUBCOMMAND_RANDOM_MAP -> handleRandomMap(event)
         }
     }
 
@@ -123,6 +145,48 @@ class ValorantBot(
         }
     }
 
+    private fun handleRandomMap(event: SlashCommandInteractionEvent) {
+        checkAudioChannelValidation(event) {
+
+            val ignores = listOfNotNull(
+                event.getOption("ignore-1")?.asString,
+                event.getOption("ignore-2")?.asString,
+                event.getOption("ignore-3")?.asString,
+                event.getOption("ignore-4")?.asString,
+                event.getOption("ignore-5")?.asString,
+                event.getOption("ignore-6")?.asString,
+                event.getOption("ignore-7")?.asString,
+                event.getOption("ignore-8")?.asString
+            )
+            val ignoresName = ignores
+                .map(ValorantMapType::valueOf)
+                .joinToString(", ") { it.typeName }
+
+            val candidates = ValorantMapType.values()
+                .filterNot { ignores.contains(it.name) }
+                .also(Collections::shuffle)
+
+            if (candidates.isNotEmpty()) {
+
+                val map = candidates.first()
+
+                val message = EmbedBuilder()
+                    .setTitle("발로란트 맵 랜덤픽")
+                    .setDescription("발로란트에 존재하는 맵 중 하나를 추천합니다.")
+                    .setImage(map.thumbnailUrl)
+                    .addField("선택된 맵", "\"${map.typeName}\"", true)
+                    .apply {
+                        if (ignores.isNotEmpty()) addField("제외된 맵", ignoresName, false)
+                    }
+                    .build()
+
+                event.replyEmbeds(message).queue()
+            } else {
+                event.reply("맵을 너무 많이 제외시켰어요. 다시 조정해주세요.").queue()
+            }
+        }
+    }
+
     private fun obtainIgnoredUsers(event: SlashCommandInteractionEvent): List<User> {
         return listOfNotNull(
             event.getOption("ignore-1")?.asUser,
@@ -182,5 +246,8 @@ class ValorantBot(
 
         private const val SUBCOMMAND_RANDOM_PICK_HARD = "random-pick-hard"
         private const val SUBCOMMAND_RANDOM_PICK_HARD_DESC = "음성 채널에 있는 유저들에게 에이전트를 무작위로 지정합니다."
+
+        private const val SUBCOMMAND_RANDOM_MAP = "random-map"
+        private const val SUBCOMMAND_RANDOM_MAP_DESC = "발로란트에 존재하는 맵 중 하나를 추천합니다."
     }
 }
