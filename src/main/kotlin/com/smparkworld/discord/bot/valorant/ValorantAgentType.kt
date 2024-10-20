@@ -26,11 +26,10 @@ enum class ValorantAgentType(
     CONTROLLER(
         typeName = "전략가",
         agentNames = listOf("바이퍼", "브림스톤", "아스트라", "오멘", "클로브", "하버")
-    ),
-
-    // 와일드 카드
-    WILD_CARD(
-        typeName = "와일드 카드",
-        agentNames = DUELIST.agentNames + INITIATOR.agentNames + SENTINEL.agentNames + CONTROLLER.agentNames
     )
+    ;
+
+    companion object {
+        val AGENT_ALL =  DUELIST.agentNames + INITIATOR.agentNames + SENTINEL.agentNames + CONTROLLER.agentNames
+    }
 }
