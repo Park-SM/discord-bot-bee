@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+    <string name="name">이름</string>
+    <string name="ignored_user">제외된 유저</string>
+    <string name="wildcard">와일드 카드</string>
+    <string name="selected_map">선택된 맵</string>
+    <string name="ignored_map">제외된 맵</string>
+
+    <string name="ignore-1">ignore-1</string>
+    <string name="ignore-2">ignore-2</string>
+    <string name="ignore-3">ignore-3</string>
+    <string name="ignore-4">ignore-4</string>
+    <string name="ignore-5">ignore-5</string>
+    <string name="ignore-6">ignore-6</string>
+    <string name="ignore-7">ignore-7</string>
+    <string name="ignore-8">ignore-8</string>
+
+    <string name="ignore_user_desc">채널 내 제외할 유저를 입력합니다.</string>
+    <string name="ignore_map_desc">제외할 맵을 선택합니다.</string>
+
+    <!-- 발로란트 봇 관련 START -->
+    <string name="val_cmd_random_pick">random-pick</string>
+    <string name="val_cmd_random_pick_desc">음성 채널에 있는 유저들에게 에이전트의 역할군을 무작위로 지정합니다.</string>
+
+    <string name="val_cmd_random_pick_hard">random-pick-hard</string>
+    <string name="val_cmd_random_pick_hard_desc">음성 채널에 있는 유저들에게 에이전트를 무작위로 지정합니다.</string>
+
+    <string name="val_cmd_random_map">random-map</string>
+    <string name="val_cmd_random_map_desc">발로란트에 존재하는 맵 중 하나를 추천합니다.</string>
+
+    <string name="val_agent">에이전트</string>
+    <string name="val_agent_type">역할군</string>
+
+    <string name="val_absent_command_author">음성 채널에 없으시군요. 음성 채널 안에서 명령해주세요!</string>
+    <string name="val_unknown_exception">알 수 없는 문제가 발생했어요! 꿀벌 봇 프로필에 있는 이슈 보고 사이트로 문의해주세요!</string>
+    <string name="val_random_pick_candidate_need_to_more">랜덤픽을 돌리기 위한 플레이어가 부족해요! 제외된 %s명을 다시 조정해주세요.</string>
+    <string name="val_random_pick_candidate_too_much">채널에 있는 유저가 5명을 초과해요! 최대 5명이 되도록 일부 유저를 제외해주세요.</string>
+
+    <string name="val_random_pick_title">발로란트 에이전트 역할군 랜덤픽</string>
+    <string name="val_random_pick_description">음성 채널에 있는 유저들에게 에이전트의 역할군을 무작위로 지정합니다.</string>
+
+    <string name="val_random_pick_hard_title">발로란트 에이전트 랜덤픽</string>
+    <string name="val_random_pick_hard_description">음성 채널에 있는 유저들에게 에이전트를 역할군에 맞게 무작위로 지정합니다.</string>
+
+    <string name="val_random_map_title">발로란트 맵 랜덤픽</string>
+    <string name="val_random_map_description">발로란트에 존재하는 맵 중 하나를 추천합니다.</string>
+    <string name="val_random_map_too_much_ignored">맵을 너무 많이 제외시켰어요. 다시 조정해주세요.</string>
+    <!-- 발로란트 봇 관련 END -->
+
+</resources>
