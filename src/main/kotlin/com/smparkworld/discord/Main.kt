@@ -1,8 +1,11 @@
 package com.smparkworld.discord
 
+import com.smparkworld.discord.base.StringCode
+import com.smparkworld.discord.base.StringsParser.getString
 import com.smparkworld.discord.bot.DiscordBotType
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.JDABuilder
+import net.dv8tion.jda.api.entities.Activity
 import net.dv8tion.jda.api.hooks.EventListener
 import net.dv8tion.jda.api.interactions.commands.build.CommandData
 import net.dv8tion.jda.api.requests.GatewayIntent
@@ -21,8 +24,13 @@ fun main(args: Array<String>) {
         )
         .build()
 
+    initJda(jda)
     initDiscordBots(jda)
     initDiscordBotsCommands(jda)
+}
+
+fun initJda(jda: JDA) {
+    jda.presence.activity = Activity.customStatus(getString(StringCode.STATUS))
 }
 
 fun initDiscordBots(jda: JDA) {

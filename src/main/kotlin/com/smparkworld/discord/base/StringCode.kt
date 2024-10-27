@@ -8,6 +8,7 @@ enum class StringCode(
     WILDCARD("wildcard"),
     SELECTED_MAP("selected_map"),
     IGNORED_MAP("ignored_map"),
+    STATUS("status"),
 
     IGNORE1("ignore1"),
     IGNORE2("ignore2"),

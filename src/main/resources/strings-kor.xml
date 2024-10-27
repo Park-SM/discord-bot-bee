@@ -5,6 +5,7 @@
     <string name="wildcard">와일드 카드</string>
     <string name="selected_map">선택된 맵</string>
     <string name="ignored_map">제외된 맵</string>
+    <string name="status">꽃가루 찾는 중</string>
 
     <string name="ignore1">제외1</string>
     <string name="ignore2">제외2</string>
