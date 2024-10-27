@@ -37,9 +37,7 @@ fun initDiscordBotsCommands(jda: JDA) {
         CommandDataImpl(type.commandType.command, type.commandType.description)
             .apply(type.bot::applyCommandData)
     }
-    jda.updateCommands().queue {
-        jda.updateCommands()
+    jda.updateCommands()
         .addCommands(commands)
         .queue()
-    }
 }
