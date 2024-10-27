@@ -1,6 +1,6 @@
-package com.smparkworld.discord.bot.usecase
+package com.smparkworld.discord.usecase
 
-import com.smparkworld.discord.bot.usecase.GetAudioChannelUsersByEventAuthorUseCase.Result
+import com.smparkworld.discord.usecase.GetAudioChannelUsersByEventAuthorUseCase.Result
 import net.dv8tion.jda.api.entities.Member
 import net.dv8tion.jda.api.interactions.Interaction
 
