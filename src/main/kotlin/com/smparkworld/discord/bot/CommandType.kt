@@ -1,8 +1,12 @@
 package com.smparkworld.discord.bot
 
+import com.smparkworld.discord.base.StringCode
+import com.smparkworld.discord.base.StringsParser.getString
+
 enum class CommandType(
     val command: String,
     val description: String
 ) {
-    VALORANT("val", "발로란트 게임할 때 유용한 기능 모음 명령어입니다.")
+    BEE(getString(StringCode.BEE_CMD), getString(StringCode.BEE_CMD_DESC)),
+    VALORANT(getString(StringCode.VAL_CMD), getString(StringCode.VAL_CMD_DESC))
 }

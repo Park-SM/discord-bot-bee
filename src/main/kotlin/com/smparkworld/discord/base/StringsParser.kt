@@ -29,7 +29,7 @@ object StringsParser {
         for (i in 0 until elements.length) {
             val node = elements.item(i)
             val key = node.attributes.getNamedItem("name").nodeValue
-            val value = node.textContent
+            val value = node.textContent.replace("\\n", "\n")
             stringsMap[key] = value
         }
     }

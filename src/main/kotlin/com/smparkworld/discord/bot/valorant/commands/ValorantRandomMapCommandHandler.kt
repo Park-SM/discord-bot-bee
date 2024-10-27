@@ -3,7 +3,7 @@ package com.smparkworld.discord.bot.valorant.commands
 import com.smparkworld.discord.base.StringCode
 import com.smparkworld.discord.base.StringsParser.getString
 import com.smparkworld.discord.bot.CommandHandler
-import com.smparkworld.discord.bot.usecase.GetAudioChannelUsersByEventAuthorUseCase
+import com.smparkworld.discord.usecase.GetAudioChannelUsersByEventAuthorUseCase
 import com.smparkworld.discord.bot.valorant.ValorantMapType
 import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.entities.Member
@@ -68,7 +68,7 @@ class ValorantRandomMapCommandHandler(
                 event.reply(getString(StringCode.VAL_ABSENT_COMMAND_AUTHOR)).queue()
             }
             is GetAudioChannelUsersByEventAuthorUseCase.Result.Error -> {
-                event.reply(getString(StringCode.VAL_UNKNOWN_EXCEPTION)).queue()
+                event.reply(getString(StringCode.UNKNOWN_EXCEPTION)).queue()
             }
         }
     }

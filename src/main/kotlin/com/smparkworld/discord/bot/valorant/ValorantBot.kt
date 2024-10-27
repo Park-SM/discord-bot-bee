@@ -3,12 +3,14 @@ package com.smparkworld.discord.bot.valorant
 import com.smparkworld.discord.base.StringCode
 import com.smparkworld.discord.base.StringsParser.getString
 import com.smparkworld.discord.bot.DiscordBot
-import com.smparkworld.discord.bot.usecase.GetAudioChannelUsersByEventAuthorUseCase
-import com.smparkworld.discord.bot.usecase.GetAudioChannelUsersByEventAuthorUseCaseImpl
+import com.smparkworld.discord.usecase.GetAudioChannelUsersByEventAuthorUseCase
+import com.smparkworld.discord.usecase.GetAudioChannelUsersByEventAuthorUseCaseImpl
 import com.smparkworld.discord.bot.valorant.commands.ValorantRandomMapCommandHandler
 import com.smparkworld.discord.bot.valorant.commands.ValorantRandomPickCommandHandler
 import com.smparkworld.discord.bot.valorant.commands.ValorantRandomPickHardCommandHandler
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
+import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent
+import net.dv8tion.jda.api.events.interaction.component.StringSelectInteractionEvent
 import net.dv8tion.jda.api.interactions.commands.OptionType
 import net.dv8tion.jda.api.interactions.commands.build.OptionData
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData
@@ -57,11 +59,19 @@ class ValorantBot(
         )
     }
 
-    private fun applyIgnoreMapChoices(option: OptionData) {
-        ValorantMapType.values().forEach { option.addChoice(it.typeName, it.name) }
-    }
-
     override fun onSlashCommand(command: String, event: SlashCommandInteractionEvent) {
         handlers[event.subcommandName]?.handle(command, event)
+    }
+
+    override fun onButtonInteraction(event: ButtonInteractionEvent) {
+        handlers.values.forEach { it.handleInteractionByButton(event) }
+    }
+
+    override fun onStringSelectInteraction(event: StringSelectInteractionEvent) {
+        handlers.values.forEach { it.handleInteractionByStringSelectMenu(event) }
+    }
+
+    private fun applyIgnoreMapChoices(option: OptionData) {
+        ValorantMapType.values().forEach { option.addChoice(it.typeName, it.name) }
     }
 }
