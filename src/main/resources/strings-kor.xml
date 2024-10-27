@@ -84,7 +84,7 @@
     <string name="val_team_result_title">발로란트 내전 팀 생성</string>
     <string name="val_team_result_desc">음성 채널에 있는 유저들을 두 팀으로 나누어 각 팀의 음성 채널로 보내드렸어요.\n내전이 종료된 후에 아래의 버튼을 클릭하면 생성된 채널을 정리하고 한 채널로 모아드릴게요!\n\n맵도 랜덤으로 선택할 수 있는 명령어가 있으니 참고해주세요 : )\nGood Luck-!</string>
     <string name="val_team_result_group_a">A팀 (수비)</string>
-    <string name="val_team_result_group_b">B팀 (수비)</string>
+    <string name="val_team_result_group_b">B팀 (공격)</string>
 
     <string name="val_team_finish_title">발로란트 내전 종료</string>
     <string name="val_team_finish_desc">%s님에 의해 발로란트 내전이 종료되었어요.\n각 팀의 채널을 제거하고 플레이어들을 모아드렸습니다.</string>
