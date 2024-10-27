@@ -28,31 +28,31 @@ class ValorantBot(
         commandData.addSubcommands(
             // 1. 에이전트 역할군 랜덤픽
             SubcommandData(getString(StringCode.VAL_CMD_RANDOM_PICK), getString(StringCode.VAL_CMD_RANDOM_PICK_DESC))
-                .addOption(OptionType.USER, getString(StringCode.IGNORE_1), getString(StringCode.IGNORE_USER_DESC), false)
-                .addOption(OptionType.USER, getString(StringCode.IGNORE_2), getString(StringCode.IGNORE_USER_DESC), false)
-                .addOption(OptionType.USER, getString(StringCode.IGNORE_3), getString(StringCode.IGNORE_USER_DESC), false)
-                .addOption(OptionType.USER, getString(StringCode.IGNORE_4), getString(StringCode.IGNORE_USER_DESC), false)
-                .addOption(OptionType.USER, getString(StringCode.IGNORE_5), getString(StringCode.IGNORE_USER_DESC), false),
+                .addOption(OptionType.USER, getString(StringCode.IGNORE1), getString(StringCode.IGNORE_USER_DESC), false)
+                .addOption(OptionType.USER, getString(StringCode.IGNORE2), getString(StringCode.IGNORE_USER_DESC), false)
+                .addOption(OptionType.USER, getString(StringCode.IGNORE3), getString(StringCode.IGNORE_USER_DESC), false)
+                .addOption(OptionType.USER, getString(StringCode.IGNORE4), getString(StringCode.IGNORE_USER_DESC), false)
+                .addOption(OptionType.USER, getString(StringCode.IGNORE5), getString(StringCode.IGNORE_USER_DESC), false),
 
             // 2. 에이전트 역할군에 맞는 에이전트 랜덤픽
             SubcommandData(getString(StringCode.VAL_CMD_RANDOM_PICK_HARD), getString(StringCode.VAL_CMD_RANDOM_PICK_HARD_DESC))
-                .addOption(OptionType.USER, getString(StringCode.IGNORE_1), getString(StringCode.IGNORE_USER_DESC), false)
-                .addOption(OptionType.USER, getString(StringCode.IGNORE_2), getString(StringCode.IGNORE_USER_DESC), false)
-                .addOption(OptionType.USER, getString(StringCode.IGNORE_3), getString(StringCode.IGNORE_USER_DESC), false)
-                .addOption(OptionType.USER, getString(StringCode.IGNORE_4), getString(StringCode.IGNORE_USER_DESC), false)
-                .addOption(OptionType.USER, getString(StringCode.IGNORE_5), getString(StringCode.IGNORE_USER_DESC), false),
+                .addOption(OptionType.USER, getString(StringCode.IGNORE1), getString(StringCode.IGNORE_USER_DESC), false)
+                .addOption(OptionType.USER, getString(StringCode.IGNORE2), getString(StringCode.IGNORE_USER_DESC), false)
+                .addOption(OptionType.USER, getString(StringCode.IGNORE3), getString(StringCode.IGNORE_USER_DESC), false)
+                .addOption(OptionType.USER, getString(StringCode.IGNORE4), getString(StringCode.IGNORE_USER_DESC), false)
+                .addOption(OptionType.USER, getString(StringCode.IGNORE5), getString(StringCode.IGNORE_USER_DESC), false),
 
             // 3. 맵 랜덤픽
             SubcommandData(getString(StringCode.VAL_CMD_RANDOM_MAP), getString(StringCode.VAL_CMD_RANDOM_MAP_DESC))
                 .addOptions(
-                    OptionData(OptionType.STRING, getString(StringCode.IGNORE_1), getString(StringCode.IGNORE_MAP_DESC), false).also(::applyIgnoreMapChoices),
-                    OptionData(OptionType.STRING, getString(StringCode.IGNORE_2), getString(StringCode.IGNORE_MAP_DESC), false).also(::applyIgnoreMapChoices),
-                    OptionData(OptionType.STRING, getString(StringCode.IGNORE_3), getString(StringCode.IGNORE_MAP_DESC), false).also(::applyIgnoreMapChoices),
-                    OptionData(OptionType.STRING, getString(StringCode.IGNORE_4), getString(StringCode.IGNORE_MAP_DESC), false).also(::applyIgnoreMapChoices),
-                    OptionData(OptionType.STRING, getString(StringCode.IGNORE_5), getString(StringCode.IGNORE_MAP_DESC), false).also(::applyIgnoreMapChoices),
-                    OptionData(OptionType.STRING, getString(StringCode.IGNORE_6), getString(StringCode.IGNORE_MAP_DESC), false).also(::applyIgnoreMapChoices),
-                    OptionData(OptionType.STRING, getString(StringCode.IGNORE_7), getString(StringCode.IGNORE_MAP_DESC), false).also(::applyIgnoreMapChoices),
-                    OptionData(OptionType.STRING, getString(StringCode.IGNORE_8), getString(StringCode.IGNORE_MAP_DESC), false).also(::applyIgnoreMapChoices),
+                    OptionData(OptionType.STRING, getString(StringCode.IGNORE1), getString(StringCode.IGNORE_MAP_DESC), false).also(::applyIgnoreMapChoices),
+                    OptionData(OptionType.STRING, getString(StringCode.IGNORE2), getString(StringCode.IGNORE_MAP_DESC), false).also(::applyIgnoreMapChoices),
+                    OptionData(OptionType.STRING, getString(StringCode.IGNORE3), getString(StringCode.IGNORE_MAP_DESC), false).also(::applyIgnoreMapChoices),
+                    OptionData(OptionType.STRING, getString(StringCode.IGNORE4), getString(StringCode.IGNORE_MAP_DESC), false).also(::applyIgnoreMapChoices),
+                    OptionData(OptionType.STRING, getString(StringCode.IGNORE5), getString(StringCode.IGNORE_MAP_DESC), false).also(::applyIgnoreMapChoices),
+                    OptionData(OptionType.STRING, getString(StringCode.IGNORE6), getString(StringCode.IGNORE_MAP_DESC), false).also(::applyIgnoreMapChoices),
+                    OptionData(OptionType.STRING, getString(StringCode.IGNORE7), getString(StringCode.IGNORE_MAP_DESC), false).also(::applyIgnoreMapChoices),
+                    OptionData(OptionType.STRING, getString(StringCode.IGNORE8), getString(StringCode.IGNORE_MAP_DESC), false).also(::applyIgnoreMapChoices),
                 ),
         )
     }

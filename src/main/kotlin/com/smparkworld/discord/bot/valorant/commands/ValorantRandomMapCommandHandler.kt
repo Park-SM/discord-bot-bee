@@ -18,14 +18,14 @@ class ValorantRandomMapCommandHandler(
         checkAudioChannelValidation(event) {
 
             val ignores = listOfNotNull(
-                event.getOption("ignore-1")?.asString,
-                event.getOption("ignore-2")?.asString,
-                event.getOption("ignore-3")?.asString,
-                event.getOption("ignore-4")?.asString,
-                event.getOption("ignore-5")?.asString,
-                event.getOption("ignore-6")?.asString,
-                event.getOption("ignore-7")?.asString,
-                event.getOption("ignore-8")?.asString
+                event.getOption(getString(StringCode.IGNORE1))?.asString,
+                event.getOption(getString(StringCode.IGNORE2))?.asString,
+                event.getOption(getString(StringCode.IGNORE3))?.asString,
+                event.getOption(getString(StringCode.IGNORE4))?.asString,
+                event.getOption(getString(StringCode.IGNORE5))?.asString,
+                event.getOption(getString(StringCode.IGNORE6))?.asString,
+                event.getOption(getString(StringCode.IGNORE7))?.asString,
+                event.getOption(getString(StringCode.IGNORE8))?.asString,
             )
             val ignoresName = ignores
                 .map(ValorantMapType::valueOf)

@@ -94,11 +94,11 @@ class ValorantRandomPickCommandHandler(
 
     private fun obtainIgnoredUsers(event: SlashCommandInteractionEvent): List<User> {
         return listOfNotNull(
-            event.getOption("ignore-1")?.asUser,
-            event.getOption("ignore-2")?.asUser,
-            event.getOption("ignore-3")?.asUser,
-            event.getOption("ignore-4")?.asUser,
-            event.getOption("ignore-5")?.asUser
+            event.getOption(getString(StringCode.IGNORE1))?.asUser,
+            event.getOption(getString(StringCode.IGNORE2))?.asUser,
+            event.getOption(getString(StringCode.IGNORE3))?.asUser,
+            event.getOption(getString(StringCode.IGNORE4))?.asUser,
+            event.getOption(getString(StringCode.IGNORE5))?.asUser,
         )
     }
 

@@ -6,14 +6,14 @@
     <string name="selected_map">선택된 맵</string>
     <string name="ignored_map">제외된 맵</string>
 
-    <string name="ignore-1">ignore-1</string>
-    <string name="ignore-2">ignore-2</string>
-    <string name="ignore-3">ignore-3</string>
-    <string name="ignore-4">ignore-4</string>
-    <string name="ignore-5">ignore-5</string>
-    <string name="ignore-6">ignore-6</string>
-    <string name="ignore-7">ignore-7</string>
-    <string name="ignore-8">ignore-8</string>
+    <string name="ignore1">ignore1</string>
+    <string name="ignore2">ignore2</string>
+    <string name="ignore3">ignore3</string>
+    <string name="ignore4">ignore4</string>
+    <string name="ignore5">ignore5</string>
+    <string name="ignore6">ignore6</string>
+    <string name="ignore7">ignore7</string>
+    <string name="ignore8">ignore8</string>
 
     <string name="ignore_user_desc">채널 내 제외할 유저를 입력합니다.</string>
     <string name="ignore_map_desc">제외할 맵을 선택합니다.</string>
