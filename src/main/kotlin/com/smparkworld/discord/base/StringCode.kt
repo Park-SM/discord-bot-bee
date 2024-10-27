@@ -8,6 +8,7 @@ enum class StringCode(
     WILDCARD("wildcard"),
     SELECTED_MAP("selected_map"),
     IGNORED_MAP("ignored_map"),
+    STATUS("status"),
 
     IGNORE1("ignore1"),
     IGNORE2("ignore2"),
@@ -42,6 +43,7 @@ enum class StringCode(
     BEE_CMD_HELP_FOR_VAL_RANDOM_PICK_EXAMPLE("bee_cmd_help_for_val_random_pick_example"),
     BEE_CMD_HELP_FOR_VAL_RANDOM_PICK_HARD_EXAMPLE("bee_cmd_help_for_val_random_pick_hard_example"),
     BEE_CMD_HELP_FOR_VAL_RANDOM_MAP_EXAMPLE("bee_cmd_help_for_val_random_map_example"),
+    BEE_CMD_HELP_FOR_VAL_TEAM_EXAMPLE("bee_cmd_help_for_val_team_example"),
     /* 꿀벌 봇 관련 END */
 
     /* 발로란트 봇 관련 START */

@@ -21,7 +21,7 @@ object StringsParser {
     private fun initialize() {
         stringsMap.clear()
 
-        val file = File("src/main/resources/strings${code.postfix}.xml")
+        val file = this::class.java.classLoader.getResourceAsStream("strings${code.postfix}.xml")
         val docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder()
         val doc: Document = docBuilder.parse(file)
 
