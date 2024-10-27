@@ -21,7 +21,7 @@ class ValorantRandomPickCommandHandler(
             val ignores: List<User> = obtainIgnoredUsers(event)
             val players: List<String> = obtainPlayerNames(members, ignores)
 
-            checkPlayersValidation(event, players, ignores.size) {
+            checkPlayersValidation(event, players) {
                 val agentTypeValues = StringBuilder()
                     .also { builder ->
                         ValorantAgentType.values()
@@ -78,12 +78,11 @@ class ValorantRandomPickCommandHandler(
     private fun checkPlayersValidation(
         event: SlashCommandInteractionEvent,
         players: List<String>,
-        ignoredUserSize: Int,
         perform: () -> Unit
     ) {
         when {
             (players.isEmpty()) -> {
-                event.reply(getString(StringCode.VAL_RANDOM_PICK_CANDIDATE_NEED_TO_MORE, ignoredUserSize)).queue()
+                event.reply(getString(StringCode.VAL_RANDOM_PICK_CANDIDATE_NEED_TO_MORE)).queue()
             }
             (players.size > 5) -> {
                 event.reply(getString(StringCode.VAL_RANDOM_PICK_CANDIDATE_TOO_MUCH)).queue()

@@ -57,7 +57,7 @@
     <string name="val_agent_type">역할군</string>
 
     <string name="val_absent_command_author">음성 채널에 없으시군요. 음성 채널 안에서 명령해주세요!</string>
-    <string name="val_random_pick_candidate_need_to_more">랜덤픽을 돌리기 위한 플레이어가 부족해요! 제외된 %s명을 다시 조정해주세요.</string>
+    <string name="val_random_pick_candidate_need_to_more">랜덤픽을 돌리기 위한 플레이어가 부족해요! 제외된 유저를 다시 조정해주세요.</string>
     <string name="val_random_pick_candidate_too_much">채널에 있는 유저가 5명을 초과해요! 최대 5명이 되도록 일부 유저를 제외해주세요.</string>
 
     <string name="val_random_pick_title">발로란트 에이전트 역할군 랜덤픽</string>

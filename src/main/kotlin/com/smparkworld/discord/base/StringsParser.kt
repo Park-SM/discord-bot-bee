@@ -38,7 +38,7 @@ object StringsParser {
         stringsMap[code.key] ?: throw IllegalArgumentException("Not found res string | key : ${code.key}")
 
     fun getString(code: StringCode, vararg args: Any) =
-        getString(code).format(args)
+        getString(code).format(args.map(Any::toString))
 
     enum class LanguageCode(
         val postfix: String

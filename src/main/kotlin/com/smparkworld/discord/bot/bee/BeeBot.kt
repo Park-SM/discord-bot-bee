@@ -5,14 +5,12 @@ import com.smparkworld.discord.base.StringsParser.getString
 import com.smparkworld.discord.bot.DiscordBot
 import com.smparkworld.discord.bot.bee.commands.BeeHelpCommandHandler
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
-import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent
-import net.dv8tion.jda.api.events.interaction.component.StringSelectInteractionEvent
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData
 import net.dv8tion.jda.api.interactions.commands.build.SubcommandData
 
 class BeeBot : DiscordBot() {
 
-    private val handlers = mapOf(
+    override val commandHandlers = mapOf(
         getString(StringCode.BEE_CMD_HELP) to BeeHelpCommandHandler()
     )
 
@@ -24,14 +22,6 @@ class BeeBot : DiscordBot() {
     }
 
     override fun onSlashCommand(command: String, event: SlashCommandInteractionEvent) {
-        handlers[event.subcommandName]?.handle(command, event)
-    }
-
-    override fun onButtonInteraction(event: ButtonInteractionEvent) {
-        handlers.values.forEach { it.handleInteractionByButton(event) }
-    }
-
-    override fun onStringSelectInteraction(event: StringSelectInteractionEvent) {
-        handlers.values.forEach { it.handleInteractionByStringSelectMenu(event) }
+        commandHandlers[event.subcommandName]?.handle(command, event)
     }
 }

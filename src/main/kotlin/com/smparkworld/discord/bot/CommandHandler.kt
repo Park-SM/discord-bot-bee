@@ -2,6 +2,7 @@ package com.smparkworld.discord.bot
 
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent
+import net.dv8tion.jda.api.events.interaction.component.EntitySelectInteractionEvent
 import net.dv8tion.jda.api.events.interaction.component.StringSelectInteractionEvent
 
 interface CommandHandler {
@@ -10,4 +11,5 @@ interface CommandHandler {
 
     fun handleInteractionByButton(event: ButtonInteractionEvent) {}
     fun handleInteractionByStringSelectMenu(event: StringSelectInteractionEvent) {}
+    fun handleInteractionByEntitySelectMenu(event: EntitySelectInteractionEvent) {}
 }

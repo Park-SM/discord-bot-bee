@@ -20,7 +20,7 @@ class ValorantBot(
     getVoiceChannelUsersByMember: GetAudioChannelUsersByEventAuthorUseCase = GetAudioChannelUsersByEventAuthorUseCaseImpl()
 ) : DiscordBot() {
 
-    private val handlers = mapOf(
+    override val commandHandlers = mapOf(
         getString(StringCode.VAL_CMD_RANDOM_PICK) to ValorantRandomPickCommandHandler(getVoiceChannelUsersByMember),
         getString(StringCode.VAL_CMD_RANDOM_PICK_HARD) to ValorantRandomPickHardCommandHandler(getVoiceChannelUsersByMember),
         getString(StringCode.VAL_CMD_RANDOM_MAP) to ValorantRandomMapCommandHandler(getVoiceChannelUsersByMember)
@@ -57,18 +57,6 @@ class ValorantBot(
                     OptionData(OptionType.STRING, getString(StringCode.IGNORE8), getString(StringCode.IGNORE_MAP_DESC), false).also(::applyIgnoreMapChoices),
                 ),
         )
-    }
-
-    override fun onSlashCommand(command: String, event: SlashCommandInteractionEvent) {
-        handlers[event.subcommandName]?.handle(command, event)
-    }
-
-    override fun onButtonInteraction(event: ButtonInteractionEvent) {
-        handlers.values.forEach { it.handleInteractionByButton(event) }
-    }
-
-    override fun onStringSelectInteraction(event: StringSelectInteractionEvent) {
-        handlers.values.forEach { it.handleInteractionByStringSelectMenu(event) }
     }
 
     private fun applyIgnoreMapChoices(option: OptionData) {
