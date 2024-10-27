@@ -29,7 +29,9 @@ enum class StringCode(
 
     BEE_CMD_HELP("bee_cmd_help"),
     BEE_CMD_HELP_DESC("bee_cmd_help_desc"),
+
     BEE_CMD_HELP_QUESTION("bee_cmd_help_question"),
+    BEE_CMD_HELP_QUESTION_DESC("bee_cmd_help_question_desc"),
 
     BEE_CMD_HELP_FOR_BEE("bee_cmd_help_for_bee"),
     BEE_CMD_HELP_FOR_BEE_DESC("bee_cmd_help_for_bee_desc"),

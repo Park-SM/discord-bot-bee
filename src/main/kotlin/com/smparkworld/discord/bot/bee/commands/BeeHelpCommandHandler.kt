@@ -16,7 +16,12 @@ class BeeHelpCommandHandler : CommandHandler {
             .addOption(getString(StringCode.VAL_CMD), getString(StringCode.VAL_CMD), getString(StringCode.VAL_CMD_DESC))
             .build()
 
-        event.reply(getString(StringCode.BEE_CMD_HELP_QUESTION))
+        val message = EmbedBuilder()
+            .setTitle(getString(StringCode.BEE_CMD_HELP_QUESTION))
+            .setDescription(getString(StringCode.BEE_CMD_HELP_QUESTION_DESC))
+            .build()
+
+        event.replyEmbeds(message)
             .addActionRow(menu)
             .queue()
     }

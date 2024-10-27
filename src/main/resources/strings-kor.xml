@@ -26,7 +26,8 @@
 
     <string name="bee_cmd_help">도움말</string>
     <string name="bee_cmd_help_desc">꿀벌이 제공하는 기능과 명령어에 대해서 설명합니다.</string>
-    <string name="bee_cmd_help_question">꿀벌이 제공하는 기능 중에 어떤 부분이 궁금하신가요?</string>
+    <string name="bee_cmd_help_question">꿀벌의 도움말</string>
+    <string name="bee_cmd_help_question_desc">어떤 명령어가 궁금하신가요? 선택하신 명령어 세트에 대해서 설명해드릴게요!</string>
 
     <string name="bee_cmd_help_for_bee">꿀벌에 대한 기능 설명</string>
     <string name="bee_cmd_help_for_bee_desc">꿀벌은 디스코드하면서 유용한 기능들을 제공하는 봇입니다. 봇에 대한 설정 명령어를 설명해드릴게요.</string>
