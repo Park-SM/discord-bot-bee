@@ -16,8 +16,8 @@ fun main(args: Array<String>) {
     }
     val jda = JDABuilder.create(
             token,
-            GatewayIntent.GUILD_MESSAGES,
-            GatewayIntent.DIRECT_MESSAGES, GatewayIntent.GUILD_VOICE_STATES
+            GatewayIntent.MESSAGE_CONTENT,
+            GatewayIntent.DIRECT_MESSAGE_POLLS, GatewayIntent.GUILD_VOICE_STATES, GatewayIntent.GUILD_MEMBERS
         )
         .build()
 
