@@ -1,10 +1,10 @@
 package com.smparkworld.discord.usecase
 
-import com.smparkworld.discord.usecase.GetAudioChannelUsersByEventAuthorUseCase.Result
+import com.smparkworld.discord.usecase.GetVoiceChannelUsersByEventAuthorUseCase.Result
 import net.dv8tion.jda.api.entities.Member
 import net.dv8tion.jda.api.interactions.Interaction
 
-interface GetAudioChannelUsersByEventAuthorUseCase {
+interface GetVoiceChannelUsersByEventAuthorUseCase {
 
     operator fun invoke(event: Interaction): Result
 
@@ -22,7 +22,7 @@ interface GetAudioChannelUsersByEventAuthorUseCase {
     }
 }
 
-class GetAudioChannelUsersByEventAuthorUseCaseImpl : GetAudioChannelUsersByEventAuthorUseCase {
+class GetVoiceChannelUsersByEventAuthorUseCaseImpl : GetVoiceChannelUsersByEventAuthorUseCase {
 
     override operator fun invoke(event: Interaction): Result = try {
         val member = event.member

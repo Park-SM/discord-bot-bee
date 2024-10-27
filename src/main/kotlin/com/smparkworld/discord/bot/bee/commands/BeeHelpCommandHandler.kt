@@ -8,7 +8,7 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 import net.dv8tion.jda.api.events.interaction.component.StringSelectInteractionEvent
 import net.dv8tion.jda.api.interactions.components.selections.StringSelectMenu
 
-class BeeHelpCommandHandler : CommandHandler {
+class BeeHelpCommandHandler : CommandHandler() {
 
     override fun handle(command: String, event: SlashCommandInteractionEvent) {
         val menu = StringSelectMenu.create(COMPONENT_ID)

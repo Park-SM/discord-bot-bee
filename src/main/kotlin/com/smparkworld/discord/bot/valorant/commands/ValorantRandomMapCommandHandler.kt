@@ -3,7 +3,7 @@ package com.smparkworld.discord.bot.valorant.commands
 import com.smparkworld.discord.base.StringCode
 import com.smparkworld.discord.base.StringsParser.getString
 import com.smparkworld.discord.bot.CommandHandler
-import com.smparkworld.discord.usecase.GetAudioChannelUsersByEventAuthorUseCase
+import com.smparkworld.discord.usecase.GetVoiceChannelUsersByEventAuthorUseCase
 import com.smparkworld.discord.bot.valorant.ValorantMapType
 import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.entities.Member
@@ -11,8 +11,8 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 import java.util.*
 
 class ValorantRandomMapCommandHandler(
-    private val getVoiceChannelUsersByMember: GetAudioChannelUsersByEventAuthorUseCase
-) : CommandHandler {
+    private val getVoiceChannelUsersByMember: GetVoiceChannelUsersByEventAuthorUseCase
+) : CommandHandler() {
 
     override fun handle(command: String, event: SlashCommandInteractionEvent) {
         checkAudioChannelValidation(event) {
@@ -61,13 +61,13 @@ class ValorantRandomMapCommandHandler(
         perform: (members: List<Member>) -> Unit
     ) {
         when (val result = getVoiceChannelUsersByMember(event)) {
-            is GetAudioChannelUsersByEventAuthorUseCase.Result.Success -> {
+            is GetVoiceChannelUsersByEventAuthorUseCase.Result.Success -> {
                 perform.invoke(result.members)
             }
-            is GetAudioChannelUsersByEventAuthorUseCase.Result.NotInVoiceChannel -> {
+            is GetVoiceChannelUsersByEventAuthorUseCase.Result.NotInVoiceChannel -> {
                 event.reply(getString(StringCode.VAL_ABSENT_COMMAND_AUTHOR)).queue()
             }
-            is GetAudioChannelUsersByEventAuthorUseCase.Result.Error -> {
+            is GetVoiceChannelUsersByEventAuthorUseCase.Result.Error -> {
                 event.reply(getString(StringCode.UNKNOWN_EXCEPTION)).queue()
             }
         }
