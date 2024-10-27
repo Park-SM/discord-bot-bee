@@ -49,6 +49,8 @@ class BeeHelpCommandHandler : CommandHandler() {
                     .addField(HELP_PREFIX + getString(StringCode.VAL_CMD_RANDOM_PICK_HARD), getString(StringCode.BEE_CMD_HELP_FOR_VAL_RANDOM_PICK_HARD_EXAMPLE), false)
                     .addBlankField(false)
                     .addField(HELP_PREFIX + getString(StringCode.VAL_CMD_RANDOM_MAP), getString(StringCode.BEE_CMD_HELP_FOR_VAL_RANDOM_MAP_EXAMPLE), false)
+                    .addBlankField(false)
+                    .addField(HELP_PREFIX + getString(StringCode.VAL_CMD_TEAM), getString(StringCode.BEE_CMD_HELP_FOR_VAL_TEAM_EXAMPLE), false)
                     .build()
                 event.replyEmbeds(message).queue()
             }

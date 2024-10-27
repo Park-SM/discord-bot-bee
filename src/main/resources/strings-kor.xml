@@ -38,6 +38,7 @@
     <string name="bee_cmd_help_for_val_random_pick_example">음성 채널에 있는 유저들에게 에이전트의 역할군을 무작위로 지정합니다.\ne.g.) `/발로 랜덤픽-역할군 {제외할 유저 선택}`</string>
     <string name="bee_cmd_help_for_val_random_pick_hard_example">음성 채널에 있는 유저들에게 에이전트를 무작위로 지정합니다.\ne.g.) `/발로 랜덤픽-에이전트 {제외할 유저 선택}`</string>
     <string name="bee_cmd_help_for_val_random_map_example">발로란트에 존재하는 맵 중 하나를 추천합니다.\ne.g.) `/발로 랜덤픽-맵 {제외할 맵 선택}`</string>
+    <string name="bee_cmd_help_for_val_team_example">음성 채널에 있는 유저들을 무작위로 두 개의 팀으로 나누어 각 팀의 새로운 음성 채널로 보냅니다.\ne.g.) `/발로 팀_만들기 {제외할 유저 선택}`</string>
     <!-- 꿀벌 봇 관련 END -->
 
     <!-- 발로란트 봇 관련 START -->
@@ -81,7 +82,7 @@
     <string name="val_team_audio_channel_name_b">발로란트 내전 B팀 (공격)</string>
 
     <string name="val_team_result_title">발로란트 내전 팀 생성</string>
-    <string name="val_team_result_desc">음성 채널에 있는 유저들을 두 개의 팀 음성 채널로 보내드렸어요.\n내전이 종료된 후에 아래의 버튼을 클릭하면 생성된 채널을 정리하고 한 채널로 모아드릴게요!\n\n맵도 랜덤으로 선택할 수 있는 명령어가 있으니 참고해주세요 : )\nGood Luck-!</string>
+    <string name="val_team_result_desc">음성 채널에 있는 유저들을 두 팀으로 나누어 각 팀의 음성 채널로 보내드렸어요.\n내전이 종료된 후에 아래의 버튼을 클릭하면 생성된 채널을 정리하고 한 채널로 모아드릴게요!\n\n맵도 랜덤으로 선택할 수 있는 명령어가 있으니 참고해주세요 : )\nGood Luck-!</string>
     <string name="val_team_result_group_a">A팀 (수비)</string>
     <string name="val_team_result_group_b">B팀 (수비)</string>
 
