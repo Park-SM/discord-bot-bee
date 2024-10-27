@@ -3,7 +3,9 @@ package com.smparkworld.discord
 import com.smparkworld.discord.bot.DiscordBotType
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.JDABuilder
+import net.dv8tion.jda.api.events.session.ReadyEvent
 import net.dv8tion.jda.api.hooks.EventListener
+import net.dv8tion.jda.api.hooks.ListenerAdapter
 import net.dv8tion.jda.api.interactions.commands.build.CommandData
 import net.dv8tion.jda.api.requests.GatewayIntent
 import net.dv8tion.jda.internal.interactions.CommandDataImpl
@@ -33,11 +35,26 @@ fun initDiscordBots(jda: JDA) {
 }
 
 fun initDiscordBotsCommands(jda: JDA) {
-    val commands: List<CommandData> = DiscordBotType.values().map { type ->
-        CommandDataImpl(type.commandType.command, type.commandType.description)
-            .apply(type.bot::applyCommandData)
-    }
-    jda.updateCommands()
-        .addCommands(commands)
-        .queue()
+
+
+    jda.addEventListener(object : ListenerAdapter() {
+        override fun onReady(event: ReadyEvent) {
+
+            jda.guilds.forEach { guild ->
+                guild.retrieveCommands().queue { commands ->
+                    commands.forEach { command ->
+                        command.delete().queue()
+                    }
+                }
+            }
+
+            val commands: List<CommandData> = DiscordBotType.values().map { type ->
+                CommandDataImpl(type.commandType.command, type.commandType.description)
+                    .apply(type.bot::applyCommandData)
+            }
+            jda.updateCommands()
+                .addCommands(commands)
+                .queue()
+        }
+    })
 }
