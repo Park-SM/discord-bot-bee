@@ -80,6 +80,7 @@ enum class StringCode(
     VAL_TEAM_CANDIDATE_NEED_TO_MORE("val_team_candidate_need_to_more"),
     VAL_TEAM_CANDIDATE_TOO_MUCH("val_team_candidate_too_much"),
 
+    VAL_TEAM_AUDIO_CHANNEL_NAME("val_team_audio_channel_name"),
     VAL_TEAM_AUDIO_CHANNEL_NAME_A("val_team_audio_channel_name_a"),
     VAL_TEAM_AUDIO_CHANNEL_NAME_B("val_team_audio_channel_name_b"),
 
@@ -87,5 +88,8 @@ enum class StringCode(
     VAL_TEAM_RESULT_DESC("val_team_result_desc"),
     VAL_TEAM_RESULT_GROUP_A("val_team_result_group_a"),
     VAL_TEAM_RESULT_GROUP_B("val_team_result_group_b"),
+
+    VAL_TEAM_FINISH_TITLE("val_team_finish_title"),
+    VAL_TEAM_FINISH_DESC("val_team_finish_desc"),
     /* 발로란트 봇 관련 END */
 }

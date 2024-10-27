@@ -53,7 +53,7 @@
     <string name="val_cmd_random_map">랜덤픽-맵</string>
     <string name="val_cmd_random_map_desc">발로란트에 존재하는 맵 중 하나를 추천합니다.</string>
 
-    <string name="val_cmd_team">팀 만들기</string>
+    <string name="val_cmd_team">팀_만들기</string>
     <string name="val_cmd_team_desc">음성 채널에 있는 유저들을 무작위로 두 개의 팀으로 나누어 각 팀의 새로운 음성 채널로 보냅니다.</string>
 
     <string name="val_agent">에이전트</string>
@@ -73,16 +73,20 @@
     <string name="val_random_map_description">발로란트에 존재하는 맵 중 하나를 추천합니다.</string>
     <string name="val_random_map_too_much_ignored">맵을 너무 많이 제외시켰어요. 다시 조정해주세요.</string>
 
-    <string name="val_team_candidate_need_to_more">팀 생성하기 위한 플레이어가 부족해요! 제외된 유저를 다시 조정해주세요.</string>
+    <string name="val_team_candidate_need_to_more">팀 생성하기 위한 플레이어가 부족해요. 최소 2명 이상의 플레이어가 필요합니다!</string>
     <string name="val_team_candidate_too_much">채널에 있는 유저가 10명을 초과해요! 최대 10명이 되도록 일부 유저를 제외해주세요.</string>
 
+    <string name="val_team_audio_channel_name">발로란트 내전 채널</string>
     <string name="val_team_audio_channel_name_a">발로란트 내전 A팀 (수비)</string>
     <string name="val_team_audio_channel_name_b">발로란트 내전 B팀 (공격)</string>
 
     <string name="val_team_result_title">발로란트 내전 팀 생성</string>
-    <string name="val_team_result_desc">음성 채널에 있는 유저들을 두 개의 팀으로 나누어 각 팀의 음성 채널로 보내드렸어요.\n새로운 팀원을 믿으세요! Good Luck-!</string>
+    <string name="val_team_result_desc">음성 채널에 있는 유저들을 두 개의 팀 음성 채널로 보내드렸어요.\n내전이 종료된 후에 아래의 버튼을 클릭하면 생성된 채널을 정리하고 한 채널로 모아드릴게요!\n\n맵도 랜덤으로 선택할 수 있는 명령어가 있으니 참고해주세요 : )\nGood Luck-!</string>
     <string name="val_team_result_group_a">A팀 (수비)</string>
     <string name="val_team_result_group_b">B팀 (수비)</string>
+
+    <string name="val_team_finish_title">발로란트 내전 종료</string>
+    <string name="val_team_finish_desc">%s님에 의해 발로란트 내전이 종료되었어요.\n각 팀의 채널을 제거하고 플레이어들을 모아드렸습니다.</string>
     <!-- 발로란트 봇 관련 END -->
 
 </resources>
