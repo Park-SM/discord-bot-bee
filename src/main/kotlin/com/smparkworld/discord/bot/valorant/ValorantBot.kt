@@ -8,6 +8,7 @@ import com.smparkworld.discord.usecase.GetAudioChannelUsersByEventAuthorUseCaseI
 import com.smparkworld.discord.bot.valorant.commands.ValorantRandomMapCommandHandler
 import com.smparkworld.discord.bot.valorant.commands.ValorantRandomPickCommandHandler
 import com.smparkworld.discord.bot.valorant.commands.ValorantRandomPickHardCommandHandler
+import com.smparkworld.discord.bot.valorant.commands.ValorantTeamCommandHandler
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent
 import net.dv8tion.jda.api.events.interaction.component.StringSelectInteractionEvent
@@ -23,7 +24,8 @@ class ValorantBot(
     override val commandHandlers = mapOf(
         getString(StringCode.VAL_CMD_RANDOM_PICK) to ValorantRandomPickCommandHandler(getVoiceChannelUsersByMember),
         getString(StringCode.VAL_CMD_RANDOM_PICK_HARD) to ValorantRandomPickHardCommandHandler(getVoiceChannelUsersByMember),
-        getString(StringCode.VAL_CMD_RANDOM_MAP) to ValorantRandomMapCommandHandler(getVoiceChannelUsersByMember)
+        getString(StringCode.VAL_CMD_RANDOM_MAP) to ValorantRandomMapCommandHandler(getVoiceChannelUsersByMember),
+        getString(StringCode.VAL_CMD_TEAM) to ValorantTeamCommandHandler(getVoiceChannelUsersByMember)
     )
 
     override fun applyCommandData(commandData: SlashCommandData) {
@@ -56,6 +58,14 @@ class ValorantBot(
                     OptionData(OptionType.STRING, getString(StringCode.IGNORE7), getString(StringCode.IGNORE_MAP_DESC), false).also(::applyIgnoreMapChoices),
                     OptionData(OptionType.STRING, getString(StringCode.IGNORE8), getString(StringCode.IGNORE_MAP_DESC), false).also(::applyIgnoreMapChoices),
                 ),
+
+            // 4. 팀 만들기
+            SubcommandData(getString(StringCode.VAL_CMD_TEAM), getString(StringCode.VAL_CMD_TEAM_DESC))
+                .addOption(OptionType.USER, getString(StringCode.IGNORE1), getString(StringCode.IGNORE_USER_DESC), false)
+                .addOption(OptionType.USER, getString(StringCode.IGNORE2), getString(StringCode.IGNORE_USER_DESC), false)
+                .addOption(OptionType.USER, getString(StringCode.IGNORE3), getString(StringCode.IGNORE_USER_DESC), false)
+                .addOption(OptionType.USER, getString(StringCode.IGNORE4), getString(StringCode.IGNORE_USER_DESC), false)
+                .addOption(OptionType.USER, getString(StringCode.IGNORE5), getString(StringCode.IGNORE_USER_DESC), false),
         )
     }
 

@@ -12,7 +12,7 @@ import java.util.*
 
 class ValorantRandomMapCommandHandler(
     private val getVoiceChannelUsersByMember: GetAudioChannelUsersByEventAuthorUseCase
-) : CommandHandler {
+) : CommandHandler() {
 
     override fun handle(command: String, event: SlashCommandInteractionEvent) {
         checkAudioChannelValidation(event) {

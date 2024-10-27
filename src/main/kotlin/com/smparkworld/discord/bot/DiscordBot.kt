@@ -20,7 +20,7 @@ abstract class DiscordBot : ListenerAdapter() {
     abstract fun applyCommandData(commandData: SlashCommandData)
 
     open fun onSlashCommand(command: String, event: SlashCommandInteractionEvent) {
-        commandHandlers[event.subcommandName]?.handle(command, event)
+        commandHandlers[event.subcommandName]?.handleSafely(command, event)
     }
 
     override fun onButtonInteraction(event: ButtonInteractionEvent) {

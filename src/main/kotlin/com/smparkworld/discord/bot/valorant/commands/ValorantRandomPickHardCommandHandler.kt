@@ -13,7 +13,7 @@ import java.util.*
 
 class ValorantRandomPickHardCommandHandler(
     private val getVoiceChannelUsersByMember: GetAudioChannelUsersByEventAuthorUseCase
-) : CommandHandler {
+) : CommandHandler() {
 
     override fun handle(command: String, event: SlashCommandInteractionEvent) {
         checkAudioChannelValidation(event) { members ->
