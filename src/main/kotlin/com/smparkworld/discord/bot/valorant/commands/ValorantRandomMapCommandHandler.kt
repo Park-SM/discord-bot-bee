@@ -51,7 +51,10 @@ class ValorantRandomMapCommandHandler(
 
                 event.replyEmbeds(message).queue()
             } else {
-                event.reply(getString(StringCode.VAL_RANDOM_MAP_TOO_MUCH_IGNORED)).queue()
+                val message = EmbedBuilder()
+                    .setDescription(getString(StringCode.VAL_RANDOM_MAP_TOO_MUCH_IGNORED))
+                    .build()
+                event.replyEmbeds(message).queue()
             }
         }
     }
@@ -65,10 +68,16 @@ class ValorantRandomMapCommandHandler(
                 perform.invoke(result.members)
             }
             is GetVoiceChannelUsersByEventAuthorUseCase.Result.NotInVoiceChannel -> {
-                event.reply(getString(StringCode.VAL_ABSENT_COMMAND_AUTHOR)).queue()
+                val message = EmbedBuilder()
+                    .setDescription(getString(StringCode.VAL_ABSENT_COMMAND_AUTHOR))
+                    .build()
+                event.replyEmbeds(message).queue()
             }
             is GetVoiceChannelUsersByEventAuthorUseCase.Result.Error -> {
-                event.reply(getString(StringCode.UNKNOWN_EXCEPTION)).queue()
+                val message = EmbedBuilder()
+                    .setDescription(getString(StringCode.UNKNOWN_EXCEPTION))
+                    .build()
+                event.replyEmbeds(message).queue()
             }
         }
     }

@@ -1,6 +1,7 @@
 package com.smparkworld.discord.bot.valorant.commands
 
 import com.smparkworld.discord.base.StringCode
+import com.smparkworld.discord.base.StringsParser
 import com.smparkworld.discord.base.StringsParser.getString
 import com.smparkworld.discord.bot.CommandHandler
 import com.smparkworld.discord.usecase.GetVoiceChannelUsersByEventAuthorUseCase
@@ -75,10 +76,16 @@ class ValorantRandomPickHardCommandHandler(
                 perform.invoke(result.members)
             }
             is GetVoiceChannelUsersByEventAuthorUseCase.Result.NotInVoiceChannel -> {
-                event.reply(getString(StringCode.VAL_ABSENT_COMMAND_AUTHOR)).queue()
+                val message = EmbedBuilder()
+                    .setDescription(getString(StringCode.VAL_ABSENT_COMMAND_AUTHOR))
+                    .build()
+                event.replyEmbeds(message).queue()
             }
             is GetVoiceChannelUsersByEventAuthorUseCase.Result.Error -> {
-                event.reply(getString(StringCode.UNKNOWN_EXCEPTION)).queue()
+                val message = EmbedBuilder()
+                    .setDescription(getString(StringCode.UNKNOWN_EXCEPTION))
+                    .build()
+                event.replyEmbeds(message).queue()
             }
         }
     }
@@ -90,10 +97,16 @@ class ValorantRandomPickHardCommandHandler(
     ) {
         when {
             (players.isEmpty()) -> {
-                event.reply(getString(StringCode.VAL_RANDOM_PICK_CANDIDATE_NEED_TO_MORE)).queue()
+                val message = EmbedBuilder()
+                    .setDescription(getString(StringCode.VAL_RANDOM_PICK_CANDIDATE_NEED_TO_MORE))
+                    .build()
+                event.replyEmbeds(message).queue()
             }
             (players.size > 5) -> {
-                event.reply(getString(StringCode.VAL_RANDOM_PICK_CANDIDATE_TOO_MUCH)).queue()
+                val message = EmbedBuilder()
+                    .setDescription(getString(StringCode.VAL_RANDOM_PICK_CANDIDATE_TOO_MUCH))
+                    .build()
+                event.replyEmbeds(message).queue()
             }
             else -> perform.invoke()
         }

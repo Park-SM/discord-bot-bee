@@ -108,10 +108,16 @@ class ValorantTeamCommandHandler(
                 perform.invoke(result.members)
             }
             is GetVoiceChannelUsersByEventAuthorUseCase.Result.NotInVoiceChannel -> {
-                event.reply(getString(StringCode.VAL_ABSENT_COMMAND_AUTHOR)).queue()
+                val message = EmbedBuilder()
+                    .setDescription(getString(StringCode.VAL_ABSENT_COMMAND_AUTHOR))
+                    .build()
+                event.replyEmbeds(message).queue()
             }
             is GetVoiceChannelUsersByEventAuthorUseCase.Result.Error -> {
-                event.reply(getString(StringCode.UNKNOWN_EXCEPTION)).queue()
+                val message = EmbedBuilder()
+                    .setDescription(getString(StringCode.UNKNOWN_EXCEPTION))
+                    .build()
+                event.replyEmbeds(message).queue()
             }
         }
     }
@@ -123,10 +129,16 @@ class ValorantTeamCommandHandler(
     ) {
         when {
             (players.size < 2) -> {
-                event.reply(getString(StringCode.VAL_TEAM_CANDIDATE_NEED_TO_MORE)).queue()
+                val message = EmbedBuilder()
+                    .setDescription(getString(StringCode.VAL_TEAM_CANDIDATE_NEED_TO_MORE))
+                    .build()
+                event.replyEmbeds(message).queue()
             }
             (players.size > 10) -> {
-                event.reply(getString(StringCode.VAL_TEAM_CANDIDATE_TOO_MUCH)).queue()
+                val message = EmbedBuilder()
+                    .setDescription(getString(StringCode.VAL_TEAM_CANDIDATE_TOO_MUCH))
+                    .build()
+                event.replyEmbeds(message).queue()
             }
             else -> perform.invoke()
         }

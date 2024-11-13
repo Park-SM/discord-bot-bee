@@ -55,7 +55,10 @@ class BeeHelpCommandHandler : CommandHandler() {
                 event.replyEmbeds(message).queue()
             }
             else -> {
-                event.reply(getString(StringCode.UNKNOWN_EXCEPTION)).queue()
+                val message = EmbedBuilder()
+                    .setDescription(getString(StringCode.UNKNOWN_EXCEPTION))
+                    .build()
+                event.replyEmbeds(message).queue()
             }
         }
     }
