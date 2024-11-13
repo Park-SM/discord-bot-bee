@@ -10,6 +10,9 @@ enum class StringCode(
     IGNORED_MAP("ignored_map"),
     STATUS("status"),
 
+    TARGET_USER("target_user"),
+    TARGET_USER_DESC("target_user_desc"),
+
     IGNORE1("ignore1"),
     IGNORE2("ignore2"),
     IGNORE3("ignore3"),
@@ -22,6 +25,7 @@ enum class StringCode(
     IGNORE_USER_DESC("ignore_user_desc"),
     IGNORE_MAP_DESC("ignore_map_desc"),
 
+    ABSENT_COMMAND_AUTHOR("absent_command_author"),
     UNKNOWN_EXCEPTION("unknown_exception"),
 
     /* 꿀벌 봇 관련 START */
@@ -31,15 +35,23 @@ enum class StringCode(
     BEE_CMD_HELP("bee_cmd_help"),
     BEE_CMD_HELP_DESC("bee_cmd_help_desc"),
 
+    BEE_CMD_FORCE_MOVE_USER("bee_cmd_force_move_user"),
+    BEE_CMD_FORCE_MOVE_USER_DESC("bee_cmd_force_move_user_desc"),
+    BEE_CMD_FORCE_MOVE_USER_TARGET_USER_EMPTY("bee_cmd_force_move_user_target_user_empty"),
+    BEE_CMD_FORCE_MOVE_USER_TARGET_USER_HAS_NOT_CHANNEL("bee_cmd_force_move_user_target_user_has_not_channel"),
+    BEE_CMD_FORCE_MOVE_USER_TARGET_USER_IN_LIMIT("bee_cmd_force_move_user_target_user_in_limit"),
+    BEE_CMD_FORCE_MOVE_USER_TARGET_USER_SUCCESS("bee_cmd_force_move_user_target_user_success"),
+
     BEE_CMD_HELP_QUESTION("bee_cmd_help_question"),
     BEE_CMD_HELP_QUESTION_DESC("bee_cmd_help_question_desc"),
 
     BEE_CMD_HELP_FOR_BEE("bee_cmd_help_for_bee"),
     BEE_CMD_HELP_FOR_BEE_DESC("bee_cmd_help_for_bee_desc"),
-    BEE_CMD_HELP_FOR_BEE_HELP_EXAMPLE("bee_cmd_help_for_bee_help_example"),
 
     BEE_CMD_HELP_FOR_VAL("bee_cmd_help_for_val"),
     BEE_CMD_HELP_FOR_VAL_DESC("bee_cmd_help_for_val_desc"),
+
+    BEE_CMD_HELP_FOR_BEE_HELP_EXAMPLE("bee_cmd_help_for_bee_help_example"),
     BEE_CMD_HELP_FOR_VAL_RANDOM_PICK_EXAMPLE("bee_cmd_help_for_val_random_pick_example"),
     BEE_CMD_HELP_FOR_VAL_RANDOM_PICK_HARD_EXAMPLE("bee_cmd_help_for_val_random_pick_hard_example"),
     BEE_CMD_HELP_FOR_VAL_RANDOM_MAP_EXAMPLE("bee_cmd_help_for_val_random_map_example"),
@@ -65,7 +77,6 @@ enum class StringCode(
     VAL_AGENT("val_agent"),
     VAL_AGENT_TYPE("val_agent_type"),
 
-    VAL_ABSENT_COMMAND_AUTHOR("val_absent_command_author"),
     VAL_RANDOM_PICK_CANDIDATE_NEED_TO_MORE("val_random_pick_candidate_need_to_more"),
     VAL_RANDOM_PICK_CANDIDATE_TOO_MUCH("val_random_pick_candidate_too_much"),
 

@@ -69,7 +69,7 @@ class ValorantRandomMapCommandHandler(
             }
             is GetVoiceChannelUsersByEventAuthorUseCase.Result.NotInVoiceChannel -> {
                 val message = EmbedBuilder()
-                    .setDescription(getString(StringCode.VAL_ABSENT_COMMAND_AUTHOR))
+                    .setDescription(getString(StringCode.ABSENT_COMMAND_AUTHOR))
                     .build()
                 event.replyEmbeds(message).queue()
             }

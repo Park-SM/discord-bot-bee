@@ -14,7 +14,6 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent
 import net.dv8tion.jda.api.interactions.components.buttons.Button
 import java.util.*
-import java.util.concurrent.CompletableFuture
 import java.util.concurrent.CountDownLatch
 
 class ValorantTeamCommandHandler(
@@ -109,7 +108,7 @@ class ValorantTeamCommandHandler(
             }
             is GetVoiceChannelUsersByEventAuthorUseCase.Result.NotInVoiceChannel -> {
                 val message = EmbedBuilder()
-                    .setDescription(getString(StringCode.VAL_ABSENT_COMMAND_AUTHOR))
+                    .setDescription(getString(StringCode.ABSENT_COMMAND_AUTHOR))
                     .build()
                 event.replyEmbeds(message).queue()
             }

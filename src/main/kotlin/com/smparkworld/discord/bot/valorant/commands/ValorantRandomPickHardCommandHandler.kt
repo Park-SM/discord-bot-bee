@@ -1,7 +1,6 @@
 package com.smparkworld.discord.bot.valorant.commands
 
 import com.smparkworld.discord.base.StringCode
-import com.smparkworld.discord.base.StringsParser
 import com.smparkworld.discord.base.StringsParser.getString
 import com.smparkworld.discord.bot.CommandHandler
 import com.smparkworld.discord.usecase.GetVoiceChannelUsersByEventAuthorUseCase
@@ -77,7 +76,7 @@ class ValorantRandomPickHardCommandHandler(
             }
             is GetVoiceChannelUsersByEventAuthorUseCase.Result.NotInVoiceChannel -> {
                 val message = EmbedBuilder()
-                    .setDescription(getString(StringCode.VAL_ABSENT_COMMAND_AUTHOR))
+                    .setDescription(getString(StringCode.ABSENT_COMMAND_AUTHOR))
                     .build()
                 event.replyEmbeds(message).queue()
             }
