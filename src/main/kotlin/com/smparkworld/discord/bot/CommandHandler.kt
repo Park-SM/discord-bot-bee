@@ -14,6 +14,8 @@ abstract class CommandHandler {
         try {
             handle(command, event)
         } catch (e: Exception) {
+            e.printStackTrace()
+
             val message = EmbedBuilder()
                 .setDescription(StringsParser.getString(StringCode.UNKNOWN_EXCEPTION))
                 .build()
