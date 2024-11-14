@@ -36,6 +36,8 @@ class BeeHelpCommandHandler : CommandHandler() {
                     .setDescription(getString(StringCode.BEE_CMD_HELP_FOR_BEE_DESC))
                     .addBlankField(false)
                     .addField(HELP_PREFIX + getString(StringCode.BEE_CMD_HELP), getString(StringCode.BEE_CMD_HELP_FOR_BEE_HELP_EXAMPLE), false)
+                    .addBlankField(false)
+                    .addField(HELP_PREFIX + getString(StringCode.BEE_CMD_FORCE_MOVE_USER), getString(StringCode.BEE_CMD_HELP_FOR_BEE_FORCE_MOVE_USER_EXAMPLE), false)
                     .build()
                 event.replyEmbeds(message).queue()
             }

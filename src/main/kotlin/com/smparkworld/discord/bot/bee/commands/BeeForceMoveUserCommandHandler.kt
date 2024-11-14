@@ -26,13 +26,9 @@ class BeeForceMoveUserCommandHandler(
                  *  1. TargetUser가 봇이면 항상 명령어 호출자가 있는 음성 채널로 데려올 수 있다.
                  *  2. TargetUser가 일반 유저일 때는 제한 시간 3분을 기준으로 한 번만 데려올 수 있다.
                  */
-                val canForceMoveUserToAuthorChannel = false
+                val canForceMoveUserToAuthorChannel = true   // 추후 작업하기
                 if (canForceMoveUserToAuthorChannel) {
-                    val message = EmbedBuilder()
-                        .setDescription(getString(StringCode.BEE_CMD_FORCE_MOVE_USER_TARGET_USER_IN_LIMIT, "3분 12초"))
-                        .build()
-                    event.replyEmbeds(message).queue()
-                } else {
+
                     event.requireGuild().moveVoiceMember(targetMember, channel).queue()
 
                     val targetName = targetMember.user.globalName
@@ -40,6 +36,11 @@ class BeeForceMoveUserCommandHandler(
 
                     val message = EmbedBuilder()
                         .setDescription(getString(StringCode.BEE_CMD_FORCE_MOVE_USER_TARGET_USER_SUCCESS, targetName))
+                        .build()
+                    event.replyEmbeds(message).queue()
+                } else {
+                    val message = EmbedBuilder()
+                        .setDescription(getString(StringCode.BEE_CMD_FORCE_MOVE_USER_TARGET_USER_IN_LIMIT, "3분 12초"))
                         .build()
                     event.replyEmbeds(message).queue()
                 }

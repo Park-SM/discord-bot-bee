@@ -33,7 +33,7 @@
     <string name="bee_cmd_help_desc">꿀벌이 제공하는 기능과 명령어에 대해서 설명합니다.</string>
 
     <string name="bee_cmd_force_move_user">데려오기</string>
-    <string name="bee_cmd_force_move_user_desc">꿀벌이 다른 채널에 있는 유저를 데려옵니다. 쿨타임은 3분이고, 봇은 쿨타임 없이 데려올 수 있어요.</string>
+    <string name="bee_cmd_force_move_user_desc">꿀벌이 다른 음성 채널에 있는 유저를 데려옵니다.</string>
     <string name="bee_cmd_force_move_user_target_user_empty">데려올 유저를 선택하지 않으셨어요! `대상자` 옵션을 추가해서 다시 명령해주세요.</string>
     <string name="bee_cmd_force_move_user_target_user_has_not_channel">음성 채널에 접속 중인 유저만 데려올 수 있어요! 다음에 다시 시도해주세요.</string>
     <string name="bee_cmd_force_move_user_target_user_in_limit">이미 유저 데려오기 기능을 사용하셨습니다. %s 후에 다시 사용할 수 있어요.</string>
@@ -49,6 +49,7 @@
     <string name="bee_cmd_help_for_val_desc">꿀벌은 디스코드하면서 발로란트 게임할 때 유용한 기능들을 제공하고 있어요. 이 기능들을 사용하기 위한 명령어에 대해서 설명해드릴게요.</string>
 
     <string name="bee_cmd_help_for_bee_help_example">꿀벌이 지원하는 명령어에 대해서 설명합니다. 궁금한 명령어 세트를 선택할 수 있어요. \ne.g.) `/꿀벌 도움말`</string>
+    <string name="bee_cmd_help_for_bee_force_move_user_example">다른 음성 채널에 있는 유저를 데려옵니다. 무작위로 사용하면 재사용 쿨타임을 추가할 수도 있으니 조심하세요!\ne.g.) `/꿀벌 데려오기 {데려올 유저 선택}`</string>
     <string name="bee_cmd_help_for_val_random_pick_example">음성 채널에 있는 유저들에게 에이전트의 역할군을 무작위로 지정합니다.\ne.g.) `/발로 랜덤픽-역할군 {제외할 유저 선택}`</string>
     <string name="bee_cmd_help_for_val_random_pick_hard_example">음성 채널에 있는 유저들에게 에이전트를 무작위로 지정합니다.\ne.g.) `/발로 랜덤픽-에이전트 {제외할 유저 선택}`</string>
     <string name="bee_cmd_help_for_val_random_map_example">발로란트에 존재하는 맵 중 하나를 추천합니다.\ne.g.) `/발로 랜덤픽-맵 {제외할 맵 선택}`</string>

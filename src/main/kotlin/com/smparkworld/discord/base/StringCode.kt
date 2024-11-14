@@ -52,6 +52,7 @@ enum class StringCode(
     BEE_CMD_HELP_FOR_VAL_DESC("bee_cmd_help_for_val_desc"),
 
     BEE_CMD_HELP_FOR_BEE_HELP_EXAMPLE("bee_cmd_help_for_bee_help_example"),
+    BEE_CMD_HELP_FOR_BEE_FORCE_MOVE_USER_EXAMPLE("bee_cmd_help_for_bee_force_move_user_example"),
     BEE_CMD_HELP_FOR_VAL_RANDOM_PICK_EXAMPLE("bee_cmd_help_for_val_random_pick_example"),
     BEE_CMD_HELP_FOR_VAL_RANDOM_PICK_HARD_EXAMPLE("bee_cmd_help_for_val_random_pick_hard_example"),
     BEE_CMD_HELP_FOR_VAL_RANDOM_MAP_EXAMPLE("bee_cmd_help_for_val_random_map_example"),
