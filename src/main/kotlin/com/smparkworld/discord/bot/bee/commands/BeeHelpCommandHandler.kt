@@ -38,6 +38,10 @@ class BeeHelpCommandHandler : CommandHandler() {
                     .addField(HELP_PREFIX + getString(StringCode.BEE_CMD_HELP), getString(StringCode.BEE_CMD_HELP_FOR_BEE_HELP_EXAMPLE), false)
                     .addBlankField(false)
                     .addField(HELP_PREFIX + getString(StringCode.BEE_CMD_FORCE_MOVE_USER), getString(StringCode.BEE_CMD_HELP_FOR_BEE_FORCE_MOVE_USER_EXAMPLE), false)
+                    .addBlankField(false)
+                    .addField(HELP_PREFIX + getString(StringCode.BEE_CMD_MUSIC_PLAY_BY_SEARCH), getString(StringCode.BEE_CMD_HELP_FOR_BEE_MUSIC_PLAY_BY_SEARCH_EXAMPLE), false)
+                    .addBlankField(false)
+                    .addField(HELP_PREFIX + getString(StringCode.BEE_CMD_MUSIC_PLAY_LEAVE), getString(StringCode.BEE_CMD_HELP_FOR_BEE_MUSIC_PLAY_LEAVE_EXAMPLE), false)
                     .build()
                 event.replyEmbeds(message).queue()
             }

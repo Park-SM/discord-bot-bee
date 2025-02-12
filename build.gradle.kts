@@ -15,11 +15,17 @@ repositories {
         name = "m2-dv8tion"
         url = URI.create("https://m2.dv8tion.net/releases")
     }
+    maven {
+        url = URI.create("https://maven.lavalink.dev/releases")
+    }
 }
 
 dependencies {
-    implementation("net.dv8tion:JDA:5.1.2")
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
+    implementation("net.dv8tion:JDA:5.1.2")
+    implementation("dev.arbjerg:lavaplayer:2.2.3")
+    implementation("dev.lavalink.youtube:common:1.11.4")
+
     testImplementation(kotlin("test"))
 }
 
