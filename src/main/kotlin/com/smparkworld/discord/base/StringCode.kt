@@ -10,6 +10,9 @@ enum class StringCode(
     IGNORED_MAP("ignored_map"),
     STATUS("status"),
 
+    MUSIC_KEYWORD("music_keyword"),
+    MUSIC_KEYWORD_DESC("music_keyword_desc"),
+
     TARGET_USER("target_user"),
     TARGET_USER_DESC("target_user_desc"),
 
@@ -42,6 +45,24 @@ enum class StringCode(
     BEE_CMD_FORCE_MOVE_USER_TARGET_USER_IN_LIMIT("bee_cmd_force_move_user_target_user_in_limit"),
     BEE_CMD_FORCE_MOVE_USER_TARGET_USER_SUCCESS("bee_cmd_force_move_user_target_user_success"),
 
+    BEE_CMD_MUSIC_PLAY_BY_SEARCH("bee_cmd_music_play_by_search"),
+    BEE_CMD_MUSIC_PLAY_BY_SEARCH_DESC("bee_cmd_music_play_by_search_desc"),
+    BEE_CMD_MUSIC_PLAY_INPUT_EMPTY("bee_cmd_music_play_input_empty"),
+    BEE_CMD_MUSIC_PLAY_NOT_FOUND("bee_cmd_music_play_not_found"),
+
+    BEE_CMD_MUSIC_PLAY_LEAVE("bee_cmd_music_play_leave"),
+    BEE_CMD_MUSIC_PLAY_LEAVE_DESC("bee_cmd_music_play_leave_desc"),
+    BEE_CMD_MUSIC_PLAY_LEAVE_MSG_1("bee_cmd_music_play_leave_msg_1"),
+    BEE_CMD_MUSIC_PLAY_LEAVE_MSG_2("bee_cmd_music_play_leave_msg_2"),
+    BEE_CMD_MUSIC_PLAY_LEAVE_MSG_3("bee_cmd_music_play_leave_msg_3"),
+
+    BEE_CMD_MUSIC_PLAY_TITLE("bee_cmd_music_play_title"),
+    BEE_CMD_MUSIC_PLAY_DESC("bee_cmd_music_play_desc"),
+    BEE_CMD_MUSIC_PLAY_PUT_PLAYLIST_DESC("bee_cmd_music_play_put_playlist_desc"),
+    BEE_CMD_MUSIC_PLAY_CURRENT_TITLE("bee_cmd_music_play_current_title"),
+    BEE_CMD_MUSIC_PLAY_CURRENT_TITLE_EXCEPTION("bee_cmd_music_play_current_title_exception"),
+    BEE_CMD_MUSIC_PLAY_PLAYLIST("bee_cmd_music_play_playlist"),
+
     BEE_CMD_HELP_QUESTION("bee_cmd_help_question"),
     BEE_CMD_HELP_QUESTION_DESC("bee_cmd_help_question_desc"),
 
@@ -53,6 +74,8 @@ enum class StringCode(
 
     BEE_CMD_HELP_FOR_BEE_HELP_EXAMPLE("bee_cmd_help_for_bee_help_example"),
     BEE_CMD_HELP_FOR_BEE_FORCE_MOVE_USER_EXAMPLE("bee_cmd_help_for_bee_force_move_user_example"),
+    BEE_CMD_HELP_FOR_BEE_MUSIC_PLAY_BY_SEARCH_EXAMPLE("bee_cmd_help_for_bee_music_play_by_search_example"),
+    BEE_CMD_HELP_FOR_BEE_MUSIC_PLAY_LEAVE_EXAMPLE("bee_cmd_help_for_bee_music_play_leave_example"),
     BEE_CMD_HELP_FOR_VAL_RANDOM_PICK_EXAMPLE("bee_cmd_help_for_val_random_pick_example"),
     BEE_CMD_HELP_FOR_VAL_RANDOM_PICK_HARD_EXAMPLE("bee_cmd_help_for_val_random_pick_hard_example"),
     BEE_CMD_HELP_FOR_VAL_RANDOM_MAP_EXAMPLE("bee_cmd_help_for_val_random_map_example"),
