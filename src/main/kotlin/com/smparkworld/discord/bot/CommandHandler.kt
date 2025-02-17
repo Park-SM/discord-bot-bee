@@ -1,6 +1,6 @@
 package com.smparkworld.discord.bot
 
-import com.smparkworld.discord.extensions.sendUnknownExceptionMessage
+import com.smparkworld.discord.extensions.sendUnknownExceptionEmbedsMessage
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent
 import net.dv8tion.jda.api.events.interaction.component.EntitySelectInteractionEvent
@@ -13,7 +13,7 @@ abstract class CommandHandler {
             handle(command, event)
         } catch (e: Exception) {
             e.printStackTrace()
-            event.sendUnknownExceptionMessage()
+            event.sendUnknownExceptionEmbedsMessage()
         }
     }
     protected abstract fun handle(command: String, event: SlashCommandInteractionEvent)

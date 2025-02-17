@@ -6,7 +6,7 @@ import com.smparkworld.discord.bot.CommandHandler
 import com.smparkworld.discord.bot.bee.commands.player.MusicManagerMediator
 import com.smparkworld.discord.extensions.checkVoiceChannelValidation
 import com.smparkworld.discord.extensions.sendEmbedsMessage
-import com.smparkworld.discord.extensions.sendUnknownExceptionMessage
+import com.smparkworld.discord.extensions.sendUnknownExceptionEmbedsMessage
 import com.smparkworld.discord.usecase.GetVoiceChannelByEventAuthorUseCase
 import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
@@ -22,7 +22,7 @@ class BeeMusicPlayLeaveCommandHandler(
 
             val guild = event.guild
             if (guild == null) {
-                event.sendUnknownExceptionMessage()
+                event.sendUnknownExceptionEmbedsMessage()
                 return@checkVoiceChannelValidation
             }
 

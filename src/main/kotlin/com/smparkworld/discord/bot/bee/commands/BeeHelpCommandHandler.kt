@@ -4,7 +4,7 @@ import com.smparkworld.discord.base.StringCode
 import com.smparkworld.discord.base.StringsParser.getString
 import com.smparkworld.discord.bot.CommandHandler
 import com.smparkworld.discord.extensions.sendEmbedsMessage
-import com.smparkworld.discord.extensions.sendUnknownExceptionMessage
+import com.smparkworld.discord.extensions.sendUnknownExceptionEmbedsMessage
 import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import net.dv8tion.jda.api.events.interaction.component.StringSelectInteractionEvent
@@ -63,7 +63,7 @@ class BeeHelpCommandHandler : CommandHandler() {
                 event.sendEmbedsMessage(message)
             }
             else -> {
-                event.sendUnknownExceptionMessage()
+                event.sendUnknownExceptionEmbedsMessage()
             }
         }
     }

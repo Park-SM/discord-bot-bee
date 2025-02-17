@@ -4,8 +4,9 @@ import com.smparkworld.discord.base.StringCode
 import com.smparkworld.discord.base.StringsParser.getString
 import com.smparkworld.discord.bot.CommandHandler
 import com.smparkworld.discord.bot.valorant.ValorantAgentType
-import com.smparkworld.discord.extensions.checkAudioChannelValidation
+import com.smparkworld.discord.extensions.checkVoiceChannelValidation
 import com.smparkworld.discord.extensions.sendEmbedsMessage
+import com.smparkworld.discord.extensions.sendNoticeEmbedsMessage
 import com.smparkworld.discord.usecase.GetVoiceChannelUsersByEventAuthorUseCase
 import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.entities.Member
@@ -18,7 +19,7 @@ class ValorantRandomPickCommandHandler(
 ) : CommandHandler() {
 
     override fun handle(command: String, event: SlashCommandInteractionEvent) {
-        checkAudioChannelValidation(event, result = getVoiceChannelUsersByMember(event)) { members ->
+        checkVoiceChannelValidation(event, result = getVoiceChannelUsersByMember(event)) { members ->
 
             val ignores: List<User> = obtainIgnoredUsers(event)
             val players: List<String> = obtainPlayerNames(members, ignores)
@@ -66,16 +67,10 @@ class ValorantRandomPickCommandHandler(
     ) {
         when {
             (players.isEmpty()) -> {
-                val message = EmbedBuilder()
-                    .setDescription(getString(StringCode.VAL_RANDOM_PICK_CANDIDATE_NEED_TO_MORE))
-                    .build()
-                event.sendEmbedsMessage(message)
+                event.sendNoticeEmbedsMessage(getString(StringCode.VAL_RANDOM_PICK_CANDIDATE_NEED_TO_MORE))
             }
             (players.size > 5) -> {
-                val message = EmbedBuilder()
-                    .setDescription(getString(StringCode.VAL_RANDOM_PICK_CANDIDATE_TOO_MUCH))
-                    .build()
-                event.sendEmbedsMessage(message)
+                event.sendNoticeEmbedsMessage(getString(StringCode.VAL_RANDOM_PICK_CANDIDATE_TOO_MUCH))
             }
             else -> perform.invoke()
         }

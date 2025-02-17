@@ -6,13 +6,22 @@ import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.entities.MessageEmbed
 import net.dv8tion.jda.api.interactions.callbacks.IReplyCallback
 
+fun EmbedBuilder.addFieldAsQuote(name: String, value: String, inline: Boolean): EmbedBuilder {
+    this.addField(name, "> $value", inline)
+    return this
+}
+
 fun IReplyCallback.sendEmbedsMessage(message: MessageEmbed) {
     this.replyEmbeds(message).queue()
 }
 
-fun IReplyCallback.sendUnknownExceptionMessage() {
+fun IReplyCallback.sendNoticeEmbedsMessage(description: String) {
     val message = EmbedBuilder()
-        .setDescription(getString(StringCode.UNKNOWN_EXCEPTION))
+        .setDescription(description)
         .build()
     this.sendEmbedsMessage(message)
+}
+
+fun IReplyCallback.sendUnknownExceptionEmbedsMessage() {
+    this.sendNoticeEmbedsMessage(description = getString(StringCode.UNKNOWN_EXCEPTION))
 }

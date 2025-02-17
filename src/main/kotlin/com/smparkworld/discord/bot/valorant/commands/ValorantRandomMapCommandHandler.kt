@@ -4,8 +4,10 @@ import com.smparkworld.discord.base.StringCode
 import com.smparkworld.discord.base.StringsParser.getString
 import com.smparkworld.discord.bot.CommandHandler
 import com.smparkworld.discord.bot.valorant.ValorantMapType
-import com.smparkworld.discord.extensions.checkAudioChannelValidation
+import com.smparkworld.discord.extensions.addFieldAsQuote
+import com.smparkworld.discord.extensions.checkVoiceChannelValidation
 import com.smparkworld.discord.extensions.sendEmbedsMessage
+import com.smparkworld.discord.extensions.sendNoticeEmbedsMessage
 import com.smparkworld.discord.usecase.GetVoiceChannelUsersByEventAuthorUseCase
 import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
@@ -16,7 +18,7 @@ class ValorantRandomMapCommandHandler(
 ) : CommandHandler() {
 
     override fun handle(command: String, event: SlashCommandInteractionEvent) {
-        checkAudioChannelValidation(event, result = getVoiceChannelUsersByMember(event)) {
+        checkVoiceChannelValidation(event, result = getVoiceChannelUsersByMember(event)) {
 
             val ignores = listOfNotNull(
                 event.getOption(getString(StringCode.IGNORE1))?.asString,
@@ -44,17 +46,14 @@ class ValorantRandomMapCommandHandler(
                     .setTitle(getString(StringCode.VAL_RANDOM_MAP_TITLE))
                     .setDescription(getString(StringCode.VAL_RANDOM_MAP_DESCRIPTION))
                     .setImage(map.thumbnailUrl)
-                    .addField(getString(StringCode.SELECTED_MAP), "\"${map.typeName}\"", true)
+                    .addFieldAsQuote(getString(StringCode.SELECTED_MAP), "\"${map.typeName}\"", true)
                     .apply {
-                        if (ignores.isNotEmpty()) addField(getString(StringCode.IGNORED_MAP), ignoresName, false)
+                        if (ignores.isNotEmpty()) addFieldAsQuote(getString(StringCode.IGNORED_MAP), ignoresName, false)
                     }
                     .build()
                 event.sendEmbedsMessage(message)
             } else {
-                val message = EmbedBuilder()
-                    .setDescription(getString(StringCode.VAL_RANDOM_MAP_TOO_MUCH_IGNORED))
-                    .build()
-                event.sendEmbedsMessage(message)
+                event.sendNoticeEmbedsMessage(getString(StringCode.VAL_RANDOM_MAP_TOO_MUCH_IGNORED))
             }
         }
     }

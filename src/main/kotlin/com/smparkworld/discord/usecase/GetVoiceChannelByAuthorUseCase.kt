@@ -4,6 +4,9 @@ import com.smparkworld.discord.usecase.GetVoiceChannelByEventAuthorUseCase.Resul
 import net.dv8tion.jda.api.entities.channel.concrete.VoiceChannel
 import net.dv8tion.jda.api.interactions.Interaction
 
+/**
+ * 명령어를 호출한 사람이 속한 [VoiceChannel]을 반환합니다.
+ */
 interface GetVoiceChannelByEventAuthorUseCase {
 
     operator fun invoke(event: Interaction): Result

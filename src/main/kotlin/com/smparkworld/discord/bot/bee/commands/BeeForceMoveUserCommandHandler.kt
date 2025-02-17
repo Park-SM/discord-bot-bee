@@ -5,9 +5,8 @@ import com.smparkworld.discord.base.StringsParser.getString
 import com.smparkworld.discord.bot.CommandHandler
 import com.smparkworld.discord.extensions.checkVoiceChannelValidation
 import com.smparkworld.discord.extensions.requireGuild
-import com.smparkworld.discord.extensions.sendEmbedsMessage
+import com.smparkworld.discord.extensions.sendNoticeEmbedsMessage
 import com.smparkworld.discord.usecase.GetVoiceChannelByEventAuthorUseCase
-import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.entities.Member
 import net.dv8tion.jda.api.entities.User
 import net.dv8tion.jda.api.entities.channel.concrete.VoiceChannel
@@ -36,15 +35,9 @@ class BeeForceMoveUserCommandHandler(
                     val targetName = targetMember.user.globalName
                         ?: targetMember.user.name
 
-                    val message = EmbedBuilder()
-                        .setDescription(getString(StringCode.BEE_CMD_FORCE_MOVE_USER_TARGET_USER_SUCCESS, targetName))
-                        .build()
-                    event.sendEmbedsMessage(message)
+                    event.sendNoticeEmbedsMessage(getString(StringCode.BEE_CMD_FORCE_MOVE_USER_TARGET_USER_SUCCESS, targetName))
                 } else {
-                    val message = EmbedBuilder()
-                        .setDescription(getString(StringCode.BEE_CMD_FORCE_MOVE_USER_TARGET_USER_IN_LIMIT, "3분 12초"))
-                        .build()
-                    event.sendEmbedsMessage(message)
+                    event.sendNoticeEmbedsMessage(getString(StringCode.BEE_CMD_FORCE_MOVE_USER_TARGET_USER_IN_LIMIT, "3분 12초"))
                 }
             }
         }
@@ -61,16 +54,10 @@ class BeeForceMoveUserCommandHandler(
 
         when {
             (targetMember == null) -> {
-                val message = EmbedBuilder()
-                    .setDescription(getString(StringCode.BEE_CMD_FORCE_MOVE_USER_TARGET_USER_EMPTY))
-                    .build()
-                event.sendEmbedsMessage(message)
+                event.sendNoticeEmbedsMessage(getString(StringCode.BEE_CMD_FORCE_MOVE_USER_TARGET_USER_EMPTY))
             }
             (targetVoiceState?.inAudioChannel() != true || targetVoiceState.channel !is VoiceChannel) -> {
-                val message = EmbedBuilder()
-                    .setDescription(getString(StringCode.BEE_CMD_FORCE_MOVE_USER_TARGET_USER_HAS_NOT_CHANNEL))
-                    .build()
-                event.sendEmbedsMessage(message)
+                event.sendNoticeEmbedsMessage(getString(StringCode.BEE_CMD_FORCE_MOVE_USER_TARGET_USER_HAS_NOT_CHANNEL))
             }
             else -> {
                 perform.invoke(targetMember)

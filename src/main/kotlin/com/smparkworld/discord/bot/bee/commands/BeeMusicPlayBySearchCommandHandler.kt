@@ -11,7 +11,8 @@ import com.smparkworld.discord.bot.bee.commands.player.GuildMusicManager
 import com.smparkworld.discord.bot.bee.commands.player.MusicManagerMediator
 import com.smparkworld.discord.extensions.checkVoiceChannelValidation
 import com.smparkworld.discord.extensions.sendEmbedsMessage
-import com.smparkworld.discord.extensions.sendUnknownExceptionMessage
+import com.smparkworld.discord.extensions.sendNoticeEmbedsMessage
+import com.smparkworld.discord.extensions.sendUnknownExceptionEmbedsMessage
 import com.smparkworld.discord.usecase.GetVoiceChannelByEventAuthorUseCase
 import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.entities.channel.concrete.VoiceChannel
@@ -28,16 +29,13 @@ class BeeMusicPlayBySearchCommandHandler(
 
             val input = event.getOption(getString(StringCode.MUSIC_KEYWORD))?.asString
             if (input.isNullOrBlank()) {
-                val message = EmbedBuilder()
-                    .setDescription(getString(StringCode.BEE_CMD_MUSIC_PLAY_INPUT_EMPTY))
-                    .build()
-                event.sendEmbedsMessage(message)
+                event.sendNoticeEmbedsMessage(getString(StringCode.BEE_CMD_MUSIC_PLAY_INPUT_EMPTY))
                 return@checkVoiceChannelValidation
             }
 
             val guild = event.guild
             if (guild == null) {
-                event.sendUnknownExceptionMessage()
+                event.sendUnknownExceptionEmbedsMessage()
                 return@checkVoiceChannelValidation
             }
 
@@ -70,14 +68,11 @@ class BeeMusicPlayBySearchCommandHandler(
                     )
                 }
                 override fun noMatches() {
-                    val message = EmbedBuilder()
-                        .setDescription(getString(StringCode.BEE_CMD_MUSIC_PLAY_NOT_FOUND))
-                        .build()
-                    event.sendEmbedsMessage(message)
+                    event.sendNoticeEmbedsMessage(getString(StringCode.BEE_CMD_MUSIC_PLAY_NOT_FOUND))
                 }
                 override fun loadFailed(exception: FriendlyException) {
                     exception.printStackTrace()
-                    event.sendUnknownExceptionMessage()
+                    event.sendUnknownExceptionEmbedsMessage()
                 }
             })
         }
@@ -90,7 +85,7 @@ class BeeMusicPlayBySearchCommandHandler(
         voiceChannel: VoiceChannel,
         event: SlashCommandInteractionEvent
     ) {
-        connectBeeBotToVoiceChannelIfAbsent(audioManager, voiceChannel)
+        connectBeeBotToEventAuthorVoiceChannel(audioManager, voiceChannel)
         manager.scheduler.queue(track)
 
         val playlistTitles = manager.scheduler
@@ -122,11 +117,12 @@ class BeeMusicPlayBySearchCommandHandler(
         }
     }
 
-    private fun connectBeeBotToVoiceChannelIfAbsent(
+    private fun connectBeeBotToEventAuthorVoiceChannel(
         audioManager: AudioManager,
         voiceChannel: VoiceChannel,
     ) {
-        if (!audioManager.isConnected) {
+        val oldChannel = audioManager.connectedChannel as? VoiceChannel
+        if (oldChannel != voiceChannel) {
             audioManager.openAudioConnection(voiceChannel)
         }
     }
