@@ -3,10 +3,11 @@ package com.smparkworld.discord.bot.valorant.commands
 import com.smparkworld.discord.base.StringCode
 import com.smparkworld.discord.base.StringsParser.getString
 import com.smparkworld.discord.bot.CommandHandler
-import com.smparkworld.discord.usecase.GetVoiceChannelUsersByEventAuthorUseCase
 import com.smparkworld.discord.bot.valorant.ValorantMapType
+import com.smparkworld.discord.extensions.checkAudioChannelValidation
+import com.smparkworld.discord.extensions.sendEmbedsMessage
+import com.smparkworld.discord.usecase.GetVoiceChannelUsersByEventAuthorUseCase
 import net.dv8tion.jda.api.EmbedBuilder
-import net.dv8tion.jda.api.entities.Member
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import java.util.*
 
@@ -15,7 +16,7 @@ class ValorantRandomMapCommandHandler(
 ) : CommandHandler() {
 
     override fun handle(command: String, event: SlashCommandInteractionEvent) {
-        checkAudioChannelValidation(event) {
+        checkAudioChannelValidation(event, result = getVoiceChannelUsersByMember(event)) {
 
             val ignores = listOfNotNull(
                 event.getOption(getString(StringCode.IGNORE1))?.asString,
@@ -48,36 +49,12 @@ class ValorantRandomMapCommandHandler(
                         if (ignores.isNotEmpty()) addField(getString(StringCode.IGNORED_MAP), ignoresName, false)
                     }
                     .build()
-
-                event.replyEmbeds(message).queue()
+                event.sendEmbedsMessage(message)
             } else {
                 val message = EmbedBuilder()
                     .setDescription(getString(StringCode.VAL_RANDOM_MAP_TOO_MUCH_IGNORED))
                     .build()
-                event.replyEmbeds(message).queue()
-            }
-        }
-    }
-
-    private fun checkAudioChannelValidation(
-        event: SlashCommandInteractionEvent,
-        perform: (members: List<Member>) -> Unit
-    ) {
-        when (val result = getVoiceChannelUsersByMember(event)) {
-            is GetVoiceChannelUsersByEventAuthorUseCase.Result.Success -> {
-                perform.invoke(result.members)
-            }
-            is GetVoiceChannelUsersByEventAuthorUseCase.Result.NotInVoiceChannel -> {
-                val message = EmbedBuilder()
-                    .setDescription(getString(StringCode.ABSENT_COMMAND_AUTHOR))
-                    .build()
-                event.replyEmbeds(message).queue()
-            }
-            is GetVoiceChannelUsersByEventAuthorUseCase.Result.Error -> {
-                val message = EmbedBuilder()
-                    .setDescription(getString(StringCode.UNKNOWN_EXCEPTION))
-                    .build()
-                event.replyEmbeds(message).queue()
+                event.sendEmbedsMessage(message)
             }
         }
     }

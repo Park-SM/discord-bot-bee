@@ -9,6 +9,9 @@ import com.smparkworld.discord.base.StringsParser.getString
 import com.smparkworld.discord.bot.CommandHandler
 import com.smparkworld.discord.bot.bee.commands.player.GuildMusicManager
 import com.smparkworld.discord.bot.bee.commands.player.MusicManagerMediator
+import com.smparkworld.discord.extensions.checkVoiceChannelValidation
+import com.smparkworld.discord.extensions.sendEmbedsMessage
+import com.smparkworld.discord.extensions.sendUnknownExceptionMessage
 import com.smparkworld.discord.usecase.GetVoiceChannelByEventAuthorUseCase
 import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.entities.channel.concrete.VoiceChannel
@@ -21,23 +24,20 @@ class BeeMusicPlayBySearchCommandHandler(
 ) : CommandHandler() {
 
     override fun handle(command: String, event: SlashCommandInteractionEvent) {
-        checkVoiceChannelValidation(event) { voiceChannel ->
+        checkVoiceChannelValidation(event, result = getVoiceChannelByEventAuthor(event)) { voiceChannel ->
 
             val input = event.getOption(getString(StringCode.MUSIC_KEYWORD))?.asString
             if (input.isNullOrBlank()) {
                 val message = EmbedBuilder()
                     .setDescription(getString(StringCode.BEE_CMD_MUSIC_PLAY_INPUT_EMPTY))
                     .build()
-                event.replyEmbeds(message).queue()
+                event.sendEmbedsMessage(message)
                 return@checkVoiceChannelValidation
             }
 
             val guild = event.guild
             if (guild == null) {
-                val message = EmbedBuilder()
-                    .setDescription(getString(StringCode.UNKNOWN_EXCEPTION))
-                    .build()
-                event.replyEmbeds(message).queue()
+                event.sendUnknownExceptionMessage()
                 return@checkVoiceChannelValidation
             }
 
@@ -73,39 +73,13 @@ class BeeMusicPlayBySearchCommandHandler(
                     val message = EmbedBuilder()
                         .setDescription(getString(StringCode.BEE_CMD_MUSIC_PLAY_NOT_FOUND))
                         .build()
-                    event.replyEmbeds(message).queue()
+                    event.sendEmbedsMessage(message)
                 }
                 override fun loadFailed(exception: FriendlyException) {
                     exception.printStackTrace()
-                    val message = EmbedBuilder()
-                        .setDescription(getString(StringCode.UNKNOWN_EXCEPTION))
-                        .build()
-                    event.replyEmbeds(message).queue()
+                    event.sendUnknownExceptionMessage()
                 }
             })
-        }
-    }
-
-    private fun checkVoiceChannelValidation(
-        event: SlashCommandInteractionEvent,
-        perform: (channel: VoiceChannel) -> Unit
-    ) {
-        when (val result = getVoiceChannelByEventAuthor(event)) {
-            is GetVoiceChannelByEventAuthorUseCase.Result.Success -> {
-                perform.invoke(result.voiceChannel)
-            }
-            is GetVoiceChannelByEventAuthorUseCase.Result.NotInVoiceChannel -> {
-                val message = EmbedBuilder()
-                    .setDescription(getString(StringCode.ABSENT_COMMAND_AUTHOR))
-                    .build()
-                event.replyEmbeds(message).queue()
-            }
-            is GetVoiceChannelByEventAuthorUseCase.Result.Error -> {
-                val message = EmbedBuilder()
-                    .setDescription(getString(StringCode.UNKNOWN_EXCEPTION))
-                    .build()
-                event.replyEmbeds(message).queue()
-            }
         }
     }
 
@@ -136,7 +110,7 @@ class BeeMusicPlayBySearchCommandHandler(
                 .addField(getString(StringCode.BEE_CMD_MUSIC_PLAY_CURRENT_TITLE), "> `${currentAudioTrack}`", false)
                 .addField(getString(StringCode.BEE_CMD_MUSIC_PLAY_PLAYLIST), playlistTitles, false)
                 .build()
-            event.replyEmbeds(message).queue()
+            event.sendEmbedsMessage(message)
         } else {
             val message = EmbedBuilder()
                 .setTitle(getString(StringCode.BEE_CMD_MUSIC_PLAY_TITLE))
@@ -144,7 +118,7 @@ class BeeMusicPlayBySearchCommandHandler(
                 .setUrl(track.info.uri)
                 .addField("> `${track.info.title}`", "", false)
                 .build()
-            event.replyEmbeds(message).queue()
+            event.sendEmbedsMessage(message)
         }
     }
 

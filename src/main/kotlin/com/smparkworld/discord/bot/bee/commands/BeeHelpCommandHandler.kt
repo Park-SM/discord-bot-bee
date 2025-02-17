@@ -3,6 +3,8 @@ package com.smparkworld.discord.bot.bee.commands
 import com.smparkworld.discord.base.StringCode
 import com.smparkworld.discord.base.StringsParser.getString
 import com.smparkworld.discord.bot.CommandHandler
+import com.smparkworld.discord.extensions.sendEmbedsMessage
+import com.smparkworld.discord.extensions.sendUnknownExceptionMessage
 import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import net.dv8tion.jda.api.events.interaction.component.StringSelectInteractionEvent
@@ -43,7 +45,7 @@ class BeeHelpCommandHandler : CommandHandler() {
                     .addBlankField(false)
                     .addField(HELP_PREFIX + getString(StringCode.BEE_CMD_MUSIC_PLAY_LEAVE), getString(StringCode.BEE_CMD_HELP_FOR_BEE_MUSIC_PLAY_LEAVE_EXAMPLE), false)
                     .build()
-                event.replyEmbeds(message).queue()
+                event.sendEmbedsMessage(message)
             }
             getString(StringCode.VAL_CMD) -> {
                 val message = EmbedBuilder()
@@ -58,13 +60,10 @@ class BeeHelpCommandHandler : CommandHandler() {
                     .addBlankField(false)
                     .addField(HELP_PREFIX + getString(StringCode.VAL_CMD_TEAM), getString(StringCode.BEE_CMD_HELP_FOR_VAL_TEAM_EXAMPLE), false)
                     .build()
-                event.replyEmbeds(message).queue()
+                event.sendEmbedsMessage(message)
             }
             else -> {
-                val message = EmbedBuilder()
-                    .setDescription(getString(StringCode.UNKNOWN_EXCEPTION))
-                    .build()
-                event.replyEmbeds(message).queue()
+                event.sendUnknownExceptionMessage()
             }
         }
     }

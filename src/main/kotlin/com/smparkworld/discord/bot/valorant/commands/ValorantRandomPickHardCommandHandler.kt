@@ -3,8 +3,10 @@ package com.smparkworld.discord.bot.valorant.commands
 import com.smparkworld.discord.base.StringCode
 import com.smparkworld.discord.base.StringsParser.getString
 import com.smparkworld.discord.bot.CommandHandler
-import com.smparkworld.discord.usecase.GetVoiceChannelUsersByEventAuthorUseCase
 import com.smparkworld.discord.bot.valorant.ValorantAgentType
+import com.smparkworld.discord.extensions.checkAudioChannelValidation
+import com.smparkworld.discord.extensions.sendEmbedsMessage
+import com.smparkworld.discord.usecase.GetVoiceChannelUsersByEventAuthorUseCase
 import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.entities.Member
 import net.dv8tion.jda.api.entities.User
@@ -16,7 +18,7 @@ class ValorantRandomPickHardCommandHandler(
 ) : CommandHandler() {
 
     override fun handle(command: String, event: SlashCommandInteractionEvent) {
-        checkAudioChannelValidation(event) { members ->
+        checkAudioChannelValidation(event, result = getVoiceChannelUsersByMember(event)) { members ->
 
             val ignores: List<User> = obtainIgnoredUsers(event)
             val players: List<String> = obtainPlayerNames(members, ignores)
@@ -59,32 +61,7 @@ class ValorantRandomPickHardCommandHandler(
                         if (ignores.isNotEmpty()) addField(getString(StringCode.IGNORED_USER), ignoresValue, false)
                     }
                     .build()
-
-                event.replyEmbeds(message).queue()
-            }
-        }
-    }
-
-
-    private fun checkAudioChannelValidation(
-        event: SlashCommandInteractionEvent,
-        perform: (members: List<Member>) -> Unit
-    ) {
-        when (val result = getVoiceChannelUsersByMember(event)) {
-            is GetVoiceChannelUsersByEventAuthorUseCase.Result.Success -> {
-                perform.invoke(result.members)
-            }
-            is GetVoiceChannelUsersByEventAuthorUseCase.Result.NotInVoiceChannel -> {
-                val message = EmbedBuilder()
-                    .setDescription(getString(StringCode.ABSENT_COMMAND_AUTHOR))
-                    .build()
-                event.replyEmbeds(message).queue()
-            }
-            is GetVoiceChannelUsersByEventAuthorUseCase.Result.Error -> {
-                val message = EmbedBuilder()
-                    .setDescription(getString(StringCode.UNKNOWN_EXCEPTION))
-                    .build()
-                event.replyEmbeds(message).queue()
+                event.sendEmbedsMessage(message)
             }
         }
     }
@@ -99,13 +76,13 @@ class ValorantRandomPickHardCommandHandler(
                 val message = EmbedBuilder()
                     .setDescription(getString(StringCode.VAL_RANDOM_PICK_CANDIDATE_NEED_TO_MORE))
                     .build()
-                event.replyEmbeds(message).queue()
+                event.sendEmbedsMessage(message)
             }
             (players.size > 5) -> {
                 val message = EmbedBuilder()
                     .setDescription(getString(StringCode.VAL_RANDOM_PICK_CANDIDATE_TOO_MUCH))
                     .build()
-                event.replyEmbeds(message).queue()
+                event.sendEmbedsMessage(message)
             }
             else -> perform.invoke()
         }
