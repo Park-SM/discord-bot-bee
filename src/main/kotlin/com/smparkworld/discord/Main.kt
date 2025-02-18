@@ -1,8 +1,8 @@
 package com.smparkworld.discord
 
-import com.smparkworld.discord.base.StringCode
-import com.smparkworld.discord.base.StringsParser.getString
-import com.smparkworld.discord.bot.DiscordBotType
+import com.smparkworld.discord.common.base.StringCode
+import com.smparkworld.discord.common.base.StringsParser.getString
+import com.smparkworld.discord.common.framework.DiscordBotType
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.entities.Activity
