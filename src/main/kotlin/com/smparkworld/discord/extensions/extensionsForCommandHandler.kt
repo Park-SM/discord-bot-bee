@@ -5,7 +5,6 @@ import com.smparkworld.discord.base.StringsParser.getString
 import com.smparkworld.discord.bot.CommandHandler
 import com.smparkworld.discord.usecase.GetVoiceChannelByEventAuthorUseCase
 import com.smparkworld.discord.usecase.GetVoiceChannelUsersByEventAuthorUseCase
-import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.entities.Member
 import net.dv8tion.jda.api.entities.channel.concrete.VoiceChannel
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
@@ -24,10 +23,7 @@ fun CommandHandler.checkVoiceChannelValidation(
             perform.invoke(result.voiceChannel)
         }
         is GetVoiceChannelByEventAuthorUseCase.Result.NotInVoiceChannel -> {
-            val message = EmbedBuilder()
-                .setDescription(getString(StringCode.ABSENT_COMMAND_AUTHOR))
-                .build()
-            event.sendEmbedsMessage(message)
+            event.sendNoticeEmbedsMessage(getString(StringCode.ABSENT_COMMAND_AUTHOR))
         }
         is GetVoiceChannelByEventAuthorUseCase.Result.Error -> {
             event.sendUnknownExceptionEmbedsMessage()
@@ -49,10 +45,7 @@ fun CommandHandler.checkVoiceChannelValidation(
             perform.invoke(result.members)
         }
         is GetVoiceChannelUsersByEventAuthorUseCase.Result.NotInVoiceChannel -> {
-            val message = EmbedBuilder()
-                .setDescription(getString(StringCode.ABSENT_COMMAND_AUTHOR))
-                .build()
-            event.sendEmbedsMessage(message)
+            event.sendNoticeEmbedsMessage(getString(StringCode.ABSENT_COMMAND_AUTHOR))
         }
         is GetVoiceChannelUsersByEventAuthorUseCase.Result.Error -> {
             event.sendUnknownExceptionEmbedsMessage()

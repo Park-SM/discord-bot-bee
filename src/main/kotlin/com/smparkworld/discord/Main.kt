@@ -24,12 +24,11 @@ fun main(args: Array<String>) {
         )
         .build()
 
-    initJda(jda)
+    initStatus(jda)
     initDiscordBots(jda)
-    initDiscordBotsCommands(jda)
 }
 
-fun initJda(jda: JDA) {
+fun initStatus(jda: JDA) {
     jda.presence.activity = Activity.customStatus(getString(StringCode.STATUS))
 }
 
@@ -38,9 +37,7 @@ fun initDiscordBots(jda: JDA) {
         .onEach { it.bot.initialize(command = it.commandType.command) }
         .map { it.bot }
     jda.addEventListener(*bots.toTypedArray())
-}
 
-fun initDiscordBotsCommands(jda: JDA) {
     val commands: List<CommandData> = DiscordBotType.values().map { type ->
         CommandDataImpl(type.commandType.command, type.commandType.description)
             .apply(type.bot::applyCommandData)
