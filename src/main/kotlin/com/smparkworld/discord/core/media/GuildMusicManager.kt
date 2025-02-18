@@ -1,4 +1,4 @@
-package com.smparkworld.discord.feature.bee.commands.player
+package com.smparkworld.discord.core.media
 
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager
@@ -19,8 +19,6 @@ class GuildMusicManager(
     init {
         player.addListener(scheduler)
     }
-
-
 }
 
 class TrackScheduler(

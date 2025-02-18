@@ -11,16 +11,15 @@ import com.smparkworld.discord.common.extensions.sendEmbedsMessage
 import com.smparkworld.discord.common.extensions.sendNoticeEmbedsMessage
 import com.smparkworld.discord.common.extensions.sendUnknownExceptionEmbedsMessage
 import com.smparkworld.discord.common.framework.CommandHandler
+import com.smparkworld.discord.core.media.GuildMusicManager
+import com.smparkworld.discord.core.media.MusicManagerMediator
 import com.smparkworld.discord.domain.GetVoiceChannelByEventAuthorUseCase
-import com.smparkworld.discord.feature.bee.commands.player.GuildMusicManager
-import com.smparkworld.discord.feature.bee.commands.player.MusicManagerMediator
 import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.entities.channel.concrete.VoiceChannel
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import net.dv8tion.jda.api.managers.AudioManager
 
 class BeeMusicPlayBySearchCommandHandler(
-    private val musicManagerMediator: MusicManagerMediator,
     private val getVoiceChannelByEventAuthor: GetVoiceChannelByEventAuthorUseCase,
 ) : CommandHandler() {
 
@@ -39,7 +38,7 @@ class BeeMusicPlayBySearchCommandHandler(
                 return@checkVoiceChannelValidation
             }
 
-            val musicManager = musicManagerMediator.obtainGuildTracker(guild.idLong)
+            val musicManager = MusicManagerMediator.obtainGuildTracker(guild.idLong)
             val audioManager = guild.audioManager.apply { sendingHandler = musicManager.sendHandler }
 
             val isValidYoutubeLink = input.startsWith(YOUTUBE_URL_PREFIX_1, ignoreCase = true)
@@ -48,7 +47,7 @@ class BeeMusicPlayBySearchCommandHandler(
 
             val query = if (isValidYoutubeLink) input else "${SEARCH_PREFIX}:${input}"
 
-            musicManagerMediator.loadItem(query, object : AudioLoadResultHandler {
+            MusicManagerMediator.loadItem(query, object : AudioLoadResultHandler {
                 override fun trackLoaded(track: AudioTrack) {
                     onNewTrackReceived(
                         track = track,

@@ -9,21 +9,19 @@ import com.smparkworld.discord.feature.bee.commands.BeeForceMoveUserCommandHandl
 import com.smparkworld.discord.feature.bee.commands.BeeHelpCommandHandler
 import com.smparkworld.discord.feature.bee.commands.BeeMusicPlayBySearchCommandHandler
 import com.smparkworld.discord.feature.bee.commands.BeeMusicPlayLeaveCommandHandler
-import com.smparkworld.discord.feature.bee.commands.player.MusicManagerMediator
 import net.dv8tion.jda.api.interactions.commands.OptionType
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData
 import net.dv8tion.jda.api.interactions.commands.build.SubcommandData
 
 class BeeBot(
-    musicManagerMediator: MusicManagerMediator = MusicManagerMediator(),
     getVoiceChannelByEventAuthor: GetVoiceChannelByEventAuthorUseCase = GetVoiceChannelByEventAuthorUseCaseImpl(),
 ) : DiscordBot() {
 
     override val commandHandlers = mapOf(
         getString(StringCode.BEE_CMD_HELP) to BeeHelpCommandHandler(),
         getString(StringCode.BEE_CMD_FORCE_MOVE_USER) to BeeForceMoveUserCommandHandler(getVoiceChannelByEventAuthor),
-        getString(StringCode.BEE_CMD_MUSIC_PLAY_BY_SEARCH) to BeeMusicPlayBySearchCommandHandler(musicManagerMediator, getVoiceChannelByEventAuthor),
-        getString(StringCode.BEE_CMD_MUSIC_PLAY_LEAVE) to BeeMusicPlayLeaveCommandHandler(musicManagerMediator, getVoiceChannelByEventAuthor)
+        getString(StringCode.BEE_CMD_MUSIC_PLAY_BY_SEARCH) to BeeMusicPlayBySearchCommandHandler(getVoiceChannelByEventAuthor),
+        getString(StringCode.BEE_CMD_MUSIC_PLAY_LEAVE) to BeeMusicPlayLeaveCommandHandler(getVoiceChannelByEventAuthor)
 
     )
 
