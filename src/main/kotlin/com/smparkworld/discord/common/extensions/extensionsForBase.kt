@@ -12,3 +12,6 @@ fun SlashCommandInteractionEvent.requireGuild(): Guild =
 
 fun SlashCommandInteractionEvent.requireAuthor(): Member =
     this.member ?: throw IllegalStateException("Not found author member")
+
+fun SlashCommandInteractionEvent.getAuthorName(): String? =
+    this.member?.effectiveName

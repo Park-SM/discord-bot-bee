@@ -19,7 +19,6 @@ class BeeMusicPlayLeaveCommandHandler(
         checkVoiceChannelValidation(event, result = getVoiceChannelByEventAuthor(event)) { _ ->
 
             MusicManagerMediator.obtainGuildTracker(event.requireGuild().idLong)
-                .scheduler
                 .clearQueue()
 
             event.requireGuild()

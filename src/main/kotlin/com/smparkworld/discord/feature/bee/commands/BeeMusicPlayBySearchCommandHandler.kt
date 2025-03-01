@@ -39,7 +39,7 @@ class BeeMusicPlayBySearchCommandHandler(
             }
 
             val musicManager = MusicManagerMediator.obtainGuildTracker(guild.idLong)
-            val audioManager = guild.audioManager.apply { sendingHandler = musicManager.sendHandler }
+            val audioManager = guild.audioManager.apply { sendingHandler = musicManager.getSendHandler() }
 
             val isValidYoutubeLink = input.startsWith(YOUTUBE_URL_PREFIX_1, ignoreCase = true)
                     || input.startsWith(YOUTUBE_URL_PREFIX_2, ignoreCase = true)
@@ -85,15 +85,14 @@ class BeeMusicPlayBySearchCommandHandler(
         event: SlashCommandInteractionEvent
     ) {
         connectBeeBotToEventAuthorVoiceChannel(audioManager, voiceChannel)
-        manager.scheduler.queue(track)
+        manager.queue(track)
 
-        val playlistTitles = manager.scheduler
-            .getPlaylist()
+        val playlistTitles = manager.getPlaylist()
             .mapIndexed { idx, e -> "> ${idx + 1}. `${e.info.title}`" }
             .joinToString("\n")
 
         if (playlistTitles.isNotEmpty()) {
-            val currentAudioTrack = manager.scheduler.currentAudioTrack?.info?.title
+            val currentAudioTrack = manager.currentTrack?.info?.title
                 ?: getString(StringCode.BEE_CMD_MUSIC_PLAY_CURRENT_TITLE_EXCEPTION)
 
             val message = EmbedBuilder()

@@ -12,28 +12,37 @@ import java.nio.ByteBuffer
 class GuildMusicManager(
     playerManager: AudioPlayerManager
 ) {
-    val player = playerManager.createPlayer()
-    val scheduler = TrackScheduler(player)
-    val sendHandler = AudioPlayerSendHandler(player)
 
-    init {
-        player.addListener(scheduler)
-    }
-}
+    private var _endedAt: Long = 0
+    val endedAt: Long get() = _endedAt
 
-class TrackScheduler(
-    private val player: AudioPlayer
-) : AudioEventAdapter() {
-
-    val currentAudioTrack: AudioTrack?
+    val currentTrack: AudioTrack?
         get() = player.playingTrack
 
-    private val queue: MutableList<AudioTrack> = mutableListOf()
+    private val player = playerManager.createPlayer()
+    private val sendHandler = AudioPlayerSendHandler(player)
+    private val queue = mutableListOf<AudioTrack>()
+
+    init {
+        val listener = object : AudioEventAdapter() {
+            override fun onTrackEnd(player: AudioPlayer?, track: AudioTrack?, endReason: AudioTrackEndReason) {
+                if (endReason.mayStartNext) { nextTrack() }
+            }
+        }
+        player.addListener(listener)
+    }
+
+    fun getSendHandler(): AudioSendHandler {
+        return sendHandler
+    }
+
+    fun getPlaylist(): List<AudioTrack> {
+        return queue.toList()
+    }
 
     fun queue(track: AudioTrack) {
-        if (!player.startTrack(track, true)) {
-            queue.add(track)
-        }
+        val isStarted = player.startTrack(track, true)
+        if (!isStarted) queue.add(track)
     }
 
     fun skipTrack() {
@@ -46,30 +55,23 @@ class TrackScheduler(
         player.stopTrack()
     }
 
-    fun getPlaylist(): List<AudioTrack> = queue.toList()
-
-    override fun onTrackEnd(player: AudioPlayer, track: AudioTrack, endReason: AudioTrackEndReason) {
-        if (endReason.mayStartNext) {
-            nextTrack()
-        }
-    }
-
     private fun nextTrack() {
         if (queue.isNotEmpty()) {
             player.startTrack(queue.removeAt(0), false)
+        } else {
+            _endedAt = System.currentTimeMillis()
         }
     }
 }
 
-
-class AudioPlayerSendHandler(
-    private val audioPlayer: AudioPlayer
+private class AudioPlayerSendHandler(
+    private val player: AudioPlayer
 ) : AudioSendHandler {
 
     private val buffer = ByteBuffer.allocate(1024)
 
     override fun canProvide(): Boolean =
-        audioPlayer.provide(MutableAudioFrame(buffer))
+        player.provide(MutableAudioFrame(buffer))
 
     override fun provide20MsAudio(): ByteBuffer =
         buffer.flip()

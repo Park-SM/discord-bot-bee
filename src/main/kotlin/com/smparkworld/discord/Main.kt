@@ -3,6 +3,7 @@ package com.smparkworld.discord
 import com.smparkworld.discord.common.base.StringCode
 import com.smparkworld.discord.common.base.StringsParser.getString
 import com.smparkworld.discord.common.framework.DiscordBotType
+import com.smparkworld.discord.core.media.MusicManagerMediator
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.entities.Activity
@@ -24,8 +25,13 @@ fun main(args: Array<String>) {
         )
         .build()
 
+    initCores(jda)
     initStatus(jda)
     initDiscordBots(jda)
+}
+
+fun initCores(jda: JDA) {
+    MusicManagerMediator.initialize(guildFinder = jda::getGuildById)
 }
 
 fun initStatus(jda: JDA) {
