@@ -32,39 +32,27 @@ class BeeMusicPlayBySearchCommandHandler(
                 return@checkVoiceChannelValidation
             }
 
-            val guild = event.guild
-            if (guild == null) {
+            val musicManager = event.guild?.idLong?.let(MusicManagerMediator::obtainGuildMusicManager)
+            if (musicManager == null) {
                 event.sendUnknownExceptionEmbedsMessage()
                 return@checkVoiceChannelValidation
             }
 
-            val musicManager = MusicManagerMediator.obtainGuildMusicManager(guild.idLong)
-
-            val isValidYoutubeLink = input.startsWith(YOUTUBE_URL_PREFIX_1, ignoreCase = true)
-                    || input.startsWith(YOUTUBE_URL_PREFIX_2, ignoreCase = true)
-                    || input.startsWith(YOUTUBE_URL_PREFIX_3, ignoreCase = true)
-
-            val query = if (isValidYoutubeLink) input else "${SEARCH_PREFIX}:${input}"
-
             val listener = object : MusicResultListener {
                 override fun onLoadSuccess(result: LoadingResult) {
                     when (result) {
-                        is LoadingResult.OnTrackLoaded -> {
-                            onNewTrackReceived(
-                                track = result.track,
-                                manager = musicManager,
-                                voiceChannel = voiceChannel,
-                                event = event
-                            )
-                        }
-                        is LoadingResult.OnTracksLoaded -> {
-                            onNewTrackReceived(
-                                track = result.tracks.firstOrNull() ?: return,
-                                manager = musicManager,
-                                voiceChannel = voiceChannel,
-                                event = event
-                            )
-                        }
+                        is LoadingResult.OnTrackLoaded -> onNewTrackReceived(
+                            track = result.track,
+                            manager = musicManager,
+                            voiceChannel = voiceChannel,
+                            event = event
+                        )
+                        is LoadingResult.OnTracksLoaded -> onNewTrackReceived(
+                            track = result.tracks.firstOrNull() ?: return,
+                            manager = musicManager,
+                            voiceChannel = voiceChannel,
+                            event = event
+                        )
                     }
                 }
                 override fun onLoadFailure(reason: LoadingFailureReason) {
@@ -82,7 +70,7 @@ class BeeMusicPlayBySearchCommandHandler(
                     }
                 }
             }
-            musicManager.load(query, listener)
+            musicManager.load(query = input, listener)
         }
     }
 
@@ -136,12 +124,5 @@ class BeeMusicPlayBySearchCommandHandler(
         if (oldChannel != voiceChannel) {
             audioManager.openAudioConnection(voiceChannel)
         }
-    }
-
-    companion object {
-        private const val SEARCH_PREFIX = "ytsearch"
-        private const val YOUTUBE_URL_PREFIX_1 = "https://youtube.com/"
-        private const val YOUTUBE_URL_PREFIX_2 = "https://www.youtube.com/"
-        private const val YOUTUBE_URL_PREFIX_3 = "https://music.youtube.com/"
     }
 }

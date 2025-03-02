@@ -48,7 +48,16 @@ class GuildMusicManager internal constructor(
     }
 
     fun load(query: String, listener: MusicResultListener) {
-        playerManager.loadItem(query, MusicResultListenerLavaPlayerAdapter(listener))
+        val isYoutubeUri = query.startsWith(YOUTUBE_URL_PREFIX_1, ignoreCase = true)
+                || query.startsWith(YOUTUBE_URL_PREFIX_2, ignoreCase = true)
+                || query.startsWith(YOUTUBE_URL_PREFIX_3, ignoreCase = true)
+
+        val decoratedQuery = if (isYoutubeUri) {
+            query
+        } else {
+            "${SEARCH_PREFIX}:${query}"
+        }
+        playerManager.loadItem(decoratedQuery, MusicResultListenerLavaPlayerAdapter(listener))
     }
 
     fun queue(track: Track) {
@@ -76,6 +85,13 @@ class GuildMusicManager internal constructor(
         } else {
             _endedAt = System.currentTimeMillis()
         }
+    }
+
+    companion object {
+        private const val SEARCH_PREFIX = "ytsearch"
+        private const val YOUTUBE_URL_PREFIX_1 = "https://youtube.com/"
+        private const val YOUTUBE_URL_PREFIX_2 = "https://www.youtube.com/"
+        private const val YOUTUBE_URL_PREFIX_3 = "https://music.youtube.com/"
     }
 }
 
