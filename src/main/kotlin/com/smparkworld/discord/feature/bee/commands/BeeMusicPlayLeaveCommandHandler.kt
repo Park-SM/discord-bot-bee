@@ -18,7 +18,7 @@ class BeeMusicPlayLeaveCommandHandler(
     override fun handle(command: String, event: SlashCommandInteractionEvent) {
         checkVoiceChannelValidation(event, result = getVoiceChannelByEventAuthor(event)) { _ ->
 
-            MusicManagerMediator.obtainGuildTracker(event.requireGuild().idLong)
+            MusicManagerMediator.obtainGuildMusicManager(event.requireGuild().idLong)
                 .clearQueue()
 
             event.requireGuild()

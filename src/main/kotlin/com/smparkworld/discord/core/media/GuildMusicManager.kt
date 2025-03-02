@@ -6,18 +6,23 @@ import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason
 import com.sedmelluq.discord.lavaplayer.track.playback.MutableAudioFrame
+import com.smparkworld.discord.core.media.model.LavaPlayerTrackImpl
+import com.smparkworld.discord.core.media.model.Track
 import net.dv8tion.jda.api.audio.AudioSendHandler
+import net.dv8tion.jda.api.entities.Guild
+import net.dv8tion.jda.api.managers.AudioManager
 import java.nio.ByteBuffer
 
-class GuildMusicManager(
-    playerManager: AudioPlayerManager
+class GuildMusicManager internal constructor(
+    private val guildId: Long,
+    private val guildFinder: (guildId: Long) -> Guild?,
+    private val playerManager: AudioPlayerManager
 ) {
+    val currentTrack: Track?
+        get() = player.playingTrack?.let(::LavaPlayerTrackImpl)
 
     private var _endedAt: Long = 0
-    val endedAt: Long get() = _endedAt
-
-    val currentTrack: AudioTrack?
-        get() = player.playingTrack
+    internal val endedAt: Long get() = _endedAt
 
     private val player = playerManager.createPlayer()
     private val sendHandler = AudioPlayerSendHandler(player)
@@ -32,17 +37,27 @@ class GuildMusicManager(
         player.addListener(listener)
     }
 
-    fun getSendHandler(): AudioSendHandler {
-        return sendHandler
+    fun getAudioManager(): AudioManager? {
+        return guildFinder(guildId)?.audioManager?.also { manager ->
+            manager.sendingHandler = sendHandler
+        }
     }
 
     fun getPlaylist(): List<AudioTrack> {
         return queue.toList()
     }
 
-    fun queue(track: AudioTrack) {
-        val isStarted = player.startTrack(track, true)
-        if (!isStarted) queue.add(track)
+    fun load(query: String, listener: MusicResultListener) {
+        playerManager.loadItem(query, MusicResultListenerLavaPlayerAdapter(listener))
+    }
+
+    fun queue(track: Track) {
+        if (track is LavaPlayerTrackImpl) {
+            _endedAt = 0
+
+            val isStarted = player.startTrack(track.audioTrack, true)
+            if (!isStarted) queue.add(track.audioTrack)
+        }
     }
 
     fun skipTrack() {

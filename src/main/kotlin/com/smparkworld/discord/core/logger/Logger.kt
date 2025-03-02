@@ -10,12 +10,12 @@ object Logger {
     private val currentTimestamp: String
         get() = formatter.format(System.currentTimeMillis())
 
-    fun d(tag: String, message: String) {
-        println("$currentTimestamp [DEBUG] ${formatTag(tag)} $message")
-    }
-
     fun i(tag: String, message: String) {
         println("$currentTimestamp [INFO] ${formatTag(tag)} $message")
+    }
+
+    fun d(tag: String, message: String) {
+        println("$currentTimestamp [DEBUG] ${formatTag(tag)} $message")
     }
 
     private fun formatTag(input: String): String {

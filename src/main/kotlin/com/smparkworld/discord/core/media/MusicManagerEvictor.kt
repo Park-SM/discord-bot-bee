@@ -2,7 +2,7 @@ package com.smparkworld.discord.core.media
 
 import net.dv8tion.jda.api.entities.Guild
 
-class MusicManagerEvictor(
+internal class MusicManagerEvictor(
     private val guildFinder: (guildId: Long) -> Guild?,
     private val onEvicted: (guildId: Long) -> Unit
 ) {

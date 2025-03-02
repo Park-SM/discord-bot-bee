@@ -17,6 +17,7 @@ object MusicManagerMediator {
     private val musicManagers: MutableMap<Long, GuildMusicManager> = mutableMapOf()
 
     private var isInitialized = false
+    private var guildFinder: (guildId: Long) -> Guild? = { null }
     private var evictor: MusicManagerEvictor? = null
 
     fun initialize(
@@ -26,6 +27,7 @@ object MusicManagerMediator {
             throw IllegalStateException("MusicManagerMediator has already been initialized.")
         }
         this.isInitialized = true
+        this.guildFinder = guildFinder
         this.evictor = MusicManagerEvictor(guildFinder, onEvicted = ::onSteamingEnd)
 
         playerManager.registerSourceManager(YoutubeAudioSourceManager())
@@ -33,12 +35,16 @@ object MusicManagerMediator {
         Logger.i(TAG, "MusicManagerMediator has been initialized.")
     }
 
-    fun obtainGuildTracker(guildId: Long): GuildMusicManager {
+    fun obtainGuildMusicManager(guildId: Long): GuildMusicManager {
         return musicManagers.computeIfAbsent(guildId) {
             Logger.i(TAG, "A new GuildMusicManager has been created. GuildID is $guildId.")
 
-            GuildMusicManager(playerManager = playerManager).also { manager ->
-                evictor?.trackMusicManagerToEvict(guildId, manager)
+            GuildMusicManager(
+                guildId = guildId,
+                guildFinder = guildFinder,
+                playerManager = playerManager
+            ).also {
+                evictor?.trackMusicManagerToEvict(guildId, it)
             }
         }
     }
