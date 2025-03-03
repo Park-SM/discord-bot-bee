@@ -22,6 +22,8 @@ repositories {
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+
     implementation("net.dv8tion:JDA:5.1.2")
     implementation("dev.arbjerg:lavaplayer:2.2.3")
     implementation("dev.lavalink.youtube:common:1.11.4")

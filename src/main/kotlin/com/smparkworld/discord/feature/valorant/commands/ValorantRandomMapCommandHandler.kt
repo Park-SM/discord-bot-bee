@@ -17,7 +17,7 @@ class ValorantRandomMapCommandHandler(
     private val getVoiceChannelUsersByMember: GetVoiceChannelUsersByEventAuthorUseCase
 ) : CommandHandler() {
 
-    override fun handle(command: String, event: SlashCommandInteractionEvent) {
+    override suspend fun handle(command: String, event: SlashCommandInteractionEvent) {
         checkVoiceChannelValidation(event, result = getVoiceChannelUsersByMember(event)) {
 
             val ignores = listOfNotNull(

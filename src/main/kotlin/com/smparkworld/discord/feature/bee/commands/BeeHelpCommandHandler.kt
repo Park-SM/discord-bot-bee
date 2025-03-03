@@ -12,7 +12,7 @@ import net.dv8tion.jda.api.interactions.components.selections.StringSelectMenu
 
 class BeeHelpCommandHandler : CommandHandler() {
 
-    override fun handle(command: String, event: SlashCommandInteractionEvent) {
+    override suspend fun handle(command: String, event: SlashCommandInteractionEvent) {
         val menu = StringSelectMenu.create(COMPONENT_ID)
             .addOption(getString(StringCode.BEE_CMD), getString(StringCode.BEE_CMD), getString(StringCode.BEE_CMD_DESC))
             .addOption(getString(StringCode.VAL_CMD), getString(StringCode.VAL_CMD), getString(StringCode.VAL_CMD_DESC))

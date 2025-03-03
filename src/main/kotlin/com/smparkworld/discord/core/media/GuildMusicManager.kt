@@ -6,8 +6,10 @@ import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason
 import com.sedmelluq.discord.lavaplayer.track.playback.MutableAudioFrame
+import com.smparkworld.discord.core.media.extensions.loadItem
 import com.smparkworld.discord.core.media.model.LavaPlayerTrackImpl
 import com.smparkworld.discord.core.media.model.Track
+import com.smparkworld.discord.core.media.model.TrackLoadingResult
 import net.dv8tion.jda.api.audio.AudioSendHandler
 import net.dv8tion.jda.api.entities.Guild
 import net.dv8tion.jda.api.managers.AudioManager
@@ -28,6 +30,8 @@ class GuildMusicManager internal constructor(
     private val sendHandler = AudioPlayerSendHandler(player)
     private val queue = mutableListOf<AudioTrack>()
 
+    private var onNextTrackLoaded: () -> Unit = {}
+
     init {
         val listener = object : AudioEventAdapter() {
             override fun onTrackEnd(player: AudioPlayer?, track: AudioTrack?, endReason: AudioTrackEndReason) {
@@ -47,7 +51,11 @@ class GuildMusicManager internal constructor(
         return queue.toList()
     }
 
-    fun load(query: String, listener: MusicResultListener) {
+    fun setOnNextTrackLoaded(onNextTrackLoaded: () -> Unit) {
+        this.onNextTrackLoaded = onNextTrackLoaded
+    }
+
+    suspend fun load(query: String): TrackLoadingResult {
         val isYoutubeUri = query.startsWith(YOUTUBE_URL_PREFIX_1, ignoreCase = true)
                 || query.startsWith(YOUTUBE_URL_PREFIX_2, ignoreCase = true)
                 || query.startsWith(YOUTUBE_URL_PREFIX_3, ignoreCase = true)
@@ -57,7 +65,7 @@ class GuildMusicManager internal constructor(
         } else {
             "${SEARCH_PREFIX}:${query}"
         }
-        playerManager.loadItem(decoratedQuery, MusicResultListenerLavaPlayerAdapter(listener))
+        return playerManager.loadItem(decoratedQuery)
     }
 
     fun queue(track: Track) {
@@ -81,10 +89,11 @@ class GuildMusicManager internal constructor(
 
     private fun nextTrack() {
         if (queue.isNotEmpty()) {
-            player.startTrack(queue.removeAt(0), false)
+            player.startTrack(queue.removeFirst(), false)
         } else {
             _endedAt = System.currentTimeMillis()
         }
+        onNextTrackLoaded()
     }
 
     companion object {

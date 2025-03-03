@@ -1,5 +1,6 @@
 package com.smparkworld.discord.common.framework
 
+import kotlinx.coroutines.*
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent
 import net.dv8tion.jda.api.events.interaction.component.EntitySelectInteractionEvent
@@ -11,10 +12,18 @@ abstract class DiscordBot : ListenerAdapter() {
 
     protected abstract val commandHandlers: Map<String, CommandHandler>
 
+    private val botCoroutineContext by lazy {
+        Dispatchers.Default + SupervisorJob()
+    }
     private var command: String? = null
 
     fun initialize(command: String) {
         this.command = command
+        this.commandHandlers.values.forEach {
+            it.commandHandlerScope = CoroutineScope(
+                context = botCoroutineContext + Job(botCoroutineContext[Job])
+            )
+        }
     }
 
     abstract fun applyCommandData(commandData: SlashCommandData)

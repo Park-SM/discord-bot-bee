@@ -18,7 +18,7 @@ class ValorantRandomPickHardCommandHandler(
     private val getVoiceChannelUsersByMember: GetVoiceChannelUsersByEventAuthorUseCase
 ) : CommandHandler() {
 
-    override fun handle(command: String, event: SlashCommandInteractionEvent) {
+    override suspend fun handle(command: String, event: SlashCommandInteractionEvent) {
         checkVoiceChannelValidation(event, result = getVoiceChannelUsersByMember(event)) { members ->
 
             val ignores: List<User> = obtainIgnoredUsers(event)

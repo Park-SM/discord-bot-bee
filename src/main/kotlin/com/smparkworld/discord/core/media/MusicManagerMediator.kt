@@ -1,6 +1,5 @@
 package com.smparkworld.discord.core.media
 
-import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager
 import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers
 import com.smparkworld.discord.core.logger.Logger
@@ -47,10 +46,6 @@ object MusicManagerMediator {
                 evictor?.trackMusicManagerToEvict(guildId, it)
             }
         }
-    }
-
-    fun loadItem(query: String, handler: AudioLoadResultHandler) {
-        playerManager.loadItem(query, handler)
     }
 
     private fun onSteamingEnd(guildId: Long) {

@@ -3,8 +3,8 @@ package com.smparkworld.discord.feature.bee
 import com.smparkworld.discord.common.base.StringCode
 import com.smparkworld.discord.common.base.StringsParser.getString
 import com.smparkworld.discord.common.framework.DiscordBot
-import com.smparkworld.discord.domain.GetVoiceChannelByEventAuthorUseCase
-import com.smparkworld.discord.domain.GetVoiceChannelByEventAuthorUseCaseImpl
+import com.smparkworld.discord.data.message.MessageRepositoryImpl
+import com.smparkworld.discord.domain.*
 import com.smparkworld.discord.feature.bee.commands.BeeForceMoveUserCommandHandler
 import com.smparkworld.discord.feature.bee.commands.BeeHelpCommandHandler
 import com.smparkworld.discord.feature.bee.commands.BeeMusicPlayBySearchCommandHandler
@@ -15,12 +15,14 @@ import net.dv8tion.jda.api.interactions.commands.build.SubcommandData
 
 class BeeBot(
     getVoiceChannelByEventAuthor: GetVoiceChannelByEventAuthorUseCase = GetVoiceChannelByEventAuthorUseCaseImpl(),
+    saveSingleMessagePerChannelUseCase: SaveSingleMessagePerChannelUseCase = SaveSingleMessagePerChannelUseCaseImpl(MessageRepositoryImpl),
+    getSingleMessagePerChannelUseCase: GetSingleMessagePerChannelUseCase = GetSingleMessagePerChannelUseCaseImpl(MessageRepositoryImpl)
 ) : DiscordBot() {
 
     override val commandHandlers = mapOf(
         getString(StringCode.BEE_CMD_HELP) to BeeHelpCommandHandler(),
         getString(StringCode.BEE_CMD_FORCE_MOVE_USER) to BeeForceMoveUserCommandHandler(getVoiceChannelByEventAuthor),
-        getString(StringCode.BEE_CMD_MUSIC_PLAY_BY_SEARCH) to BeeMusicPlayBySearchCommandHandler(getVoiceChannelByEventAuthor),
+        getString(StringCode.BEE_CMD_MUSIC_PLAY_BY_SEARCH) to BeeMusicPlayBySearchCommandHandler(getVoiceChannelByEventAuthor, saveSingleMessagePerChannelUseCase, getSingleMessagePerChannelUseCase),
         getString(StringCode.BEE_CMD_MUSIC_PLAY_LEAVE) to BeeMusicPlayLeaveCommandHandler(getVoiceChannelByEventAuthor)
 
     )

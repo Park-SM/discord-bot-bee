@@ -13,10 +13,10 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
  * 명령어를 호출한 사람이 속한 [VoiceChannel]을 반환합니다.
  * 어느 채널에도 속하지 않은 상태에서 명령어를 호출한 경우 에러 문구를 출력합니다.
  */
-fun CommandHandler.checkVoiceChannelValidation(
+suspend fun CommandHandler.checkVoiceChannelValidation(
     event: SlashCommandInteractionEvent,
     result: GetVoiceChannelByEventAuthorUseCase.Result,
-    perform: (channel: VoiceChannel) -> Unit
+    perform: suspend (channel: VoiceChannel) -> Unit
 ) {
     when (result) {
         is GetVoiceChannelByEventAuthorUseCase.Result.Success -> {
@@ -35,10 +35,10 @@ fun CommandHandler.checkVoiceChannelValidation(
  * 명령어를 호출한 사람이 속한 [VoiceChannel]을 찾고, 그 [VoiceChannel]에 참여 중엔 [Member]들을 반환합니다.
  * 어느 채널에도 속하지 않은 상태에서 명령어를 호출한 경우 에러 문구를 출력합니다.
  */
-fun CommandHandler.checkVoiceChannelValidation(
+suspend fun CommandHandler.checkVoiceChannelValidation(
     event: SlashCommandInteractionEvent,
     result: GetVoiceChannelUsersByEventAuthorUseCase.Result,
-    perform: (members: List<Member>) -> Unit
+    perform: suspend (members: List<Member>) -> Unit
 ) {
     when (result) {
         is GetVoiceChannelUsersByEventAuthorUseCase.Result.Success -> {

@@ -16,7 +16,7 @@ class BeeForceMoveUserCommandHandler(
     private val getVoiceChannelByEventAuthor: GetVoiceChannelByEventAuthorUseCase,
 ) : CommandHandler() {
 
-    override fun handle(command: String, event: SlashCommandInteractionEvent) {
+    override suspend fun handle(command: String, event: SlashCommandInteractionEvent) {
         checkVoiceChannelValidation(event, result = getVoiceChannelByEventAuthor(event)) { channel ->
 
             val targetUser = event.getOption(getString(StringCode.TARGET_USER))?.asUser
