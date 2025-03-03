@@ -11,7 +11,6 @@ import com.smparkworld.discord.core.media.model.TrackLoadingResult
 import com.smparkworld.discord.domain.GetSingleMessagePerChannelUseCase
 import com.smparkworld.discord.domain.GetVoiceChannelByEventAuthorUseCase
 import com.smparkworld.discord.domain.SaveSingleMessagePerChannelUseCase
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.entities.MessageEmbed
@@ -19,7 +18,6 @@ import net.dv8tion.jda.api.entities.channel.concrete.TextChannel
 import net.dv8tion.jda.api.entities.channel.concrete.VoiceChannel
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import net.dv8tion.jda.api.managers.AudioManager
-import kotlin.coroutines.coroutineContext
 
 class BeeMusicPlayBySearchCommandHandler(
     private val getVoiceChannelByEventAuthor: GetVoiceChannelByEventAuthorUseCase,
@@ -85,10 +83,10 @@ class BeeMusicPlayBySearchCommandHandler(
 
         manager.setOnNextTrackLoaded {
             commandHandlerScope.launch {
-                sendCurrentTrackDashboardMessage(event, manager, track)
+                sendCurrentTrackDashboardMessage(event, manager)
             }
         }
-        sendCurrentTrackDashboardMessage(event, manager, track)
+        sendCurrentTrackDashboardMessage(event, manager)
     }
 
     private fun connectBeeBotToEventAuthorVoiceChannel(
@@ -101,23 +99,32 @@ class BeeMusicPlayBySearchCommandHandler(
         }
     }
 
-    private suspend fun sendCurrentTrackDashboardMessage(event: SlashCommandInteractionEvent, manager: GuildMusicManager, track: Track) {
-        val playlistTitles = manager.getPlaylist()
-            .mapIndexed { idx, e -> "> ${idx + 1}. `${e.info.title}`" }
-            .joinToString("\n")
-            .takeIf(String::isNotBlank)
+    private suspend fun sendCurrentTrackDashboardMessage(event: SlashCommandInteractionEvent, manager: GuildMusicManager) {
+        val currentTrack = manager.currentTrack
 
-        val currentAudioTrack = manager.currentTrack?.title
-            ?: getString(StringCode.BEE_CMD_MUSIC_PLAY_CURRENT_TITLE_EXCEPTION)
+        val message = if (currentTrack != null) {
 
-        val message = EmbedBuilder()
-            .setTitle(getString(StringCode.BEE_CMD_MUSIC_PLAY_TITLE))
-            .setThumbnail(track.thumbnailUrl)
-            .setUrl(track.uri)
-            .setDescription(getString(StringCode.BEE_CMD_MUSIC_PLAY_CURRENT_TITLE))
-            .addField("> `${currentAudioTrack}`", "", false)
-            .addFieldIfNotNull(getString(StringCode.BEE_CMD_MUSIC_PLAY_PLAYLIST), playlistTitles, false)
-            .build()
+            val playlistTitles = manager.getPlaylist()
+                .mapIndexed { idx, e -> "> ${idx + 1}. `${e.info.title}`" }
+                .joinToString("\n")
+                .takeIf(String::isNotBlank)
+
+            EmbedBuilder()
+                .setTitle(getString(StringCode.BEE_CMD_MUSIC_PLAY_TITLE))
+                .setThumbnail(currentTrack.thumbnailUrl)
+                .setUrl(currentTrack.uri)
+                .addField(getString(StringCode.BEE_CMD_MUSIC_PLAY_CURRENT_TITLE), "> `${currentTrack.title}`", false)
+                .addFieldIfNotNull(getString(StringCode.BEE_CMD_MUSIC_PLAY_PLAYLIST), playlistTitles, false)
+                .addBlankField(false)
+                .addField(getString(StringCode.BEE_CMD_MUSIC_PLAY_HELP_1_TITLE), getString(StringCode.BEE_CMD_MUSIC_PLAY_HELP_1_DESC), false)
+                .addField(getString(StringCode.BEE_CMD_MUSIC_PLAY_HELP_2_TITLE), getString(StringCode.BEE_CMD_MUSIC_PLAY_HELP_2_DESC), false)
+                .build()
+        } else {
+            EmbedBuilder()
+                .setTitle(getString(StringCode.BEE_CMD_MUSIC_PLAY_TITLE))
+                .setDescription(getString(StringCode.BEE_CMD_MUSIC_PLAY_DESC_EMPTY))
+                .build()
+        }
         upsertMessageByLimit(event, message)
     }
 

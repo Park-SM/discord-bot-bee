@@ -39,8 +39,11 @@
     <string name="bee_cmd_music_play_input_empty">검색어를 입력하지 않으셨어요! 검색할 음악의 제목이나 YouTube의 URL을 입력해주세요!</string>
     <string name="bee_cmd_music_play_not_found">검색어에 맞는 음악을 찾지 못했어요! 다시 입력해주세요.</string>
     <string name="bee_cmd_music_play_title">음악 재생 🎶</string>
-    <string name="bee_cmd_music_play_desc">검색하신 아래의 음악을 재생할게요!</string>
-    <string name="bee_cmd_music_play_put_playlist_desc">재생 중인 음악이 있네요! 검색하신 아래의 음악은 Playlist에 담아드릴게요!</string>
+    <string name="bee_cmd_music_play_desc_empty">예약하신 노래를 다 불렀어요. 아래의 버튼을 통해 다음 노래를 예약해주세요!</string>
+    <string name="bee_cmd_music_play_help_1_title">**🎤 검색하신 음악을 순서대로 재생합니다.**</string>
+    <string name="bee_cmd_music_play_help_1_desc">> 하단의 `노래 예약하기` 버튼을 통해 다음 노래를 예약해보세요!\n> `다음 노래` 버튼을 통해 재생 중인 노래를 넘길 수도 있어요.</string>
+    <string name="bee_cmd_music_play_help_2_title">**📚 재생한 음악의 이력을 볼 수 있어요.**</string>
+    <string name="bee_cmd_music_play_help_2_desc">> 하단의 `노래 이력` 버튼을 통해 지금까지 재생했던 노래를 볼 수 있어요! Playlist에 있는 노래를 직접 제거한 경우는 보이지 않습니다.</string>
     <string name="bee_cmd_music_play_current_title">현재 재생 중.</string>
     <string name="bee_cmd_music_play_current_title_exception">예상치 못한 이슈로 노래 제목을 불러오지 못했어요.</string>
     <string name="bee_cmd_music_play_playlist">Playlist.</string>
@@ -68,7 +71,7 @@
     <string name="bee_cmd_help_for_val_desc">꿀벌은 디스코드하면서 발로란트 게임할 때 유용한 기능들을 제공하고 있어요. 이 기능들을 사용하기 위한 명령어에 대해서 설명해드릴게요.</string>
 
     <string name="bee_cmd_help_for_bee_help_example">꿀벌이 지원하는 명령어에 대해서 설명합니다. 궁금한 명령어 세트를 선택할 수 있어요. \ne.g.) `/꿀벌 도움말`</string>
-    <string name="bee_cmd_help_for_bee_force_move_user_example">다른 음성 채널에 있는 유저를 데려옵니다. 무작위로 사용하면 재사용 쿨타임을 추가할 수도 있으니 조심하세요!\ne.g.) `/꿀벌 데려오기 {데려올 유저 선택}`</string>
+    <string name="bee_cmd_help_for_bee_force_move_user_example">다른 음성 채널에 있는 유저를 데려옵니다.\ne.g.) `/꿀벌 데려오기 {데려올 유저 선택}`</string>
     <string name="bee_cmd_help_for_bee_music_play_by_search_example">듣고 싶은 음원의 제목이나 YouTube URL 혹은 YouTube Music URL을 입력하면 음원을 찾아서 재생합니다.\ne.g.) `/꿀벌 노래 {검색할 제목 or URL 입력}`</string>
     <string name="bee_cmd_help_for_bee_music_play_leave_example">채널 안에 있는 꿀벌 봇을 내쫓습니다.\ne.g.) `/꿀벌 나가`</string>
     <string name="bee_cmd_help_for_val_random_pick_example">음성 채널에 있는 유저들에게 에이전트의 역할군을 무작위로 지정합니다.\ne.g.) `/발로 랜덤픽-역할군 {제외할 유저 선택}`</string>
