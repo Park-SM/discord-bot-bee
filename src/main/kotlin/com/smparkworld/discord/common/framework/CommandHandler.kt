@@ -1,8 +1,6 @@
 package com.smparkworld.discord.common.framework
 
-import com.smparkworld.discord.common.extensions.getAuthorName
 import com.smparkworld.discord.common.extensions.sendUnknownExceptionEmbedsMessage
-import com.smparkworld.discord.core.logger.Logger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import net.dv8tion.jda.api.events.interaction.ModalInteractionEvent
@@ -19,7 +17,6 @@ abstract class CommandHandler {
         event.runSafely {
             commandHandlerScope.launch {
                 event.runSafely {
-                    Logger.i(TAG, "New command executed: `${event.commandString}` by ${event.getAuthorName()}")
                     handle(command, event)
                 }
             }
@@ -39,9 +36,5 @@ abstract class CommandHandler {
             e.printStackTrace()
             sendUnknownExceptionEmbedsMessage()
         }
-    }
-
-    companion object {
-        private const val TAG = "CommandHandler"
     }
 }

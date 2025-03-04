@@ -54,11 +54,6 @@ class BeeMusicPlayBySearchCommandHandler(
     }
 
     override fun handleInteractionByButton(event: ButtonInteractionEvent) {
-        val musicManager = event.guild?.idLong?.let(MusicManagerMediator::obtainGuildMusicManager)
-        if (musicManager == null) {
-            event.sendUnknownExceptionEmbedsMessage()
-            return
-        }
         when (event.componentId) {
             ButtonID.SEARCH_MUSIC -> {
                 val modal = Modal.create(ModalID.SEARCH_MUSIC, getString(StringCode.MODAL_TITLE_SEARCH_MUSIC))
@@ -72,6 +67,11 @@ class BeeMusicPlayBySearchCommandHandler(
                 event.replyModal(modal).queue()
             }
             ButtonID.PAUSE_OR_RESUME_MUSIC -> {
+                val musicManager = event.guild?.idLong?.let(MusicManagerMediator::obtainGuildMusicManager)
+                if (musicManager == null) {
+                    event.sendUnknownExceptionEmbedsMessage()
+                    return
+                }
                 if (musicManager.isPaused) {
                     musicManager.resumeTrack()
                 } else {
@@ -80,13 +80,24 @@ class BeeMusicPlayBySearchCommandHandler(
                 event.sendDeferReply()
             }
             ButtonID.SKIP_MUSIC -> {
+                val musicManager = event.guild?.idLong?.let(MusicManagerMediator::obtainGuildMusicManager)
+                if (musicManager == null) {
+                    event.sendUnknownExceptionEmbedsMessage()
+                    return
+                }
                 musicManager.skipTrack()
                 commandHandlerScope.launch {
                     sendCurrentTrackDashboardMessage(event, musicManager, withDeferReply = true)
                 }
             }
             ButtonID.HISTORY_MUSIC -> {
-                val historyTitles = musicManager.getHistory()
+                val guildId = event.guild?.idLong
+                if (guildId == null) {
+                    event.sendUnknownExceptionEmbedsMessage()
+                    return
+                }
+
+                val historyTitles = MusicManagerMediator.getTrackHistoryBy(guildId)
                     .mapIndexed { idx, e -> "> ${idx + 1}. [${e.title}](${e.uri})" }
                     .joinToString("\n")
                     .takeIf(String::isNotBlank)
@@ -101,7 +112,9 @@ class BeeMusicPlayBySearchCommandHandler(
     }
 
     override fun handleInteractionByModal(event: ModalInteractionEvent) {
-        val musicManager = event.guild?.idLong?.let(MusicManagerMediator::obtainGuildMusicManager)
+        val guildId = event.guild?.idLong
+
+        val musicManager = guildId?.let(MusicManagerMediator::obtainGuildMusicManager)
         if (musicManager == null) {
             event.sendUnknownExceptionEmbedsMessage()
             return

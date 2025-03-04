@@ -6,6 +6,7 @@ import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason
 import com.sedmelluq.discord.lavaplayer.track.playback.MutableAudioFrame
+import com.smparkworld.discord.core.media.MusicManagerMediator.offerTrackHistory
 import com.smparkworld.discord.core.media.extensions.loadItem
 import com.smparkworld.discord.core.media.model.LavaPlayerTrackImpl
 import com.smparkworld.discord.core.media.model.Track
@@ -32,7 +33,6 @@ class GuildMusicManager internal constructor(
     private val player = playerManager.createPlayer()
     private val sendHandler = AudioPlayerSendHandler(player)
     private val queue = mutableListOf<AudioTrack>()
-    private val history = mutableListOf<AudioTrack>()
 
     private var onNextTrackLoaded: (bySkip: Boolean) -> Unit = {}
 
@@ -55,10 +55,6 @@ class GuildMusicManager internal constructor(
         return queue.map(::LavaPlayerTrackImpl)
     }
 
-    fun getHistory(): List<Track> {
-        return history.map(::LavaPlayerTrackImpl)
-    }
-
     fun setOnNextTrackLoaded(onNextTrackLoaded: (bySkip: Boolean) -> Unit) {
         this.onNextTrackLoaded = onNextTrackLoaded
     }
@@ -79,8 +75,8 @@ class GuildMusicManager internal constructor(
     fun queue(track: Track) {
         if (track is LavaPlayerTrackImpl) {
             _endedAt = 0
+            offerTrackHistory(guildId, track)
             resumeTrack()
-            history.add(track.audioTrack)
 
             val isStarted = player.startTrack(track.audioTrack, true)
             if (!isStarted) queue.add(track.audioTrack)

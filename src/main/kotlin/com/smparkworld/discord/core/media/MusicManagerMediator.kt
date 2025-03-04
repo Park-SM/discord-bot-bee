@@ -3,6 +3,7 @@ package com.smparkworld.discord.core.media
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager
 import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers
 import com.smparkworld.discord.core.logger.Logger
+import com.smparkworld.discord.core.media.model.Track
 import dev.lavalink.youtube.YoutubeAudioSourceManager
 import net.dv8tion.jda.api.entities.Guild
 
@@ -14,6 +15,7 @@ object MusicManagerMediator {
 
     private val playerManager: DefaultAudioPlayerManager = DefaultAudioPlayerManager()
     private val musicManagers: MutableMap<Long, GuildMusicManager> = mutableMapOf()
+    private val trackHistories: MutableMap<Long, MutableList<Track>> = mutableMapOf()
 
     private var isInitialized = false
     private var guildFinder: (guildId: Long) -> Guild? = { null }
@@ -46,6 +48,19 @@ object MusicManagerMediator {
                 evictor?.trackMusicManagerToEvict(guildId, it)
             }
         }
+    }
+
+    fun getTrackHistoryBy(guildId: Long): List<Track> {
+        return trackHistories[guildId].orEmpty().toList()
+    }
+
+    internal fun offerTrackHistory(guildId: Long, track: Track) {
+        val history = (trackHistories[guildId] ?: mutableListOf())
+        if (history.size >= 10) {
+            history.removeFirstOrNull()
+        }
+        history.add(track)
+        trackHistories[guildId] = history
     }
 
     private fun onSteamingEnd(guildId: Long) {

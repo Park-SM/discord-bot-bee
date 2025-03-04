@@ -5,6 +5,7 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 import net.dv8tion.jda.api.entities.Guild
 import net.dv8tion.jda.api.entities.Member
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
+import net.dv8tion.jda.api.interactions.Interaction
 import net.dv8tion.jda.api.requests.RestAction
 import kotlin.coroutines.resume
 
@@ -17,7 +18,7 @@ fun SlashCommandInteractionEvent.requireGuild(): Guild =
 fun SlashCommandInteractionEvent.requireAuthor(): Member =
     this.member ?: throw IllegalStateException("Not found author member")
 
-fun SlashCommandInteractionEvent.getAuthorName(): String? =
+fun Interaction.getAuthorName(): String? =
     this.member?.effectiveName
 
 fun <T> CancellableContinuation<T>.resumeIfActive(value: T) {
