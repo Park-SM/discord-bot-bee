@@ -51,8 +51,8 @@
     <string name="bee_cmd_music_play_desc_already">이미 음악 재생 기능이 실행 중이에요.\n음악 재생 메세지의 버튼을 통해 노래를 예약해주세요!</string>
     <string name="bee_cmd_music_play_help_1_title">**검색하신 음악을 순서대로 재생합니다. 🎤**</string>
     <string name="bee_cmd_music_play_help_1_desc">> 하단의 `노래 예약하기` 버튼을 통해 다음 노래를 예약해보세요!\n> `다음 노래` 버튼을 통해 재생 중인 노래를 넘길 수도 있어요.</string>
-    <string name="bee_cmd_music_play_help_2_title">**재생한 음악의 이력을 볼 수 있어요. 📚**</string>
-    <string name="bee_cmd_music_play_help_2_desc">> 하단의 `최근 재생 목록` 버튼을 통해 재생한 이력 볼 수 있어요!\n> Playlist에 있는 노래를 직접 제거한 경우는 보이지 않습니다.</string>
+    <string name="bee_cmd_music_play_help_2_title">**재생한 음악의 이력을 볼 수 있습니다. 📚**</string>
+    <string name="bee_cmd_music_play_help_2_desc">> 하단의 `최근 재생 목록` 버튼을 통해 최근 재생한 10개의 노래를\n> 볼 수 있어요! 재생 중인 노래를 넘겨도 목록에 표시됩니다.</string>
     <string name="bee_cmd_music_play_current_title">현재 재생 중.</string>
     <string name="bee_cmd_music_play_playlist">Playlist.</string>
     <string name="bee_cmd_music_play_history">최근 재생 목록.</string>
