@@ -1,8 +1,9 @@
 package com.smparkworld.discord
 
-import com.smparkworld.discord.base.StringCode
-import com.smparkworld.discord.base.StringsParser.getString
-import com.smparkworld.discord.bot.DiscordBotType
+import com.smparkworld.discord.common.base.StringCode
+import com.smparkworld.discord.common.base.StringsParser.getString
+import com.smparkworld.discord.common.framework.DiscordBotType
+import com.smparkworld.discord.core.media.MusicManagerMediator
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.entities.Activity
@@ -24,12 +25,16 @@ fun main(args: Array<String>) {
         )
         .build()
 
-    initJda(jda)
+    initCores(jda)
+    initStatus(jda)
     initDiscordBots(jda)
-    initDiscordBotsCommands(jda)
 }
 
-fun initJda(jda: JDA) {
+fun initCores(jda: JDA) {
+    MusicManagerMediator.initialize(guildFinder = jda::getGuildById)
+}
+
+fun initStatus(jda: JDA) {
     jda.presence.activity = Activity.customStatus(getString(StringCode.STATUS))
 }
 
@@ -38,9 +43,7 @@ fun initDiscordBots(jda: JDA) {
         .onEach { it.bot.initialize(command = it.commandType.command) }
         .map { it.bot }
     jda.addEventListener(*bots.toTypedArray())
-}
 
-fun initDiscordBotsCommands(jda: JDA) {
     val commands: List<CommandData> = DiscordBotType.values().map { type ->
         CommandDataImpl(type.commandType.command, type.commandType.description)
             .apply(type.bot::applyCommandData)
