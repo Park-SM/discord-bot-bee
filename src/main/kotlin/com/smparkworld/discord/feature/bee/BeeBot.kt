@@ -24,7 +24,6 @@ class BeeBot(
         getString(StringCode.BEE_CMD_FORCE_MOVE_USER) to BeeForceMoveUserCommandHandler(getVoiceChannelByEventAuthor),
         getString(StringCode.BEE_CMD_MUSIC_PLAY_BY_SEARCH) to BeeMusicPlayBySearchCommandHandler(getVoiceChannelByEventAuthor, saveSingleMessagePerGuildUseCase, getSingleMessagePerGuildUseCase),
         getString(StringCode.BEE_CMD_MUSIC_PLAY_LEAVE) to BeeMusicPlayLeaveCommandHandler(getVoiceChannelByEventAuthor)
-
     )
 
     override fun applyCommandData(commandData: SlashCommandData) {

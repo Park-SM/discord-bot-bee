@@ -32,28 +32,32 @@ abstract class DiscordBot : ListenerAdapter() {
     abstract fun applyCommandData(commandData: SlashCommandData)
 
     open fun onSlashCommand(command: String, event: SlashCommandInteractionEvent) {
-        Logger.i(TAG, "Command executed. `${event.commandString}` by ${event.getAuthorName()}")
         commandHandlers[event.subcommandName]?.handleSafely(command, event)
+        Logger.s(TAG, "$command || Command executed. `${event.commandString}` by ${event.getAuthorName()}")
     }
 
     override fun onButtonInteraction(event: ButtonInteractionEvent) {
-        Logger.i(TAG, "Button clicked. `${event.interaction.button.label}` by ${event.getAuthorName()}")
-        commandHandlers.values.forEach { it.handleInteractionByButton(event) }
+        if (commandHandlers.values.map { it.handleInteractionByButton(event) }.any { it }) {
+            Logger.s(TAG, "$command || Button clicked. `${event.interaction.button.label}` by ${event.getAuthorName()}")
+        }
     }
 
     override fun onModalInteraction(event: ModalInteractionEvent) {
-        Logger.i(TAG, "Modal submitted. `${event.interaction.values}` by ${event.getAuthorName()}")
-        commandHandlers.values.forEach { it.handleInteractionByModal(event) }
+        if (commandHandlers.values.map { it.handleInteractionByModal(event) }.any { it }) {
+            Logger.s(TAG, "$command || Modal submitted. `${event.interaction.values}` by ${event.getAuthorName()}")
+        }
     }
 
     override fun onStringSelectInteraction(event: StringSelectInteractionEvent) {
-        Logger.i(TAG, "StringSelect submitted. `${event.interaction.values}` by ${event.getAuthorName()}")
-        commandHandlers.values.forEach { it.handleInteractionByStringSelectMenu(event) }
+        if (commandHandlers.values.map { it.handleInteractionByStringSelectMenu(event) }.any { it }) {
+            Logger.s(TAG, "$command || StringSelect submitted. `${event.interaction.values}` by ${event.getAuthorName()}")
+        }
     }
 
     override fun onEntitySelectInteraction(event: EntitySelectInteractionEvent) {
-        Logger.i(TAG, "EntitySelect submitted. `${event.interaction.values}` by ${event.getAuthorName()}")
-        commandHandlers.values.forEach { it.handleInteractionByEntitySelectMenu(event) }
+        if (commandHandlers.values.map { it.handleInteractionByEntitySelectMenu(event) }.any { it }) {
+            Logger.s(TAG, "$command || EntitySelect submitted. `${event.interaction.values}` by ${event.getAuthorName()}")
+        }
     }
 
     final override fun onSlashCommandInteraction(event: SlashCommandInteractionEvent) {

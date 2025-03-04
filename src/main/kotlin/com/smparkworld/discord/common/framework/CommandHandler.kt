@@ -24,10 +24,10 @@ abstract class CommandHandler {
     }
     protected abstract suspend fun handle(command: String, event: SlashCommandInteractionEvent)
 
-    open fun handleInteractionByModal(event: ModalInteractionEvent) {}
-    open fun handleInteractionByButton(event: ButtonInteractionEvent) {}
-    open fun handleInteractionByStringSelectMenu(event: StringSelectInteractionEvent) {}
-    open fun handleInteractionByEntitySelectMenu(event: EntitySelectInteractionEvent) {}
+    open fun handleInteractionByModal(event: ModalInteractionEvent): Boolean = false
+    open fun handleInteractionByButton(event: ButtonInteractionEvent): Boolean = false
+    open fun handleInteractionByStringSelectMenu(event: StringSelectInteractionEvent): Boolean = false
+    open fun handleInteractionByEntitySelectMenu(event: EntitySelectInteractionEvent): Boolean = false
 
     private inline fun SlashCommandInteractionEvent.runSafely(perform: () -> Unit) {
         try {

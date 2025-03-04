@@ -4,18 +4,27 @@ import java.text.SimpleDateFormat
 
 object Logger {
 
-    private const val TAG_LENGTH = 25
+    private const val TAG_LENGTH = 24
+    private const val CATEGORY_LENGTH = 12
+
+    private const val INFO = "[INFO]"
+    private const val DEBUG = "[DEBUG]"
+    private const val SYSTEM = "[SYSTEM]"
 
     private val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
     private val currentTimestamp: String
         get() = formatter.format(System.currentTimeMillis())
 
     fun i(tag: String, message: String) {
-        println("$currentTimestamp [INFO] ${formatTag(tag)} $message")
+        println("$currentTimestamp ${formatCategory(INFO)} ${formatTag(tag)} $message")
     }
 
     fun d(tag: String, message: String) {
-        println("$currentTimestamp [DEBUG] ${formatTag(tag)} $message")
+        println("$currentTimestamp ${formatCategory(DEBUG)} ${formatTag(tag)} $message")
+    }
+
+    fun s(tag: String, message: String) {
+        println("$currentTimestamp ${formatCategory(SYSTEM)} ${formatTag(tag)} $message")
     }
 
     private fun formatTag(input: String): String {
@@ -23,6 +32,14 @@ object Logger {
             input.substring(0, TAG_LENGTH)
         } else {
             input.padEnd(TAG_LENGTH, ' ')
+        }
+    }
+
+    private fun formatCategory(input: String): String {
+        return if (input.length > CATEGORY_LENGTH) {
+            input.substring(0, CATEGORY_LENGTH)
+        } else {
+            input.padEnd(CATEGORY_LENGTH, ' ')
         }
     }
 }

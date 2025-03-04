@@ -28,8 +28,8 @@ class BeeHelpCommandHandler : CommandHandler() {
             .queue()
     }
 
-    override fun handleInteractionByStringSelectMenu(event: StringSelectInteractionEvent) {
-        if (event.componentId != COMPONENT_ID) return
+    override fun handleInteractionByStringSelectMenu(event: StringSelectInteractionEvent): Boolean {
+        if (event.componentId != COMPONENT_ID) return false
 
         when (event.selectedOptions.firstOrNull()?.value) {
             getString(StringCode.BEE_CMD) -> {
@@ -66,6 +66,7 @@ class BeeHelpCommandHandler : CommandHandler() {
                 event.sendUnknownExceptionEmbedsMessage()
             }
         }
+        return true
     }
 
     companion object {

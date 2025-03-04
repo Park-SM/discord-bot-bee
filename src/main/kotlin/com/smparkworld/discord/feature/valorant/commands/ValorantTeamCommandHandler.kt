@@ -77,8 +77,8 @@ class ValorantTeamCommandHandler(
         }
     }
 
-    override fun handleInteractionByButton(event: ButtonInteractionEvent) {
-        if (event.componentId != COMPONENT_ID) return
+    override fun handleInteractionByButton(event: ButtonInteractionEvent): Boolean {
+        if (event.componentId != COMPONENT_ID) return false
 
         event.guild?.let { guild ->
             getVoiceChannelByNameUseCase(guild, getString(StringCode.VAL_TEAM_AUDIO_CHANNEL_NAME)) { defaultChannel ->
@@ -99,6 +99,8 @@ class ValorantTeamCommandHandler(
             .setDescription(getString(StringCode.VAL_TEAM_FINISH_DESC, finishAuthor.toString()))
             .build()
         event.sendEmbedsMessage(message)
+
+        return true
     }
 
     private fun checkPlayersValidation(

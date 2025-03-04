@@ -47,7 +47,7 @@ class BeeMusicPlayBySearchCommandHandler(
         }
     }
 
-    override fun handleInteractionByButton(event: ButtonInteractionEvent) {
+    override fun handleInteractionByButton(event: ButtonInteractionEvent): Boolean {
         when (event.componentId) {
             ButtonID.SEARCH_MUSIC -> {
                 val modal = Modal.create(ModalID.SEARCH_MUSIC, getString(StringCode.MODAL_TITLE_SEARCH_MUSIC))
@@ -59,12 +59,13 @@ class BeeMusicPlayBySearchCommandHandler(
                     )
                     .build()
                 event.replyModal(modal).queue()
+                return true
             }
             ButtonID.PAUSE_OR_RESUME_MUSIC -> {
                 val musicManager = event.guild?.idLong?.let(MusicManagerMediator::obtainGuildMusicManager)
                 if (musicManager == null) {
                     event.sendUnknownExceptionEmbedsMessage()
-                    return
+                    return true
                 }
                 if (musicManager.isPaused) {
                     musicManager.resumeTrack()
@@ -72,23 +73,25 @@ class BeeMusicPlayBySearchCommandHandler(
                     musicManager.pauseTrack()
                 }
                 event.sendDeferReply()
+                return true
             }
             ButtonID.SKIP_MUSIC -> {
                 val musicManager = event.guild?.idLong?.let(MusicManagerMediator::obtainGuildMusicManager)
                 if (musicManager == null) {
                     event.sendUnknownExceptionEmbedsMessage()
-                    return
+                    return true
                 }
                 musicManager.skipTrack()
                 commandHandlerScope.launch {
                     sendCurrentTrackDashboardMessage(event, musicManager)
                 }
+                return true
             }
             ButtonID.HISTORY_MUSIC -> {
                 val guildId = event.guild?.idLong
                 if (guildId == null) {
                     event.sendUnknownExceptionEmbedsMessage()
-                    return
+                    return true
                 }
 
                 val historyTitles = MusicManagerMediator.getTrackHistoryBy(guildId)
@@ -101,51 +104,62 @@ class BeeMusicPlayBySearchCommandHandler(
                     .setDescription(historyTitles)
                     .build()
                 event.sendEmbedsMessage(message, ephemeral = true, deleteAfter = 10_000L)
+                return true
             }
         }
+        return false
     }
 
-    override fun handleInteractionByModal(event: ModalInteractionEvent) {
+    override fun handleInteractionByModal(event: ModalInteractionEvent): Boolean {
         val guildId = event.guild?.idLong
 
         val musicManager = guildId?.let(MusicManagerMediator::obtainGuildMusicManager)
         if (musicManager == null) {
             event.sendUnknownExceptionEmbedsMessage()
-            return
+            return true
         }
-        commandHandlerScope.launch {
-            when (event.modalId) {
-                ModalID.SEARCH_MUSIC -> checkVoiceChannelValidation(event, result = getVoiceChannelByEventAuthor(event)) { voiceChannel ->
+        when (event.modalId) {
+            ModalID.SEARCH_MUSIC -> {
+                commandHandlerScope.launch {
+                    checkVoiceChannelValidation(event, result = getVoiceChannelByEventAuthor(event)) { voiceChannel ->
 
-                    val input = event.getValue(InputID.SEARCH_MUSIC)?.asString ?: return@checkVoiceChannelValidation
+                        val input = event.getValue(InputID.SEARCH_MUSIC)?.asString
+                            ?: return@checkVoiceChannelValidation
 
-                    when (val result = musicManager.load(query = input)) {
-                        is TrackLoadingResult.SuccessTrackLoading -> onNewTrackReceived(
-                            track = result.track,
-                            manager = musicManager,
-                            voiceChannel = voiceChannel,
-                            event = event
-                        )
-                        is TrackLoadingResult.SuccessTracksLoading -> onNewTrackReceived(
-                            track = result.tracks.firstOrNull() ?: return@checkVoiceChannelValidation,
-                            manager = musicManager,
-                            voiceChannel = voiceChannel,
-                            event = event
-                        )
-                        is TrackLoadingResult.NoMatches -> {
-                            event.sendNoticeEmbedsMessage(getString(StringCode.BEE_CMD_MUSIC_PLAY_NOT_FOUND))
-                        }
-                        is TrackLoadingResult.UnknownException -> {
-                            event.sendUnknownExceptionEmbedsMessage()
-                        }
-                        is TrackLoadingResult.Error -> {
-                            result.exception.printStackTrace()
-                            event.sendUnknownExceptionEmbedsMessage()
+                        when (val result = musicManager.load(query = input)) {
+                            is TrackLoadingResult.SuccessTrackLoading -> onNewTrackReceived(
+                                track = result.track,
+                                manager = musicManager,
+                                voiceChannel = voiceChannel,
+                                event = event
+                            )
+
+                            is TrackLoadingResult.SuccessTracksLoading -> onNewTrackReceived(
+                                track = result.tracks.firstOrNull() ?: return@checkVoiceChannelValidation,
+                                manager = musicManager,
+                                voiceChannel = voiceChannel,
+                                event = event
+                            )
+
+                            is TrackLoadingResult.NoMatches -> {
+                                event.sendNoticeEmbedsMessage(getString(StringCode.BEE_CMD_MUSIC_PLAY_NOT_FOUND))
+                            }
+
+                            is TrackLoadingResult.UnknownException -> {
+                                event.sendUnknownExceptionEmbedsMessage()
+                            }
+
+                            is TrackLoadingResult.Error -> {
+                                result.exception.printStackTrace()
+                                event.sendUnknownExceptionEmbedsMessage()
+                            }
                         }
                     }
                 }
+                return true
             }
         }
+        return false
     }
 
     private suspend fun onNewTrackReceived(
