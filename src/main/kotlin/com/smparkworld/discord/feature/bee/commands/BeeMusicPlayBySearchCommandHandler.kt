@@ -133,24 +133,20 @@ class BeeMusicPlayBySearchCommandHandler(
                                 voiceChannel = voiceChannel,
                                 event = event
                             )
-
                             is TrackLoadingResult.SuccessTracksLoading -> onNewTrackReceived(
                                 track = result.tracks.firstOrNull() ?: return@checkVoiceChannelValidation,
                                 manager = musicManager,
                                 voiceChannel = voiceChannel,
                                 event = event
                             )
-
                             is TrackLoadingResult.NoMatches -> {
                                 event.sendNoticeEmbedsMessage(getString(StringCode.BEE_CMD_MUSIC_PLAY_NOT_FOUND))
                             }
-
-                            is TrackLoadingResult.UnknownException -> {
-                                event.sendUnknownExceptionEmbedsMessage()
-                            }
-
                             is TrackLoadingResult.Error -> {
                                 result.exception.printStackTrace()
+                                event.sendUnknownExceptionEmbedsMessage()
+                            }
+                            else -> {
                                 event.sendUnknownExceptionEmbedsMessage()
                             }
                         }
@@ -225,12 +221,13 @@ class BeeMusicPlayBySearchCommandHandler(
                 .addField(getString(StringCode.BEE_CMD_MUSIC_PLAY_HELP_2_TITLE), getString(StringCode.BEE_CMD_MUSIC_PLAY_HELP_2_DESC), false)
                 .build()
         }
-        upsertMessageByLimit(event, message)
+        upsertMessageByLimit(event, message, isInit)
     }
 
     private suspend fun upsertMessageByLimit(
         event: IReplyCallback,
         message: MessageEmbed,
+        isInit: Boolean,
         limit: Int = 3
     ) {
         val textChannel = (event.channel as? TextChannel) ?: return
@@ -239,11 +236,12 @@ class BeeMusicPlayBySearchCommandHandler(
         val prevMessageInLimit = textChannel.history.retrievePast(limit).execute()
             .firstOrNull { it.idLong == prevMessage?.idLong }
 
-        if (prevMessageInLimit == null) {
+        if (prevMessageInLimit == null || isInit) {
             saveSingleMessagePerGuildUseCase(event, message = null)
             prevMessage?.delete()?.queue()
         }
-        if (prevMessageInLimit != null) {
+
+        if (prevMessageInLimit != null && !isInit) {
             prevMessageInLimit.editMessageEmbeds(message).queue()
             event.sendDeferReply(withCheckAcknowledged = true)
         } else {

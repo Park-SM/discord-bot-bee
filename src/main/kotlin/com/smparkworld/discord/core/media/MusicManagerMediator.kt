@@ -29,7 +29,7 @@ object MusicManagerMediator {
         }
         this.isInitialized = true
         this.guildFinder = guildFinder
-        this.evictor = MusicManagerEvictor(guildFinder, onEvicted = ::onSteamingEnd)
+        this.evictor = MusicManagerEvictor(guildFinder, onEvicted = this::removeMusicManager)
 
         playerManager.registerSourceManager(YoutubeAudioSourceManager())
         AudioSourceManagers.registerRemoteSources(playerManager, DeprecatedYoutubeSourceManager::class.java)
@@ -50,6 +50,12 @@ object MusicManagerMediator {
         }
     }
 
+    fun removeMusicManager(guildId: Long) { // GuildMusicManager를 따로 release 처리하지 않아도 Evictor가 자동으로 수행함.
+        if (musicManagers.remove(guildId) != null) {
+            Logger.i(TAG, "The GuildMusicManager has been removed. GuildID is $guildId")
+        }
+    }
+
     fun getTrackHistoryBy(guildId: Long): List<Track> {
         return trackHistories[guildId].orEmpty().toList()
     }
@@ -61,10 +67,5 @@ object MusicManagerMediator {
         }
         history.add(track)
         trackHistories[guildId] = history
-    }
-
-    private fun onSteamingEnd(guildId: Long) {
-        musicManagers.remove(guildId)
-        Logger.i(TAG, "The GuildMusicManager has been removed. GuildID is $guildId")
     }
 }

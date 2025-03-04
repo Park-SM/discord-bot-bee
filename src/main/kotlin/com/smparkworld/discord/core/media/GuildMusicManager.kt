@@ -34,6 +34,7 @@ class GuildMusicManager internal constructor(
     private val sendHandler = AudioPlayerSendHandler(player)
     private val queue = mutableListOf<AudioTrack>()
 
+    private var isReleased = false
     private var onNextTrackLoaded: (bySkip: Boolean) -> Unit = {}
 
     init {
@@ -46,6 +47,8 @@ class GuildMusicManager internal constructor(
     }
 
     fun getAudioManager(): AudioManager? {
+        if (isReleased) return null
+
         return guildFinder(guildId)?.audioManager?.also { manager ->
             manager.sendingHandler = sendHandler
         }
@@ -59,7 +62,9 @@ class GuildMusicManager internal constructor(
         this.onNextTrackLoaded = onNextTrackLoaded
     }
 
-    suspend fun load(query: String): TrackLoadingResult {
+    suspend fun load(query: String): TrackLoadingResult? {
+        if (isReleased) return null
+
         val isYoutubeUri = query.startsWith(YOUTUBE_URL_PREFIX_1, ignoreCase = true)
                 || query.startsWith(YOUTUBE_URL_PREFIX_2, ignoreCase = true)
                 || query.startsWith(YOUTUBE_URL_PREFIX_3, ignoreCase = true)
@@ -73,6 +78,8 @@ class GuildMusicManager internal constructor(
     }
 
     fun queue(track: Track) {
+        if (isReleased) return
+
         if (track is LavaPlayerTrackImpl) {
             _endedAt = 0
             offerTrackHistory(guildId, track)
@@ -84,24 +91,32 @@ class GuildMusicManager internal constructor(
     }
 
     fun resumeTrack() {
+        if (isReleased) return
         player.isPaused = false
     }
 
     fun pauseTrack() {
+        if (isReleased) return
         player.isPaused = true
     }
 
     fun skipTrack() {
+        if (isReleased) return
         player.stopTrack()
         nextTrack(bySkip = true)
     }
 
-    fun clearQueue() {
+    fun release() {
+        isReleased = true
+        _endedAt = System.currentTimeMillis()
+
         queue.clear()
-        player.stopTrack()
+        player.destroy()
     }
 
     private fun nextTrack(bySkip: Boolean = false) {
+        if (isReleased) return
+
         if (queue.isNotEmpty()) {
             player.startTrack(queue.removeFirst(), false)
         } else {

@@ -41,9 +41,15 @@ internal class MusicManagerEvictor(
     }
 
     private fun evict(guildId: Long) {
+        // 1. GuildMusicManager release 처리
+        trackedMusicManagers[guildId]?.release()
+
+        // 2. AudioChannel에서 봇 제거
         guildFinder.invoke(guildId)
             ?.audioManager
             ?.closeAudioConnection()
+
+        // 3. Callback 호출
         onEvicted(guildId)
     }
 

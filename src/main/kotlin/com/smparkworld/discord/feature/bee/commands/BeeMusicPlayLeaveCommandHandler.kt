@@ -18,8 +18,8 @@ class BeeMusicPlayLeaveCommandHandler(
     override suspend fun handle(command: String, event: SlashCommandInteractionEvent) {
         checkVoiceChannelValidation(event, result = getVoiceChannelByEventAuthor(event)) { _ ->
 
-            MusicManagerMediator.obtainGuildMusicManager(event.requireGuild().idLong)
-                .clearQueue()
+            MusicManagerMediator
+                .removeMusicManager(event.requireGuild().idLong)
 
             event.requireGuild()
                 .audioManager
