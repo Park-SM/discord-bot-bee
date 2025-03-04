@@ -11,9 +11,9 @@ import com.smparkworld.discord.core.media.GuildMusicManager
 import com.smparkworld.discord.core.media.MusicManagerMediator
 import com.smparkworld.discord.core.media.model.Track
 import com.smparkworld.discord.core.media.model.TrackLoadingResult
-import com.smparkworld.discord.domain.GetSingleMessagePerChannelUseCase
+import com.smparkworld.discord.domain.GetSingleMessagePerGuildUseCase
 import com.smparkworld.discord.domain.GetVoiceChannelByEventAuthorUseCase
-import com.smparkworld.discord.domain.SaveSingleMessagePerChannelUseCase
+import com.smparkworld.discord.domain.SaveSingleMessagePerGuildUseCase
 import kotlinx.coroutines.launch
 import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.entities.MessageEmbed
@@ -31,18 +31,12 @@ import net.dv8tion.jda.api.managers.AudioManager
 
 class BeeMusicPlayBySearchCommandHandler(
     private val getVoiceChannelByEventAuthor: GetVoiceChannelByEventAuthorUseCase,
-    private val saveSingleMessagePerChannelUseCase: SaveSingleMessagePerChannelUseCase,
-    private val getSingleMessagePerChannelUseCase: GetSingleMessagePerChannelUseCase
+    private val saveSingleMessagePerGuildUseCase: SaveSingleMessagePerGuildUseCase,
+    private val getSingleMessagePerGuildUseCase: GetSingleMessagePerGuildUseCase
 ) : CommandHandler() {
 
     override suspend fun handle(command: String, event: SlashCommandInteractionEvent) {
         checkVoiceChannelValidation(event, result = getVoiceChannelByEventAuthor(event)) {
-
-            val prevMessage = getSingleMessagePerChannelUseCase(event)
-            if (prevMessage != null) {
-                event.sendNoticeEmbedsMessage(getString(StringCode.BEE_CMD_MUSIC_PLAY_DESC_ALREADY), ephemeral = true, deleteAfter = 5_000L)
-                return@checkVoiceChannelValidation
-            }
 
             val musicManager = event.guild?.idLong?.let(MusicManagerMediator::obtainGuildMusicManager)
             if (musicManager == null) {
@@ -87,7 +81,7 @@ class BeeMusicPlayBySearchCommandHandler(
                 }
                 musicManager.skipTrack()
                 commandHandlerScope.launch {
-                    sendCurrentTrackDashboardMessage(event, musicManager, withDeferReply = true)
+                    sendCurrentTrackDashboardMessage(event, musicManager)
                 }
             }
             ButtonID.HISTORY_MUSIC -> {
@@ -172,10 +166,10 @@ class BeeMusicPlayBySearchCommandHandler(
             if (bySkip) return@setOnNextTrackLoaded
 
             commandHandlerScope.launch {
-                sendCurrentTrackDashboardMessage(event, manager, withDeferReply = false)
+                sendCurrentTrackDashboardMessage(event, manager)
             }
         }
-        sendCurrentTrackDashboardMessage(event, manager, withDeferReply = true)
+        sendCurrentTrackDashboardMessage(event, manager)
     }
 
     private fun connectBeeBotToEventAuthorVoiceChannel(
@@ -191,8 +185,7 @@ class BeeMusicPlayBySearchCommandHandler(
     private suspend fun sendCurrentTrackDashboardMessage(
         event: IReplyCallback,
         manager: GuildMusicManager,
-        isInit: Boolean = false,
-        withDeferReply: Boolean = false
+        isInit: Boolean = false
     ) {
         val currentTrack = manager.currentTrack
 
@@ -218,30 +211,27 @@ class BeeMusicPlayBySearchCommandHandler(
                 .addField(getString(StringCode.BEE_CMD_MUSIC_PLAY_HELP_2_TITLE), getString(StringCode.BEE_CMD_MUSIC_PLAY_HELP_2_DESC), false)
                 .build()
         }
-        upsertMessageByLimit(event, message, withDeferReply)
+        upsertMessageByLimit(event, message)
     }
 
     private suspend fun upsertMessageByLimit(
         event: IReplyCallback,
         message: MessageEmbed,
-        withDeferReply: Boolean,
         limit: Int = 3
     ) {
         val textChannel = (event.channel as? TextChannel) ?: return
-        val prevMessage = getSingleMessagePerChannelUseCase(event)
+        val prevMessage = getSingleMessagePerGuildUseCase(event)
 
         val prevMessageInLimit = textChannel.history.retrievePast(limit).execute()
             .firstOrNull { it.idLong == prevMessage?.idLong }
 
         if (prevMessageInLimit == null) {
-            saveSingleMessagePerChannelUseCase(event, message = null)
+            saveSingleMessagePerGuildUseCase(event, message = null)
             prevMessage?.delete()?.queue()
         }
         if (prevMessageInLimit != null) {
-            if (withDeferReply) {
-                event.sendDeferReply()
-            }
             prevMessageInLimit.editMessageEmbeds(message).queue()
+            event.sendDeferReply(withCheckAcknowledged = true)
         } else {
             val buttons = listOfNotNull(
                 Button.success(ButtonID.SEARCH_MUSIC, getString(StringCode.BUTTON_NAME_SEARCH_MUSIC)),
@@ -250,7 +240,7 @@ class BeeMusicPlayBySearchCommandHandler(
                 Button.primary(ButtonID.HISTORY_MUSIC, getString(StringCode.BUTTON_NAME_HISTORY_MUSIC)),
             )
             event.sendEmbedsMessageAndReturn(message, buttons).also {
-                saveSingleMessagePerChannelUseCase(event, it)
+                saveSingleMessagePerGuildUseCase(event, it)
             }
         }
     }

@@ -4,9 +4,9 @@ import net.dv8tion.jda.api.entities.Message
 
 interface MessageRepository {
 
-    fun putMessageByKey(key: String, message: Message?)
+    fun putMessageByKey(key: Long, message: Message?)
 
-    fun getMessageByKey(key: String): Message?
+    fun getMessageByKey(key: Long): Message?
 
-    fun removeMessageByKey(key: String)
+    fun removeMessageByKey(key: Long)
 }

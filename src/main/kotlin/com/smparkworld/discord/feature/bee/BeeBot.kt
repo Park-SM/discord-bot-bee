@@ -15,14 +15,14 @@ import net.dv8tion.jda.api.interactions.commands.build.SubcommandData
 
 class BeeBot(
     getVoiceChannelByEventAuthor: GetVoiceChannelByEventAuthorUseCase = GetVoiceChannelByEventAuthorUseCaseImpl(),
-    saveSingleMessagePerChannelUseCase: SaveSingleMessagePerChannelUseCase = SaveSingleMessagePerChannelUseCaseImpl(MessageRepositoryImpl),
-    getSingleMessagePerChannelUseCase: GetSingleMessagePerChannelUseCase = GetSingleMessagePerChannelUseCaseImpl(MessageRepositoryImpl)
+    saveSingleMessagePerGuildUseCase: SaveSingleMessagePerGuildUseCase = SaveSingleMessagePerGuildUseCaseImpl(MessageRepositoryImpl),
+    getSingleMessagePerGuildUseCase: GetSingleMessagePerGuildUseCase = GetSingleMessagePerGuildUseCaseImpl(MessageRepositoryImpl)
 ) : DiscordBot() {
 
     override val commandHandlers = mapOf(
         getString(StringCode.BEE_CMD_HELP) to BeeHelpCommandHandler(),
         getString(StringCode.BEE_CMD_FORCE_MOVE_USER) to BeeForceMoveUserCommandHandler(getVoiceChannelByEventAuthor),
-        getString(StringCode.BEE_CMD_MUSIC_PLAY_BY_SEARCH) to BeeMusicPlayBySearchCommandHandler(getVoiceChannelByEventAuthor, saveSingleMessagePerChannelUseCase, getSingleMessagePerChannelUseCase),
+        getString(StringCode.BEE_CMD_MUSIC_PLAY_BY_SEARCH) to BeeMusicPlayBySearchCommandHandler(getVoiceChannelByEventAuthor, saveSingleMessagePerGuildUseCase, getSingleMessagePerGuildUseCase),
         getString(StringCode.BEE_CMD_MUSIC_PLAY_LEAVE) to BeeMusicPlayLeaveCommandHandler(getVoiceChannelByEventAuthor)
 
     )

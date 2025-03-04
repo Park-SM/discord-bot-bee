@@ -20,7 +20,8 @@ fun EmbedBuilder.addFieldAsQuote(name: String, value: String, inline: Boolean): 
     return this
 }
 
-fun IReplyCallback.sendDeferReply() {
+fun IReplyCallback.sendDeferReply(withCheckAcknowledged: Boolean = false) {
+    if (withCheckAcknowledged && isAcknowledged) return
     this.deferReply().setEphemeral(true).queue {
         it.deleteOriginal().queueAfter(500L, TimeUnit.MILLISECONDS)
     }

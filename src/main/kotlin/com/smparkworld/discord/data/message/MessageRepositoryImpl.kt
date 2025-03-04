@@ -7,17 +7,17 @@ import java.util.concurrent.ConcurrentMap
 
 object MessageRepositoryImpl : MessageRepository {
 
-    private val cachedMessages: ConcurrentMap<String, Message> = ConcurrentHashMap()
+    private val cachedMessages: ConcurrentMap<Long, Message> = ConcurrentHashMap()
 
-    override fun putMessageByKey(key: String, message: Message?) {
+    override fun putMessageByKey(key: Long, message: Message?) {
         cachedMessages[key] = message
     }
 
-    override fun getMessageByKey(key: String): Message? {
+    override fun getMessageByKey(key: Long): Message? {
         return cachedMessages[key]
     }
 
-    override fun removeMessageByKey(key: String) {
+    override fun removeMessageByKey(key: Long) {
         cachedMessages.remove(key)
     }
 }
