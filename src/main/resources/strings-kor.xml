@@ -79,14 +79,14 @@
     <string name="bee_cmd_help_for_val">발로란트 게임에 대한 기능 설명</string>
     <string name="bee_cmd_help_for_val_desc">꿀벌은 디스코드하면서 발로란트 게임할 때 유용한 기능들을 제공하고 있어요. 이 기능들을 사용하기 위한 명령어에 대해서 설명해드릴게요.</string>
 
-    <string name="bee_cmd_help_for_bee_help_example">꿀벌이 지원하는 명령어에 대해서 설명합니다. 궁금한 명령어 세트를 선택할 수 있어요. \ne.g.) `/꿀벌 도움말`</string>
-    <string name="bee_cmd_help_for_bee_force_move_user_example">다른 음성 채널에 있는 유저를 데려옵니다.\ne.g.) `/꿀벌 데려오기 {데려올 유저 선택}`</string>
-    <string name="bee_cmd_help_for_bee_music_play_by_search_example">듣고 싶은 음원의 제목이나 YouTube URL 혹은 YouTube Music URL을 입력하면 음원을 찾아서 재생합니다.\ne.g.) `/꿀벌 노래 {검색할 제목 or URL 입력}`</string>
-    <string name="bee_cmd_help_for_bee_music_play_leave_example">채널 안에 있는 꿀벌 봇을 내쫓습니다.\ne.g.) `/꿀벌 나가`</string>
-    <string name="bee_cmd_help_for_val_random_pick_example">음성 채널에 있는 유저들에게 에이전트의 역할군을 무작위로 지정합니다.\ne.g.) `/발로 랜덤픽-역할군 {제외할 유저 선택}`</string>
-    <string name="bee_cmd_help_for_val_random_pick_hard_example">음성 채널에 있는 유저들에게 에이전트를 무작위로 지정합니다.\ne.g.) `/발로 랜덤픽-에이전트 {제외할 유저 선택}`</string>
-    <string name="bee_cmd_help_for_val_random_map_example">발로란트에 존재하는 맵 중 하나를 추천합니다.\ne.g.) `/발로 랜덤픽-맵 {제외할 맵 선택}`</string>
-    <string name="bee_cmd_help_for_val_team_example">음성 채널에 있는 유저들을 무작위로 두 개의 팀으로 나누어 각 팀의 새로운 음성 채널로 보냅니다.\ne.g.) `/발로 팀_만들기 {제외할 유저 선택}`</string>
+    <string name="bee_cmd_help_for_bee_help_example">> 꿀벌이 지원하는 명령어에 대해서 설명합니다. 궁금한 명령어 세트를 선택할 수 있어요.\ne.g.) `/꿀벌 도움말`</string>
+    <string name="bee_cmd_help_for_bee_force_move_user_example">> 다른 음성 채널에 있는 유저를 데려옵니다.\ne.g.) `/꿀벌 데려오기 {데려올 유저 선택}`</string>
+    <string name="bee_cmd_help_for_bee_music_play_by_search_example">> 음악을 재생할 수 있는 대시보드를 보여드려요. 듣고 싶은 음원의 제목이나 YouTube URL 혹은 YouTube Music URL을 입력하면 음원을 찾아서 재생합니다.\ne.g.) `/꿀벌 재생`</string>
+    <string name="bee_cmd_help_for_bee_music_play_leave_example">> 채널 안에 있는 꿀벌 봇을 내쫓습니다.\ne.g.) `/꿀벌 나가`</string>
+    <string name="bee_cmd_help_for_val_random_pick_example">> 음성 채널에 있는 유저들에게 에이전트의 역할군을 무작위로 지정합니다.\ne.g.) `/발로 랜덤픽-역할군 {제외할 유저 선택}`</string>
+    <string name="bee_cmd_help_for_val_random_pick_hard_example">> 음성 채널에 있는 유저들에게 에이전트를 무작위로 지정합니다.\ne.g.) `/발로 랜덤픽-에이전트 {제외할 유저 선택}`</string>
+    <string name="bee_cmd_help_for_val_random_map_example">> 발로란트에 존재하는 맵 중 하나를 추천합니다.\ne.g.) `/발로 랜덤픽-맵 {제외할 맵 선택}`</string>
+    <string name="bee_cmd_help_for_val_team_example">> 음성 채널에 있는 유저들을 무작위로 두 개의 팀으로 나누어 각 팀의 새로운 음성 채널로 보냅니다.\ne.g.) `/발로 팀_만들기 {제외할 유저 선택}`</string>
     <!-- 꿀벌 봇 관련 END -->
 
     <!-- 발로란트 봇 관련 START -->
