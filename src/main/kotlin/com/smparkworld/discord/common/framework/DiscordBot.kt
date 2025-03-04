@@ -1,6 +1,7 @@
 package com.smparkworld.discord.common.framework
 
 import kotlinx.coroutines.*
+import net.dv8tion.jda.api.events.interaction.ModalInteractionEvent
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent
 import net.dv8tion.jda.api.events.interaction.component.EntitySelectInteractionEvent
@@ -34,6 +35,10 @@ abstract class DiscordBot : ListenerAdapter() {
 
     override fun onButtonInteraction(event: ButtonInteractionEvent) {
         commandHandlers.values.forEach { it.handleInteractionByButton(event) }
+    }
+
+    override fun onModalInteraction(event: ModalInteractionEvent) {
+        commandHandlers.values.forEach { it.handleInteractionByModal(event) }
     }
 
     override fun onStringSelectInteraction(event: StringSelectInteractionEvent) {

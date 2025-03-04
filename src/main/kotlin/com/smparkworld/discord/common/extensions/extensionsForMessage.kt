@@ -7,6 +7,8 @@ import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.entities.Message
 import net.dv8tion.jda.api.entities.MessageEmbed
 import net.dv8tion.jda.api.interactions.callbacks.IReplyCallback
+import net.dv8tion.jda.api.interactions.components.ItemComponent
+import java.util.concurrent.TimeUnit
 
 fun EmbedBuilder.addFieldIfNotNull(name: String, value: String?, inline: Boolean): EmbedBuilder {
     if (value != null) this.addField(name, value, inline)
@@ -18,23 +20,31 @@ fun EmbedBuilder.addFieldAsQuote(name: String, value: String, inline: Boolean): 
     return this
 }
 
-fun IReplyCallback.sendEmbedsMessage(message: MessageEmbed) {
-    this.replyEmbeds(message).queue()
-}
-
-suspend fun IReplyCallback.sendEmbedsMessageAndReturn(message: MessageEmbed): Message = suspendCancellableCoroutine { continuation ->
-    this.replyEmbeds(message).queue {
-        this.hook.retrieveOriginal().queue(continuation::resumeIfActive)
+fun IReplyCallback.sendDeferReply() {
+    this.deferReply().setEphemeral(true).queue {
+        it.deleteOriginal().queueAfter(500L, TimeUnit.MILLISECONDS)
     }
 }
 
-fun IReplyCallback.sendNoticeEmbedsMessage(description: String) {
+fun IReplyCallback.sendEmbedsMessage(message: MessageEmbed, ephemeral: Boolean = false, deleteAfter: Long = -1) {
+    this.replyEmbeds(message).setEphemeral(ephemeral).queue {
+        if (deleteAfter > -1) it.deleteOriginal().queueAfter(deleteAfter, TimeUnit.MILLISECONDS)
+    }
+}
+
+fun IReplyCallback.sendNoticeEmbedsMessage(description: String, ephemeral: Boolean = false, deleteAfter: Long = -1) {
     val message = EmbedBuilder()
         .setDescription(description)
         .build()
-    this.sendEmbedsMessage(message)
+    this.sendEmbedsMessage(message, ephemeral, deleteAfter)
 }
 
 fun IReplyCallback.sendUnknownExceptionEmbedsMessage() {
     this.sendNoticeEmbedsMessage(description = getString(StringCode.UNKNOWN_EXCEPTION))
+}
+
+suspend fun IReplyCallback.sendEmbedsMessageAndReturn(message: MessageEmbed, actions: List<ItemComponent>): Message = suspendCancellableCoroutine { continuation ->
+    this.replyEmbeds(message)
+        .addActionRow(actions)
+        .queue { it.retrieveOriginal().queue(continuation::resumeIfActive) }
 }

@@ -8,13 +8,14 @@ import com.smparkworld.discord.domain.GetVoiceChannelUsersByEventAuthorUseCase
 import net.dv8tion.jda.api.entities.Member
 import net.dv8tion.jda.api.entities.channel.concrete.VoiceChannel
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
+import net.dv8tion.jda.api.interactions.callbacks.IReplyCallback
 
 /**
  * 명령어를 호출한 사람이 속한 [VoiceChannel]을 반환합니다.
  * 어느 채널에도 속하지 않은 상태에서 명령어를 호출한 경우 에러 문구를 출력합니다.
  */
 suspend fun CommandHandler.checkVoiceChannelValidation(
-    event: SlashCommandInteractionEvent,
+    event: IReplyCallback,
     result: GetVoiceChannelByEventAuthorUseCase.Result,
     perform: suspend (channel: VoiceChannel) -> Unit
 ) {
@@ -36,7 +37,7 @@ suspend fun CommandHandler.checkVoiceChannelValidation(
  * 어느 채널에도 속하지 않은 상태에서 명령어를 호출한 경우 에러 문구를 출력합니다.
  */
 suspend fun CommandHandler.checkVoiceChannelValidation(
-    event: SlashCommandInteractionEvent,
+    event: IReplyCallback,
     result: GetVoiceChannelUsersByEventAuthorUseCase.Result,
     perform: suspend (members: List<Member>) -> Unit
 ) {

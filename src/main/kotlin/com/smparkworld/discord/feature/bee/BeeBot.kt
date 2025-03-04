@@ -37,8 +37,7 @@ class BeeBot(
                 .addOption(OptionType.USER, getString(StringCode.TARGET_USER), getString(StringCode.TARGET_USER_DESC)),
 
             // 3. 검색해서 노래 재생하기
-            SubcommandData(getString(StringCode.BEE_CMD_MUSIC_PLAY_BY_SEARCH), getString(StringCode.BEE_CMD_MUSIC_PLAY_BY_SEARCH_DESC))
-                .addOption(OptionType.STRING, getString(StringCode.MUSIC_KEYWORD), getString(StringCode.MUSIC_KEYWORD_DESC)),
+            SubcommandData(getString(StringCode.BEE_CMD_MUSIC_PLAY_BY_SEARCH), getString(StringCode.BEE_CMD_MUSIC_PLAY_BY_SEARCH_DESC)),
 
             // 4. 봇 퇴장시키기
             SubcommandData(getString(StringCode.BEE_CMD_MUSIC_PLAY_LEAVE), getString(StringCode.BEE_CMD_MUSIC_PLAY_LEAVE_DESC)),

@@ -5,6 +5,7 @@ import com.smparkworld.discord.common.extensions.sendUnknownExceptionEmbedsMessa
 import com.smparkworld.discord.core.logger.Logger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import net.dv8tion.jda.api.events.interaction.ModalInteractionEvent
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent
 import net.dv8tion.jda.api.events.interaction.component.EntitySelectInteractionEvent
@@ -26,6 +27,7 @@ abstract class CommandHandler {
     }
     protected abstract suspend fun handle(command: String, event: SlashCommandInteractionEvent)
 
+    open fun handleInteractionByModal(event: ModalInteractionEvent) {}
     open fun handleInteractionByButton(event: ButtonInteractionEvent) {}
     open fun handleInteractionByStringSelectMenu(event: StringSelectInteractionEvent) {}
     open fun handleInteractionByEntitySelectMenu(event: EntitySelectInteractionEvent) {}

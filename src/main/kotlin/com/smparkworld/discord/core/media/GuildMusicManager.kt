@@ -23,14 +23,18 @@ class GuildMusicManager internal constructor(
     val currentTrack: Track?
         get() = player.playingTrack?.let(::LavaPlayerTrackImpl)
 
+    val isPaused: Boolean
+        get() = player.isPaused
+
     private var _endedAt: Long = 0
     internal val endedAt: Long get() = _endedAt
 
     private val player = playerManager.createPlayer()
     private val sendHandler = AudioPlayerSendHandler(player)
     private val queue = mutableListOf<AudioTrack>()
+    private val history = mutableListOf<AudioTrack>()
 
-    private var onNextTrackLoaded: () -> Unit = {}
+    private var onNextTrackLoaded: (bySkip: Boolean) -> Unit = {}
 
     init {
         val listener = object : AudioEventAdapter() {
@@ -47,11 +51,15 @@ class GuildMusicManager internal constructor(
         }
     }
 
-    fun getPlaylist(): List<AudioTrack> {
-        return queue.toList()
+    fun getPlaylist(): List<Track> {
+        return queue.map(::LavaPlayerTrackImpl)
     }
 
-    fun setOnNextTrackLoaded(onNextTrackLoaded: () -> Unit) {
+    fun getHistory(): List<Track> {
+        return history.map(::LavaPlayerTrackImpl)
+    }
+
+    fun setOnNextTrackLoaded(onNextTrackLoaded: (bySkip: Boolean) -> Unit) {
         this.onNextTrackLoaded = onNextTrackLoaded
     }
 
@@ -71,15 +79,25 @@ class GuildMusicManager internal constructor(
     fun queue(track: Track) {
         if (track is LavaPlayerTrackImpl) {
             _endedAt = 0
+            resumeTrack()
+            history.add(track.audioTrack)
 
             val isStarted = player.startTrack(track.audioTrack, true)
             if (!isStarted) queue.add(track.audioTrack)
         }
     }
 
+    fun resumeTrack() {
+        player.isPaused = false
+    }
+
+    fun pauseTrack() {
+        player.isPaused = true
+    }
+
     fun skipTrack() {
         player.stopTrack()
-        nextTrack()
+        nextTrack(bySkip = true)
     }
 
     fun clearQueue() {
@@ -87,13 +105,13 @@ class GuildMusicManager internal constructor(
         player.stopTrack()
     }
 
-    private fun nextTrack() {
+    private fun nextTrack(bySkip: Boolean = false) {
         if (queue.isNotEmpty()) {
             player.startTrack(queue.removeFirst(), false)
         } else {
             _endedAt = System.currentTimeMillis()
         }
-        onNextTrackLoaded()
+        onNextTrackLoaded(bySkip)
     }
 
     companion object {

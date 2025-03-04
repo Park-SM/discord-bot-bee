@@ -8,9 +8,6 @@
     <string name="status">꽃가루 찾는 중</string>
     <string name="target_user">대상자</string>
 
-    <string name="music_keyword">검색어</string>
-    <string name="music_keyword_desc">검색할 음악의 제목이나 YouTube의 URL을 입력해주세요.</string>
-
     <string name="ignore1">제외1</string>
     <string name="ignore2">제외2</string>
     <string name="ignore3">제외3</string>
@@ -27,6 +24,17 @@
     <string name="absent_command_author">음성 채널에 없으시군요. 음성 채널 안에서 명령해주세요!</string>
     <string name="unknown_exception">알 수 없는 문제가 발생했어요! 꿀벌 봇 프로필에 있는 이슈 보고 사이트로 문의해주세요!</string>
 
+    <string name="button_name_search_music">🔍 노래 예약하기</string>
+    <string name="button_name_pause_or_resume_music">⏯️ 재생/일시정지</string>
+    <string name="button_name_resume_music">▶️ 노래 재생</string>
+    <string name="button_name_skip_music">⏭️ 다음 노래</string>
+    <string name="button_name_history_music">📜 최근 재생 목록</string>
+
+    <string name="modal_title_search_music">노래 예약하기</string>
+
+    <string name="input_title_search_music_label">노래 제목 혹은 URL</string>
+    <string name="input_title_search_music_hint">검색할 음악의 제목이나 YouTube 혹은 YouTube Music의 URL을 입력해주세요.</string>
+
     <!-- 꿀벌 봇 관련 START -->
     <string name="bee_cmd">꿀벌</string>
     <string name="bee_cmd_desc">꿀벌 봇의 기본 명령어입니다.</string>
@@ -35,18 +43,19 @@
     <string name="bee_cmd_help_desc">꿀벌이 제공하는 기능과 명령어에 대해서 설명합니다.</string>
 
     <string name="bee_cmd_music_play_by_search">재생</string>
-    <string name="bee_cmd_music_play_by_search_desc">음악 제목이나 YouTube의 URL을 입력하면 꿀벌이 검색해서 재생합니다.</string>
-    <string name="bee_cmd_music_play_input_empty">검색어를 입력하지 않으셨어요! 검색할 음악의 제목이나 YouTube의 URL을 입력해주세요!</string>
+    <string name="bee_cmd_music_play_by_search_desc">음악 제목이나 YouTube 혹은 YouTube Music의 URL을 입력하면 꿀벌이 검색해서 재생합니다.</string>
     <string name="bee_cmd_music_play_not_found">검색어에 맞는 음악을 찾지 못했어요! 다시 입력해주세요.</string>
     <string name="bee_cmd_music_play_title">음악 재생 🎶</string>
-    <string name="bee_cmd_music_play_desc_empty">예약하신 노래를 다 불렀어요. 아래의 버튼을 통해 다음 노래를 예약해주세요!</string>
-    <string name="bee_cmd_music_play_help_1_title">**🎤 검색하신 음악을 순서대로 재생합니다.**</string>
+    <string name="bee_cmd_music_play_desc_init">아래의 `노래 예약하기` 버튼을 통해 노래를 예약해주세요!</string>
+    <string name="bee_cmd_music_play_desc_empty">예약하신 노래를 다 불렀어요.\n아래의 `노래 예약하기` 버튼을 통해 다음 노래를 예약해주세요!</string>
+    <string name="bee_cmd_music_play_desc_already">이미 음악 재생 기능이 실행 중이에요.\n음악 재생 메세지의 버튼을 통해 노래를 예약해주세요!</string>
+    <string name="bee_cmd_music_play_help_1_title">**검색하신 음악을 순서대로 재생합니다. 🎤**</string>
     <string name="bee_cmd_music_play_help_1_desc">> 하단의 `노래 예약하기` 버튼을 통해 다음 노래를 예약해보세요!\n> `다음 노래` 버튼을 통해 재생 중인 노래를 넘길 수도 있어요.</string>
-    <string name="bee_cmd_music_play_help_2_title">**📚 재생한 음악의 이력을 볼 수 있어요.**</string>
-    <string name="bee_cmd_music_play_help_2_desc">> 하단의 `노래 이력` 버튼을 통해 지금까지 재생했던 노래를 볼 수 있어요! Playlist에 있는 노래를 직접 제거한 경우는 보이지 않습니다.</string>
+    <string name="bee_cmd_music_play_help_2_title">**재생한 음악의 이력을 볼 수 있어요. 📚**</string>
+    <string name="bee_cmd_music_play_help_2_desc">> 하단의 `최근 재생 목록` 버튼을 통해 재생한 이력 볼 수 있어요!\n> Playlist에 있는 노래를 직접 제거한 경우는 보이지 않습니다.</string>
     <string name="bee_cmd_music_play_current_title">현재 재생 중.</string>
-    <string name="bee_cmd_music_play_current_title_exception">예상치 못한 이슈로 노래 제목을 불러오지 못했어요.</string>
     <string name="bee_cmd_music_play_playlist">Playlist.</string>
+    <string name="bee_cmd_music_play_history">최근 재생 목록.</string>
 
     <string name="bee_cmd_music_play_leave">나가</string>
     <string name="bee_cmd_music_play_leave_desc">채널에 있는 꿀벌을 퇴장시킵니다.</string>
