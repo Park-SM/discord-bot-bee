@@ -10,6 +10,7 @@ object Logger {
     private const val INFO = "[INFO]"
     private const val DEBUG = "[DEBUG]"
     private const val SYSTEM = "[SYSTEM]"
+    private const val ERROR = "[ERROR]"
 
     private val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
     private val currentTimestamp: String
@@ -25,6 +26,11 @@ object Logger {
 
     fun s(tag: String, message: String) {
         println("$currentTimestamp ${formatCategory(SYSTEM)} ${formatTag(tag)} $message")
+    }
+
+    fun e(tag: String, message: String, exception: Exception? = null) {
+        println("$currentTimestamp ${formatCategory(ERROR)} ${formatTag(tag)} $message")
+        exception?.printStackTrace()
     }
 
     private fun formatTag(input: String): String {
