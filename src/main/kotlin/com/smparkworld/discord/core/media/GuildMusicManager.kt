@@ -3,9 +3,11 @@ package com.smparkworld.discord.core.media
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager
 import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter
+import com.sedmelluq.discord.lavaplayer.tools.FriendlyException
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason
 import com.sedmelluq.discord.lavaplayer.track.playback.MutableAudioFrame
+import com.smparkworld.discord.core.logger.Logger
 import com.smparkworld.discord.core.media.MusicManagerMediator.offerTrackHistory
 import com.smparkworld.discord.core.media.extensions.loadItem
 import com.smparkworld.discord.core.media.model.LavaPlayerTrackImpl
@@ -39,6 +41,9 @@ class GuildMusicManager internal constructor(
 
     init {
         val listener = object : AudioEventAdapter() {
+            override fun onTrackException(player: AudioPlayer?, track: AudioTrack?, exception: FriendlyException?) {
+                Logger.e(TAG, "An exception occurred while processing the track.", exception)
+            }
             override fun onTrackEnd(player: AudioPlayer?, track: AudioTrack?, endReason: AudioTrackEndReason) {
                 if (endReason.mayStartNext) { nextTrack() }
             }
@@ -126,6 +131,8 @@ class GuildMusicManager internal constructor(
     }
 
     companion object {
+        private const val TAG = "GuildMusicManager"
+
         private const val SEARCH_PREFIX = "ytsearch"
         private const val YOUTUBE_URL_PREFIX_1 = "https://youtube.com/"
         private const val YOUTUBE_URL_PREFIX_2 = "https://www.youtube.com/"
