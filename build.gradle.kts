@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "com.smparkworld.discord"
-version = "2.3.2"
+version = "2.3.3"
 
 repositories {
     mavenCentral()
